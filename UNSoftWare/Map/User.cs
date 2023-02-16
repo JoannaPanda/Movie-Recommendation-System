@@ -210,7 +210,7 @@ namespace UNSoftWare.Map
                         usr.SetWishlist(list);
 
                         var pm = usr.PreferenceModels;
-                        pm[movie.Performer] = pm.GetValueOrDefault(movie.Performer) + 25;
+                        pm[movie.Director] = pm.GetValueOrDefault(movie.Director) + 25;
                         foreach(string tag in movie.Tags)
                             pm[tag] = pm.GetValueOrDefault(tag) + 25;
                         foreach (string per in movie.Performers)

@@ -80,11 +80,11 @@ namespace UNSoftWare.Map
                     if (usr != null)
                     {
                         var pm = usr.PreferenceModels;
-                        pm[movie.Performer] = pm.GetValueOrDefault(movie.Performer) + 25;
+                        pm[movie.Director] = pm.GetValueOrDefault(movie.Director) + 1;
                         foreach (string tag in movie.Tags)
-                            pm[tag] = pm.GetValueOrDefault(tag) + 25;
+                            pm[tag] = pm.GetValueOrDefault(tag) + 1;
                         foreach (string per in movie.Performers)
-                            pm[per] = pm.GetValueOrDefault(per) + 25;
+                            pm[per] = pm.GetValueOrDefault(per) + 1;
                         usr.SetPreferenceModel(pm);
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                     }
@@ -97,6 +97,43 @@ namespace UNSoftWare.Map
                 await context.Response.WriteAsync("No Movie Found");
                 return;
             }
+        }
+        /// <summary>
+        /// Search Movie
+        /// </summary>
+        public static async void Search(HttpContext context)
+        {
+            var searchtext = (string)context.Request.Query["searchtext"];
+            if (string.IsNullOrWhiteSpace(searchtext))
+            {
+                await context.Response.WriteAsync("[]");
+                return;
+            }
+            var searchtexts = searchtext.ToLower().Split(' ');
+
+            var moives = FSQL.Select<MV_Moive>().ToList();
+
+            foreach (var moive in moives)
+            {
+                foreach (string jr in searchtexts)
+                {
+                    if (moive.Tag.ToLower().Contains(jr))
+                        moive.RankPoint += 20;
+                    if (moive.MovieName.ToLower().Contains(jr))
+                        moive.RankPoint += 40;
+                    if (moive.Director.ToLower().Contains(jr))
+                        moive.RankPoint += 16;
+                    if (moive.Performer.ToLower().Contains(jr))
+                        moive.RankPoint += 18;
+                    if (moive.Type.ToLower().Contains(jr))
+                        moive.RankPoint += 30;
+                    if (moive.Intor.ToLower().Contains(jr))
+                        moive.RankPoint += 2;
+                    if (moive.Info.ToLower().Contains(jr))
+                        moive.RankPoint += 1;
+                }
+            }
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(moives.Where(x => x.RankPoint > 0).OrderByDescending(x => x.RankPoint).Take(20).ToArray()));
         }
     }
 }
