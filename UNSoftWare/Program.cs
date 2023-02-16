@@ -17,8 +17,20 @@ namespace UNSoftWare
             var app = builder.Build();
 
             app.MapGet("/", () => "UNSoftWare BackEND");
+
+            //User
             app.MapPost("/User/Login", User.Login);
             app.MapPost("/User/Register", User.Register);
+            app.MapPost("/User/Logout", User.Logout);
+            app.MapGet("/User/Info", User.Info);
+
+            app.MapGet("/User/Wishlist/list", User.Wishlist.list);
+            app.MapPost("/User/Wishlist/add", User.Wishlist.add);
+            app.MapPost("/User/Wishlist/remove", User.Wishlist.remove);
+
+            app.MapGet("/User/Banlist/list", User.Banlist.list);
+            app.MapPost("/User/Banlist/add", User.Banlist.add);
+            app.MapPost("/User/Banlist/remove", User.Banlist.remove);
 
             app.Run();
         }

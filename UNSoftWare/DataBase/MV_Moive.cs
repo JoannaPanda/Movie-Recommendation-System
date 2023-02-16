@@ -34,32 +34,32 @@ namespace UNSoftWare.DataBase
         /// Movie ID
         /// </summary>
         [Column(IsPrimary = true, IsIdentity = true)]
-        public int Uid { get; set; }
+        public int Mid { get; set; }
         /// <summary>
         /// Movie Name
         /// </summary>
-        [Column(StringLength = 1024)]
+        [Column(StringLength = 1024, IsNullable = false)]
         public string MovieName { get; set; }
 
         /// <summary>
         /// Movie Intor
         /// </summary>
-        [Column(DbType = "TEXT")]
+        [Column(DbType = "TEXT", IsNullable = false)]
         public string Intor { get; set; }
         /// <summary>
         /// Movie detailed information
         /// </summary>
-        [Column(DbType = "LONGTEXT")]
+        [Column(DbType = "LONGTEXT", IsNullable = false)]
         public string Info { get; set; }
         /// <summary>
         /// Movie Type
         /// </summary>
-        [Column(StringLength = 256)]
+        [Column(StringLength = 256, IsNullable = false)]
         public string Type { get; set; }
         /// <summary>
         /// Movie Tag
         /// </summary>
-        [Column(StringLength = 4096)]
+        [Column(StringLength = 4096, IsNullable = false)]
         public string Tag { get; set; }
         /// <summary>
         /// Set Tag
@@ -80,7 +80,7 @@ namespace UNSoftWare.DataBase
         /// <summary>
         /// Movie Performer
         /// </summary>
-        [Column(StringLength = 4096)]
+        [Column(StringLength = 4096, IsNullable = false)]
         public string Performer { get; set; }
         /// <summary>
         /// Set Performer

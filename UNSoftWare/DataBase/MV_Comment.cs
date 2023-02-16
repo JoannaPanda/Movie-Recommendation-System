@@ -47,7 +47,7 @@ namespace UNSoftWare.DataBase
         /// <summary>
         /// Movie Comment
         /// </summary>
-        [Column(DbType = "TEXT")]
+        [Column(DbType = "TEXT", IsNullable = false)]
         public string Comment { get; set; }
     }
 }
