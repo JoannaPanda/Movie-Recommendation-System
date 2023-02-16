@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.687" />
     <PackageReference Include="LinePutScript" Version="1.6.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
 </Project>
