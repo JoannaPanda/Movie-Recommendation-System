@@ -1,4 +1,5 @@
 ﻿using FreeSql.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace UNSoftWare.DataBase
 {
@@ -13,7 +14,8 @@ namespace UNSoftWare.DataBase
     [Index("PublishDate", "PublishDate", IsUnique = false)]
     public class MV_Moive
     {
-        public MV_Moive(string movieName, string intor, string info, string type, string tag, string director, string performer, DateTime publishDate, int uPLoaderID)
+        public MV_Moive(string movieName, string intor, string info, string type, string tag, string director,
+            string performer, DateTime publishDate, string imagelink, int uPLoaderID)
         {
             MovieName = movieName;
             Intor = intor;
@@ -24,6 +26,7 @@ namespace UNSoftWare.DataBase
             Performer = performer;
             PublishDate = publishDate;
             UPLoaderID = uPLoaderID;
+            ImageLink = imagelink;
         }
 
         public MV_Moive()
@@ -60,6 +63,7 @@ namespace UNSoftWare.DataBase
         /// Movie Tag
         /// </summary>
         [Column(StringLength = 4096, IsNullable = false)]
+        [JsonIgnore]
         public string Tag { get; set; }
         /// <summary>
         /// Set Tag
@@ -70,7 +74,8 @@ namespace UNSoftWare.DataBase
         /// Get Tag
         /// </summary>
         /// <returns>Tag List</returns>
-        public List<string> GetTag() => Tag.Split(',').ToList();
+        [Column(IsIgnore = true)]
+        public List<string> Tags => Tag.Split(',').ToList();
         /// <summary>
         /// Movie Director Name
         /// </summary>
@@ -81,6 +86,7 @@ namespace UNSoftWare.DataBase
         /// Movie Performer
         /// </summary>
         [Column(StringLength = 4096, IsNullable = false)]
+        [JsonIgnore]
         public string Performer { get; set; }
         /// <summary>
         /// Set Performer
@@ -91,7 +97,8 @@ namespace UNSoftWare.DataBase
         /// Get Performer
         /// </summary>
         /// <returns>Performer List</returns>
-        public List<string> GetPerformer() => Performer.Split(',').ToList();
+        [Column(IsIgnore = true)]
+        public List<string> Performers => Performer.Split(',').ToList();
 
         /// <summary>
         /// Movie Publish Date
@@ -103,5 +110,16 @@ namespace UNSoftWare.DataBase
         /// </summary>
         [Column]
         public int UPLoaderID { get; set; }
+
+        /// <summary>
+        /// Image Link
+        /// </summary>
+        [Column]
+        public string ImageLink { get; set; }
+        /// <summary>
+        /// TMP: Point for Rank
+        /// </summary>
+        [JsonIgnore]
+        public int RankPoint = 0;
     }
 }

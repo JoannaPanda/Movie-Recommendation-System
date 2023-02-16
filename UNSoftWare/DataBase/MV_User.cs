@@ -1,6 +1,7 @@
 ﻿using FreeSql.DataAnnotations;
 using LinePutScript;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace UNSoftWare.DataBase
 {
@@ -45,15 +46,17 @@ namespace UNSoftWare.DataBase
         /// Preference model
         /// </summary>
         [Column(DbType = "TEXT", IsNullable = false)]
-        public string PreferenceModel { get; set; } = "";
+        [JsonIgnore]
+        public string PreferenceModel { get; set; } = "{}";
         /// <summary>
-        /// Get Preference model Line
+        /// Get Preference model
         /// </summary>
-        public Line GetPreferenceModel() => new Line(PreferenceModel);
+        [Column(IsIgnore = true)]
+        public Dictionary<string,int> PreferenceModels => JsonConvert.DeserializeObject<Dictionary<string, int>>(PreferenceModel);
         /// <summary>
-        /// Set Preference model Line
+        /// Set Preference model
         /// </summary>
-        public void SetPreferenceModel(Line line) => PreferenceModel = line.ToString();
+        public void SetPreferenceModel(Dictionary<string, int> value) => PreferenceModel = JsonConvert.SerializeObject(value);
         /// <summary>
         /// User Password
         /// </summary>
@@ -69,6 +72,7 @@ namespace UNSoftWare.DataBase
         /// Movie Wishlist
         /// </summary>
         [Column(StringLength = 4096, IsNullable = false)]
+        [JsonIgnore]
         public string Wishlist { get; set; } = "";
         /// <summary>
         /// Set Wishlist
@@ -87,12 +91,23 @@ namespace UNSoftWare.DataBase
                     list.Add(int.Parse(wish));
             return list;
         }
+        /// <summary>
+        /// Get Wishlist
+        /// </summary>
+        [Column(IsIgnore = true)]
+        public List<int> WishList { get => GetWishlist(); }
 
         /// <summary>
         /// User Banlist
         /// </summary>
         [Column(StringLength = 4096, IsNullable = false)]
+        [JsonIgnore]
         public string Banlist { get; set; } = "";
+        /// <summary>
+        /// Get Banlist
+        /// </summary>
+        [Column(IsIgnore = true)]
+        public List<int> BanList { get => GetBanlist(); }
         /// <summary>
         /// Set Banlist
         /// </summary>
@@ -101,7 +116,7 @@ namespace UNSoftWare.DataBase
         /// <summary>
         /// Get Banlist
         /// </summary>
-        /// <returns>Banlist List</returns>
+        /// <returns>Banlist List</returns>        
         public List<int> GetBanlist()
         {
             var list = new List<int>();

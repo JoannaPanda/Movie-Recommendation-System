@@ -105,7 +105,7 @@ namespace UNSoftWare.Map
                 }
                 else
                 {
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(usr)); 
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(usr));
                 }
             }
             else
@@ -123,13 +123,11 @@ namespace UNSoftWare.Map
         /// <returns>MV_User</returns>
         public static MV_User? PostUserInfofromToken(HttpContext context)
         {
-            if (long.TryParse(context.Request.Form["token"], out long tk))
-                if (Tokens.TryGetValue(tk, out int uid))
-                    return FSQL.Select<MV_User>().Where(a => a.Uid == uid).First();
-                else
-                    return null;
-            else
-                return null;
+            if (context.Request.Form.TryGetValue("token", out var token) &&
+                long.TryParse(token, out long tk) &&
+                    Tokens.TryGetValue(tk, out int uid))
+                return FSQL.Select<MV_User>().Where(a => a.Uid == uid).First();
+            return null;
         }
         /// <summary>
         /// Get User Info From Token
@@ -210,7 +208,15 @@ namespace UNSoftWare.Map
                         }
                         list.Add(mid);
                         usr.SetWishlist(list);
-                        //FSQL.Update<MV_User>(usr.Uid).Set(x => x.Wishlist, usr.Wishlist);
+
+                        var pm = usr.PreferenceModels;
+                        pm[movie.Performer] = pm.GetValueOrDefault(movie.Performer) + 25;
+                        foreach(string tag in movie.Tags)
+                            pm[tag] = pm.GetValueOrDefault(tag) + 25;
+                        foreach (string per in movie.Performers)
+                            pm[per] = pm.GetValueOrDefault(per) + 25;
+                        usr.SetPreferenceModel(pm);
+
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                         await context.Response.WriteAsync("Success");
                         return;
