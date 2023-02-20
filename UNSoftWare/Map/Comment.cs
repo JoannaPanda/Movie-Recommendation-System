@@ -26,7 +26,7 @@ namespace UNSoftWare.Map
                 }
                 else
                 {
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_User>().Where(x => x.Uid == uid).ToList()));
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Comment>().Where(x => x.Uid == uid).ToList()));
                 }
             }
             else
@@ -143,7 +143,7 @@ namespace UNSoftWare.Map
                     }
                     var jret = new JObject();
                     jret["score"] = comms.Count == 0 ? 0 : comms.Sum(x => x.Score) / comms.Count;
-                    jret["commentinfo"] = JObject.Parse(JsonConvert.SerializeObject(comms));
+                    jret["commentinfo"] = JArray.Parse(JsonConvert.SerializeObject(comms));
                     await context.Response.WriteAsync(jret.ToString());
                 }
             }
