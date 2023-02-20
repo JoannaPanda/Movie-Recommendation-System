@@ -38,6 +38,13 @@ namespace UNSoftWare
             app.MapPost("/Movie/add", Movie.add);
             app.MapGet("/Movie/Search", Movie.Search);
 
+            //Comment
+            app.MapPost("/Comment/add", Comment.add);
+            app.MapGet("/Comment/User", Comment.User);
+            app.MapGet("/User/Comment", Comment.User);
+            app.MapGet("/Comment/Movie", Comment.Movie);
+            app.MapGet("/Movie/Comment", Comment.Movie);
+            app.MapPost("/Comment/remove", Comment.remove);
 
             app.Run();
         }

@@ -53,7 +53,8 @@ namespace UNSoftWare.Map
                 {
                     foreach (var jr in usr.PreferenceModels)
                     {
-                        if (moive.Tag.Contains(jr.Key) || moive.Performer.Contains(jr.Key) || moive.Director == jr.Key)
+                        if (moive.Tag.Contains(jr.Key) || moive.Performer.Contains(jr.Key) 
+                            || moive.Director == jr.Key || moive.Type == jr.Key)
                             moive.RankPoint += (int)jr.Value;
                     }
                 }
@@ -80,6 +81,7 @@ namespace UNSoftWare.Map
                     if (usr != null)
                     {
                         var pm = usr.PreferenceModels;
+                        pm[movie.Type] = pm.GetValueOrDefault(movie.Type) + 1;
                         pm[movie.Director] = pm.GetValueOrDefault(movie.Director) + 1;
                         foreach (string tag in movie.Tags)
                             pm[tag] = pm.GetValueOrDefault(tag) + 1;

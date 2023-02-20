@@ -174,6 +174,12 @@ namespace UNSoftWare.Map
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(list));
                     }
                 }
+                else
+                {
+                    context.Response.StatusCode = 404;
+                    await context.Response.WriteAsync("No User Found");
+                    return;
+                }
             }
             /// <summary>
             /// Add WishList
@@ -211,7 +217,8 @@ namespace UNSoftWare.Map
 
                         var pm = usr.PreferenceModels;
                         pm[movie.Director] = pm.GetValueOrDefault(movie.Director) + 25;
-                        foreach(string tag in movie.Tags)
+                        pm[movie.Type] = pm.GetValueOrDefault(movie.Type) + 25;
+                        foreach (string tag in movie.Tags)
                             pm[tag] = pm.GetValueOrDefault(tag) + 25;
                         foreach (string per in movie.Performers)
                             pm[per] = pm.GetValueOrDefault(per) + 25;
