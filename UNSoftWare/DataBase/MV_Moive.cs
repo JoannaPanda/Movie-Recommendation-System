@@ -119,7 +119,11 @@ namespace UNSoftWare.DataBase
         /// <summary>
         /// TMP: Point for Rank
         /// </summary>
-        [JsonIgnore]
         public int RankPoint = 0;
+        /// <summary>
+        /// Wish List Count
+        /// </summary>
+        [Column]
+        public int WishListCount { get; set; } = 0;
     }
 }
