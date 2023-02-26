@@ -1,0 +1,10 @@
+Week1:
+In the first week, we formed a team and select a project which is movie finder system. 
+In the first lab , we think out some novel ideas which probably would be achieved in our further development of the movie finder system. Moreover, 
+I came up with some primary user stories that would be used in proposal. My part is to write the user story for the search functionality and movie detail page, 
+including the corresponding recommendation list, and a navel idea which is trailers in the front page. On Saturday, we had another meeting that assign further 
+tasks to each of our team members.
+Week2:
+I wrote the full description and how the functionality would satisfy the corresponding project objectives for my part. 
+Moreover, I also build some of the storyboards which would show how our site should be interacted with users. 
+In the Sunday meeting, we discussed some further details that need to be finished by one or two days.
