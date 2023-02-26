@@ -1,0 +1,27 @@
+
+Week 1
+
+Wednesday 2023/02/15
+
+During the week 1 tutorial, I joined the group UNSoftWare and started our first group meeting. I contributed to the discussion of picking project topic as well as brainstorming novel functionalities. We ended up choosing the movie finder system as our project and set up the Jira & GitHub accounts for future project development. I became the scrum master, thus I would administrate GitHub and Jira accounts for the team. To keep us on track for completing the Project Proposal, I set up a group meeting time with team members.
+
+Saturday 2023/02/20
+
+I created the project group on Teams for future meetings. In the meeting, I helped with task distribution for the proposal. I was responsible for writing section (a) background of the proposal, as well as assisting with section (b) and (c). After task distribution, I wrote 10 user story for the proposal. I also discussed with the front-end team available software tools and libraries that we can use for the project. I set the deadline for finishing user stories to be Week 2 Monday. We aimed to complete around half of the proposal by week 2 tutorial so that our tutor could provide us constructive feedback on parts we've accomplished.
+
+
+Week 2
+
+Monday 2023/02/20
+
+Today I attended the team meeting for finalizing user stories and sprints. Each team members wrote ~10 user stories, we went through each of them together and decided which one to prioritize. I suggested the start/end dates for the 3 sprints, and together we selected the user stories for the first sprint. Before the end of the meeting, we set tasks to be completed by Wednesday’s tutorial, and planned out questions that we would like to consult our tutor. 
+
+Wednesday 2023/02/22
+
+During the first half of week 2, I worked on writing the proposal and setting up GitHub Classroom. I learned how to do storyboards and sprints from the lecture and will apply what I've learned in project management.
+
+Sunday 2023/02/26
+
+Since Wednesday, I've been working on making wireframes for our website on Canva. By Sunday's meeting, I completed the parts of proposal that I was working on. I would add the complete user storied on Jira after the meeting. We set the goal to complete our proposal by mid next week so that we could move on to actual implementation.
+
+
