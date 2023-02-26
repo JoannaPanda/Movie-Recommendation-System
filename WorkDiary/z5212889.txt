@@ -1,0 +1,9 @@
+Work diary for Zhiyue Pan z5212889
+
+Week 1
+Group formed. I created the Jira & GitHub accounts. 
+
+Together with John Smith, I wrote the user story and sprints section of the proposal. I also found and discussed with the team all available software tools and libraries that we can use for the project. We decided that we will do an movie review system, we discussed about the functions that out system will provide, and the advantages our system will have over the existing website —rotten tomato. 
+
+Week2 
+This week I was working on the proposal. I completed my part which includes user story, description and How the objectives being satisfised for three main functions. I also completed the story board durig lab with my teammates, and complete the rest of the parts at home. 
