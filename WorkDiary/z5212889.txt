@@ -7,3 +7,10 @@ Together with my group mates, I wrote the user story and sprints section of the 
 
 Week2 
 This week I was working on the proposal. I completed my part which includes user story, description and How the objectives being satisfised for three main functions. I also completed the story board durig lab with my teammates, and complete the rest of the parts at home. 
+
+week 3 
+During lab: 
+Finalise the story board with my groupmates, and moving the user stories we worte on google doc into jira.
+
+5/03/2023
+Complete the Sprints section and the novel functionalities section for the proposal. The novel functionality section includes 9 sections of Reward point system:,Trailer on the front page:,preference system:,banned review writer(s):,More precise recommender system:,Goal setting:,Dark/light mode and Advanced Review metrics. Also finalise the proposal alonge with Yuemeng Yin. 
