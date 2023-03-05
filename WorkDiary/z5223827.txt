@@ -8,3 +8,5 @@ Week2:
 I wrote the full description and how the functionality would satisfy the corresponding project objectives for my part. 
 Moreover, I also build some of the storyboards which would show how our site should be interacted with users. 
 In the Sunday meeting, we discussed some further details that need to be finished by one or two days.
+week3:
+In this week (mainly usring lab), I design the front page, signout page, and finishlised the design with Zhiyue and Yuemeng. I put all the user stories that had been signed to me into Jira and (mainly in the sprint1), and I created epics for each functionality and assign the user stories to each functionality.
