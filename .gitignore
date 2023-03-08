@@ -355,3 +355,4 @@ VUPSimulator/packages.config
 VUPSimulator.sln
 *.rar
 *.lnk
+*.DS_Store
