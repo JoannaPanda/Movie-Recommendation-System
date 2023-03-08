@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Routing.Constraints;
 using UNSoftWare.Map;
 
 namespace UNSoftWare
@@ -14,7 +15,13 @@ namespace UNSoftWare
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddCors(e => e.AddDefaultPolicy(o => o.AllowAnyOrigin()
+            .AllowAnyMethod().AllowAnyHeader()));
+
             var app = builder.Build();
+
+            app.UseCors();
 
             app.MapGet("/", () => "UNSoftWare BackEND");
 
@@ -46,7 +53,20 @@ namespace UNSoftWare
             app.MapGet("/Movie/Comment", Comment.Movie);
             app.MapPost("/Comment/remove", Comment.remove);
 
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "api",
+            //        pattern: "api/{controller}/{action}",
+            //        defaults: new { action = "Index" },
+            //        constraints: new { httpMethod = new HttpMethodRouteConstraint("GET") });
+            //});
+
+
+
             app.Run();
+
+
         }
     }
 }
