@@ -30,8 +30,8 @@ namespace UNSoftWare.Map
                 return;
             }
             var form = context.Request.Form;
-            var movie = new MV_Moive(form["name"], form["intor"], form["info"], form["type"], ((string)form["tag"]).Replace(", ", ","), form["director"],
-                 ((string)form["performer"]).Replace(", ", ","), Convert.ToDateTime(form["publishdate"]), form["link"], usr.Uid);
+            var movie = new MV_Moive(form["name"], form["info"], form["type"], ((string)form["tag"]).Replace(", ", ","), form["director"],
+                 ((string)form["performer"]).Replace(", ", ","), Convert.ToDateTime(form["publishdate"]), usr.Uid);
             movie.Mid = (int)FSQL.Insert(movie).ExecuteIdentity();
             await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
         }
@@ -120,17 +120,17 @@ namespace UNSoftWare.Map
                 foreach (string jr in searchtexts)
                 {
                     if (moive.Tag.ToLower().Contains(jr))
-                        moive.RankPoint += 20;
+                        moive.RankPoint += 5;
                     if (moive.MovieName.ToLower().Contains(jr))
-                        moive.RankPoint += 40;
+                        moive.RankPoint += 20;
                     if (moive.Director.ToLower().Contains(jr))
-                        moive.RankPoint += 16;
+                        moive.RankPoint += 4;
                     if (moive.Performer.ToLower().Contains(jr))
-                        moive.RankPoint += 18;
+                        moive.RankPoint += 6;
                     if (moive.Type.ToLower().Contains(jr))
-                        moive.RankPoint += 30;
-                    if (moive.Intor.ToLower().Contains(jr))
-                        moive.RankPoint += 2;
+                        moive.RankPoint += 15;
+                    //if (moive.Intor.ToLower().Contains(jr))
+                    //    moive.RankPoint += 2;
                     if (moive.Info.ToLower().Contains(jr))
                         moive.RankPoint += 1;
                 }
