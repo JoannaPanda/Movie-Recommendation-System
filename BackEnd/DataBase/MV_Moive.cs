@@ -125,6 +125,11 @@ namespace UNSoftWare.DataBase
         /// </summary>
         [Column]
         public int WishListCount { get; set; } = 0;
+        /// <summary>
+        /// Score
+        /// </summary>
+        [Column]
+        public double Score { get; set; } = 0;
 
     }
 }
