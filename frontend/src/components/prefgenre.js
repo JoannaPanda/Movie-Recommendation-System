@@ -26,12 +26,46 @@ const SetPreferenceGenre = () => {
   };
 
   const handleNextButtonClick = () => {
-    // navigate to the next page
+    const token = localStorage.getItem("token");
+    const params = new URLSearchParams();
+    params.append("token", token);
+    console.log(genrePreferences);
+    params.append("tag", genrePreferences);
+
+    fetch("http://lbosau.exlb.org:9900//User/Recommend/set", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    })
+      .then((response) => {
+        localStorage.setItem("userinfo", JSON.stringify(response.data));
+        // navigate to the next page
+        // redirect to preference tag setting
+        window.location.href = "/setpreftag";
+      })
+      .then((data) => {
+        console.log("Response data:", data);
+        try {
+          const jsonData = JSON.parse(data);
+          console.log("Preference successfully updated:", jsonData);
+          alert("successful");
+        } catch (error) {
+          console.error(error);
+          alert(error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error);
+      });
   };
 
   return (
     <div className="movie-preference-container">
-      <h1 className="movie-preference-title">Select up to 8 genres</h1>
+      <h1 className="movie-preference-title">What's your movie preference?</h1>
+      <h1 className="movie-preference-subtitle">Select up to 8 genres</h1>
       <div className="movie-preference-genres">
         {genreData.map((genre) => (
           <button

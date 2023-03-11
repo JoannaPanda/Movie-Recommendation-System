@@ -6,7 +6,7 @@ class registerpage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      name: "",
       email: "",
       password: "",
     };
@@ -15,8 +15,9 @@ class registerpage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { username, email, password } = this.state;
-    if (username === "") {
+    const { name, email, password } = this.state;
+
+    if (name === "") {
       alert("invalid username.");
       return;
     }
@@ -38,10 +39,22 @@ class registerpage extends React.Component {
       return;
     }
 
+    console.log(
+      "API endpoint URL:",
+      "http://lbosau.exlb.org:9900/User/Register"
+    );
+
+    const params = new URLSearchParams();
+    params.append("name", name);
+    params.append("email", email);
+    params.append("password", password);
+
     fetch("http://lbosau.exlb.org:9900/User/Register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
     })
       .then((response) => {
         if (!response.ok) {
@@ -68,8 +81,8 @@ class registerpage extends React.Component {
           // update state with token and user info
           this.setState({ token, userinfo });
 
-          // redirect to dashboard
-          window.location.href = "/dashboard";
+          // redirect to preference setting
+          window.location.href = "/setprefgenre";
         } catch (error) {
           console.error("Registration failed:", error);
           alert(error);
@@ -83,7 +96,15 @@ class registerpage extends React.Component {
 
   render() {
     return (
-      <div className="registration-page">
+      <div
+        className="registration-page"
+        style={{
+          backgroundColor: "#400b0a",
+          backgroundSize: `cover`,
+          width: "120%",
+          height: "800px",
+        }}
+      >
         <form
           onSubmit={this.handleSubmit}
           style={{
@@ -95,15 +116,13 @@ class registerpage extends React.Component {
         >
           <div>
             <h2>Create your account</h2>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="name">Username</label>
             <input
               className="form-input"
               type="text"
-              id="username"
-              value={this.state.username}
-              onChange={(event) =>
-                this.setState({ username: event.target.value })
-              }
+              id="name"
+              value={this.state.name}
+              onChange={(event) => this.setState({ name: event.target.value })}
             />
           </div>
           <div>
@@ -127,7 +146,7 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
-            <div class="pass-instruction">
+            <div className="pass-instruction">
               <span>&#63;</span>
             </div>
           </div>
@@ -138,7 +157,7 @@ class registerpage extends React.Component {
         {this.state.token && (
           <div>
             <p>Token: {this.state.token}</p>
-            <p>User Info: {JSON.stringify(this.state.userInfo)}</p>
+            <p>User Info: {JSON.stringify(this.state.userinfo)}</p>
           </div>
         )}
         <img

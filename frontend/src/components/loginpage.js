@@ -2,12 +2,11 @@ import React from "react";
 import "../styles/Form.css";
 import { Link } from "react-router-dom";
 
-class loginpage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      email: "",
+      idoremail: "",
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,16 +14,20 @@ class loginpage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { username, password } = this.state;
-    if (username === "") {
+    const { idoremail, password } = this.state;
+    if (idoremail === "") {
       alert("invalid username.");
       return;
     }
 
+    const formData = new URLSearchParams();
+    formData.append("idoremail", idoremail);
+    formData.append("password", password);
+
     fetch("http://lbosau.exlb.org:9900/User/Login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString(),
     })
       .then((response) => {
         if (!response.ok) {
@@ -34,11 +37,11 @@ class loginpage extends React.Component {
       })
       .then((data) => {
         console.log("Login successful:", data);
-        const { token, user } = data;
+        const { token, userinfo } = data;
 
         // store token and user info in local storage
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(userinfo));
 
         // redirect to dashboard
         window.location.href = "/dashboard";
@@ -63,14 +66,14 @@ class loginpage extends React.Component {
         >
           <div>
             <h2>Hello Again!</h2>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="idoremail">Username</label>
             <input
               className="form-input"
               type="text"
-              id="username"
-              value={this.state.username}
+              id="idoremail"
+              value={this.state.idoremail}
               onChange={(event) =>
-                this.setState({ username: event.target.value })
+                this.setState({ idoremail: event.target.value })
               }
             />
           </div>
@@ -96,7 +99,7 @@ class loginpage extends React.Component {
         {this.state.token && (
           <div>
             <p>Token: {this.state.token}</p>
-            <p>User Info: {JSON.stringify(this.state.userInfo)}</p>
+            <p>User Info: {JSON.stringify(this.state.userinfo)}</p>
           </div>
         )}
         <img
@@ -116,4 +119,4 @@ class loginpage extends React.Component {
   }
 }
 
-export default loginpage;
+export default LoginPage;
