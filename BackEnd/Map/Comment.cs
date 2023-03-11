@@ -27,7 +27,7 @@ namespace UNSoftWare.Map
                 }
                 else
                 {
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Comment>().Where(x => x.Uid == uid).ToList()));
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Comment>().Where(x => x.Uid == uid).ToList().ToArray()));
                 }
             }
             else
@@ -153,7 +153,7 @@ namespace UNSoftWare.Map
                         comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid && !banlist.Contains(x.Uid)).ToList();
                         jret["score"] = MV_Comment.CalScore(comms); //comms.Count == 0 ? 0 : comms.Sum(x => x.Score) / comms.Count;
                     }
-                    jret["commentinfo"] = JArray.Parse(JsonConvert.SerializeObject(comms));
+                    jret["commentinfo"] = JArray.Parse(JsonConvert.SerializeObject(comms.ToArray()));
                     await context.Response.WriteAsync(jret.ToString());
                 }
             }

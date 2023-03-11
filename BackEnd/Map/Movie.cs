@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 using UNSoftWare.DataBase;
 using static UNSoftWare.Map.User;
@@ -44,7 +45,7 @@ namespace UNSoftWare.Map
             var usr = GetUserInfofromToken(context);
             if (usr == null || usr.PreferenceModels.Count == 0)
             {
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Moive>().OrderBy("rand()").Limit(20).ToList()));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Moive>().OrderBy("rand()").Limit(20).ToList().ToArray()));
             }
             else
             {
@@ -96,7 +97,7 @@ namespace UNSoftWare.Map
                     recom.Remove(movie);
 
                     var jret = new JObject();
-                    jret["recommendation"] = JObject.Parse(JsonConvert.SerializeObject(recom));
+                    jret["recommendation"] = JObject.Parse(JsonConvert.SerializeObject(recom.ToArray()));
                     jret["movieinfo"] = JObject.Parse(JsonConvert.SerializeObject(movie));
                     await context.Response.WriteAsync(jret.ToString());
                 }
@@ -144,6 +145,52 @@ namespace UNSoftWare.Map
                 }
             }
             await context.Response.WriteAsync(JsonConvert.SerializeObject(moives.Where(x => x.RankPoint > 0).OrderByDescending(x => x.RankPoint).Take(20).ToArray()));
+        }
+
+        /// <summary>
+        /// List Movie Order By
+        /// </summary>
+        public static async void ListOrder(HttpContext context)
+        {
+            var moviesql = FSQL.Select<MV_Moive>();
+
+            if (int.TryParse(context.Request.Query["limit"], out int limit))
+            {
+                moviesql.Limit(limit);
+            }
+            if (bool.TryParse(context.Request.Query["desc"], out bool desc) && desc)
+                switch (context.Request.Query["orderby"])
+                {
+                    case "WishListCount":
+                        moviesql.OrderByDescending(x => x.WishListCount);
+                        break;
+                    case "PublishDate":
+                        moviesql.OrderByDescending(x => x.PublishDate);
+                        break;
+                    case "Score":
+                        moviesql.OrderByDescending(x => x.Score);
+                        break;
+                    default:
+                        moviesql.OrderByDescending(x => x.MovieName);
+                        break;
+                }
+            else
+                switch (context.Request.Query["orderby"])
+                {
+                    case "WishListCount":
+                        moviesql.OrderBy(x => x.WishListCount);
+                        break;
+                    case "PublishDate":
+                        moviesql.OrderBy(x => x.PublishDate);
+                        break;
+                    case "Score":
+                        moviesql.OrderBy(x => x.Score);
+                        break;
+                    default:
+                        moviesql.OrderBy(x => x.MovieName);
+                        break;
+                }
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(moviesql.ToList().ToArray()));
         }
     }
 }
