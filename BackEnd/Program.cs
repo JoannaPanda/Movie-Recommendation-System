@@ -39,6 +39,9 @@ namespace UNSoftWare
             app.MapPost("/User/Banlist/add", User.Banlist.add);
             app.MapPost("/User/Banlist/remove", User.Banlist.remove);
 
+            app.MapPost("/User/Recommend/add", User.Recommend.add);
+            app.MapPost("/User/Recommend/Clear", User.Recommend.Clear);
+
             //Movie
             app.MapGet("/Movie/Recommend", Movie.Recommend);
             app.MapGet("/Movie/Info", Movie.Info);

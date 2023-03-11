@@ -49,5 +49,44 @@ namespace UNSoftWare.DataBase
         /// </summary>
         [Column(DbType = "TEXT", IsNullable = false)]
         public string Comment { get; set; }
+        /// <summary>
+        /// Like
+        /// </summary>
+        public int Like { get; set; }
+        /// <summary>
+        /// DisLike
+        /// </summary>
+        public int DisLike { get; set; }
+        /// <summary>
+        /// Weight of Score
+        /// </summary>
+        public double Weight()
+        {
+            double tr = Like + DisLike;
+            double rs = (Like + 1) / (tr + 1);
+            double w = (rs - 0.5) * tr + 1;
+            return w >= 0 ? w : 0;
+        }
+        /// <summary>
+        /// Cal Score for comments
+        /// </summary>
+        public static double CalScore(List<MV_Comment> comments)
+        {
+            if (comments.Count == 0) return 0;
+            double ts = 0;
+            double s = 0;
+            comments.ForEach(c =>
+            {
+                double w = c.Weight();
+                s += c.Score * w;
+                ts += 5 * w;
+            });
+            double rs = s / ts;
+            double r = rs - (rs - 0.5) * Math.Pow(2, -Math.Log10(ts + 1));
+            if (r < 0) return 0;
+            if (r > 5) return 5;
+            return r;
+        }
+
     }
 }

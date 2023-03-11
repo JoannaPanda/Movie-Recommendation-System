@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 using UNSoftWare.DataBase;
 using static UNSoftWare.Map.User;
@@ -73,6 +74,11 @@ namespace UNSoftWare.Map
                         FSQL.Update<MV_Comment>().SetSource(comm).ExecuteAffrows();
                     }
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(comm));
+
+                    //Re Cal Score
+                    var comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == mid).ToList();
+                    movie.Score = MV_Comment.CalScore(comms);
+                    FSQL.Update<MV_Moive>().SetSource(movie).ExecuteAffrows();
                 }
             }
             else
@@ -107,6 +113,7 @@ namespace UNSoftWare.Map
                 else
                 {
                     await context.Response.WriteAsync("Success");
+
                 }
             }
             else
@@ -134,15 +141,18 @@ namespace UNSoftWare.Map
                 else
                 {
                     List<MV_Comment> comms;
+                    var jret = new JObject();
                     if (usr == null)
+                    {
                         comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid).ToList();
+                        jret["score"] = movie.Score;
+                    }
                     else
                     {
                         var banlist = usr.BanList;
                         comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid && !banlist.Contains(x.Uid)).ToList();
+                        jret["score"] = MV_Comment.CalScore(comms); //comms.Count == 0 ? 0 : comms.Sum(x => x.Score) / comms.Count;
                     }
-                    var jret = new JObject();
-                    jret["score"] = comms.Count == 0 ? 0 : comms.Sum(x => x.Score) / comms.Count;
                     jret["commentinfo"] = JArray.Parse(JsonConvert.SerializeObject(comms));
                     await context.Response.WriteAsync(jret.ToString());
                 }
