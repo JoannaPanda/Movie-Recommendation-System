@@ -14,11 +14,11 @@ namespace UNSoftWare.DataBase
     [Index("PublishDate", "PublishDate", IsUnique = false)]
     public class MV_Moive
     {
-        public MV_Moive(string movieName, string intor, string info, string type, string tag, string director,
-            string performer, DateTime publishDate, string imagelink, int uPLoaderID)
+        public MV_Moive(string movieName, string info, string type, string tag, string director,
+            string performer, DateTime publishDate, int uPLoaderID)
         {
             MovieName = movieName;
-            Intor = intor;
+            //Intor = intor;
             Info = info;
             Type = type;
             Tag = tag;
@@ -26,7 +26,7 @@ namespace UNSoftWare.DataBase
             Performer = performer;
             PublishDate = publishDate;
             UPLoaderID = uPLoaderID;
-            ImageLink = imagelink;
+            //ImageLink = imagelink;
         }
 
         public MV_Moive()
@@ -44,11 +44,11 @@ namespace UNSoftWare.DataBase
         [Column(StringLength = 1024, IsNullable = false)]
         public string MovieName { get; set; }
 
-        /// <summary>
-        /// Movie Intor
-        /// </summary>
-        [Column(DbType = "TEXT", IsNullable = false)]
-        public string Intor { get; set; }
+        ///// <summary>
+        ///// Movie Intor
+        ///// </summary>
+        //[Column(DbType = "TEXT", IsNullable = false)]
+        //public string Intor { get; set; }
         /// <summary>
         /// Movie detailed information
         /// </summary>
@@ -111,11 +111,11 @@ namespace UNSoftWare.DataBase
         [Column]
         public int UPLoaderID { get; set; }
 
-        /// <summary>
-        /// Image Link
-        /// </summary>
-        [Column]
-        public string ImageLink { get; set; }
+        ///// <summary>
+        ///// Image Link
+        ///// </summary>
+        //[Column]
+        //public string ImageLink { get; set; }
         /// <summary>
         /// TMP: Point for Rank
         /// </summary>
@@ -125,5 +125,11 @@ namespace UNSoftWare.DataBase
         /// </summary>
         [Column]
         public int WishListCount { get; set; } = 0;
+        /// <summary>
+        /// Score
+        /// </summary>
+        [Column]
+        public double Score { get; set; } = 0;
+
     }
 }

@@ -216,12 +216,12 @@ namespace UNSoftWare.Map
                         usr.SetWishlist(list);
 
                         var pm = usr.PreferenceModels;
-                        pm[movie.Director] = pm.GetValueOrDefault(movie.Director) + 25;
-                        pm[movie.Type] = pm.GetValueOrDefault(movie.Type) + 25;
+                        pm[movie.Director.ToLower()] = pm.GetValueOrDefault(movie.Director.ToLower()) + 25;
+                        pm[movie.Type.ToLower()] = pm.GetValueOrDefault(movie.Type.ToLower()) + 25;
                         foreach (string tag in movie.Tags)
-                            pm[tag] = pm.GetValueOrDefault(tag) + 25;
+                            pm[tag.ToLower()] = pm.GetValueOrDefault(tag.ToLower()) + 25;
                         foreach (string per in movie.Performers)
-                            pm[per] = pm.GetValueOrDefault(per) + 25;
+                            pm[per.ToLower()] = pm.GetValueOrDefault(per.ToLower()) + 25;
                         usr.SetPreferenceModel(pm);
 
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
@@ -379,6 +379,54 @@ namespace UNSoftWare.Map
                     await context.Response.WriteAsync("No User Found");
                     return;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Recommend System
+        /// </summary>
+        public static class Recommend
+        {
+            /// <summary>
+            /// Add Recommend
+            /// </summary>
+            public static async void add(HttpContext context)
+            {
+                var usr = PostUserInfofromToken(context);
+                if (usr == null)
+                {
+                    context.Response.StatusCode = 401;
+                    await context.Response.WriteAsync("Error Token");
+                    return;
+                }
+
+                var list = ((string)context.Request.Form["tag"]).Split(',');
+                var pm = usr.PreferenceModels;
+                foreach ( var item in list )
+                {
+                    var v = item.ToLower().Trim();
+                    pm[v] = pm.GetValueOrDefault(v) + 1000;
+                }
+                usr.SetPreferenceModel(pm);
+
+                FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
+                await context.Response.WriteAsync("Success");
+            }
+            /// <summary>
+            /// Add Recommend
+            /// </summary>
+            public static async void Clear(HttpContext context)
+            {
+                var usr = PostUserInfofromToken(context);
+                if (usr == null)
+                {
+                    context.Response.StatusCode = 401;
+                    await context.Response.WriteAsync("Error Token");
+                    return;
+                }
+                usr.PreferenceModel = "{}";
+                FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
+                await context.Response.WriteAsync("Success");
             }
         }
     }

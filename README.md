@@ -12,4 +12,4 @@ Automatically generated, see [Database](https://github.com/unsw-cse-comp3900-990
 
 ## Front-End
 
-TODO
+Created with React.js, see [Frontend](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/frontend)
