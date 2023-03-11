@@ -18,6 +18,7 @@ class loginpage extends React.Component {
     const { username, password } = this.state;
     if (username === "") {
       alert("invalid username.");
+      return;
     }
 
     fetch("http://lbosau.exlb.org:9900/User/Login", {

@@ -18,9 +18,11 @@ class registerpage extends React.Component {
     const { username, email, password } = this.state;
     if (username === "") {
       alert("invalid username.");
+      return;
     }
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
       alert("invalid email address.");
+      return;
     }
 
     if (
@@ -41,13 +43,40 @@ class registerpage extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Registration failed: " + response.status);
+        }
+        console.log("Response status code:", response.status);
+        return response.text();
+      })
       .then((data) => {
-        console.log("Registration successful:", data);
-        alert("successful");
+        console.log("Response data:", data);
+        if (data.length === 0) {
+          throw new Error("Empty response data");
+        }
+        try {
+          const jsonData = JSON.parse(data);
+          console.log("Registration successful:", jsonData);
+          alert("successful");
+          const { token, userinfo } = jsonData;
+
+          // store token and user info in local storage
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userinfo));
+
+          // update state with token and user info
+          this.setState({ token, userinfo });
+
+          // redirect to dashboard
+          window.location.href = "/dashboard";
+        } catch (error) {
+          console.error("Registration failed:", error);
+          alert(error);
+        }
       })
       .catch((error) => {
-        console.error("Registration failed:", error);
+        console.error(error);
         alert(error);
       });
   }
@@ -106,7 +135,12 @@ class registerpage extends React.Component {
             Sign Up
           </button>
         </form>
-
+        {this.state.token && (
+          <div>
+            <p>Token: {this.state.token}</p>
+            <p>User Info: {JSON.stringify(this.state.userInfo)}</p>
+          </div>
+        )}
         <img
           style={{
             position: "absolute",
