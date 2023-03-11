@@ -83,6 +83,7 @@ namespace UNSoftWare.DataBase
             });
             double rs = s / ts;
             double r = rs - (rs - 0.5) * Math.Pow(2, -Math.Log10(ts + 1));
+            r *= 5;
             if (r < 0) return 0;
             if (r > 5) return 5;
             return r;

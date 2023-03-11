@@ -93,12 +93,12 @@ namespace UNSoftWare.Map
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                     }
                     var recom = FSQL.Select<MV_Moive>()
-                        .Where(a => a.Type == movie.Type || a.Director == movie.Director || a.Tags.Any(x => movie.Tags.Any(y => y == x))).ToList();
-                    recom.Remove(movie);
+                        .Where(a => a.Type == movie.Type || a.Director == movie.Director || movie.Tags.Any(y => a.Tag.Contains(y))).ToList();
+                    recom.RemoveAll(x => x.Mid == mid);
 
                     var jret = new JObject();
-                    jret["recommendation"] = JObject.Parse(JsonConvert.SerializeObject(recom.ToArray()));
                     jret["movieinfo"] = JObject.Parse(JsonConvert.SerializeObject(movie));
+                    jret["recommendation"] = JArray.Parse(JsonConvert.SerializeObject(recom.ToArray()));
                     await context.Response.WriteAsync(jret.ToString());
                 }
             }
