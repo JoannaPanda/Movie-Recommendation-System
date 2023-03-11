@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Xml.Linq;
 using UNSoftWare.DataBase;
 using static UNSoftWare.Map.User;
@@ -53,7 +54,7 @@ namespace UNSoftWare.Map
                 {
                     foreach (var jr in usr.PreferenceModels)
                     {
-                        if (moive.Tag.ToLower().Contains(jr.Key) || moive.Performer.ToLower().Contains(jr.Key) 
+                        if (moive.Tag.ToLower().Contains(jr.Key) || moive.Performer.ToLower().Contains(jr.Key)
                             || moive.Director.ToLower() == jr.Key || moive.Type.ToLower() == jr.Key)
                             moive.RankPoint += (int)jr.Value;
                     }
@@ -90,7 +91,14 @@ namespace UNSoftWare.Map
                         usr.SetPreferenceModel(pm);
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                     }
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
+                    var recom = FSQL.Select<MV_Moive>()
+                        .Where(a => a.Type == movie.Type || a.Director == movie.Director || a.Tags.Any(x => movie.Tags.Any(y => y == x))).ToList();
+                    recom.Remove(movie);
+
+                    var jret = new JObject();
+                    jret["recommendation"] = JObject.Parse(JsonConvert.SerializeObject(recom));
+                    jret["movieinfo"] = JObject.Parse(JsonConvert.SerializeObject(movie));
+                    await context.Response.WriteAsync(jret.ToString());
                 }
             }
             else
