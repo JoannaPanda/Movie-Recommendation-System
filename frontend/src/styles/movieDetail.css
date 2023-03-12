@@ -1,0 +1,153 @@
+/* body {
+    background-color: aliceblue;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 88%;
+    height: 800;
+} */
+
+.movie-detail-page {
+    background-color: aliceblue;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 150%;
+    height: 800;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px;
+    margin-top: 500;
+    
+}
+
+.movie-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.movie-name-date{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 20px;
+}
+
+.movie-title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: left;
+    margin: 0;
+}
+
+.movie-release-date {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    margin: 10px 0;
+}
+
+.movie-rating {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+    color: #ff9800;
+    display: flex;
+}
+
+.movie-description {
+ 
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.movie-poster img {
+    width: 300px;
+    height: 450px;   
+}
+
+.movie-summary {
+    /* margin-bottom: 20px;
+    display: flex; */
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.summary-heading {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+}
+
+.summary-text {
+    font-size: 18px;
+    margin: 10px 0;
+    display: flex;
+}
+
+.movie-cast {
+    margin-bottom: 20px;
+    text-align: left;
+    margin-left: 12px;
+}
+
+.cast-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.cast-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.cast-item {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.movie-reviews {
+    margin-bottom: 20px;
+}
+
+.reviews-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.review-item {
+    margin-bottom: 20px;
+}
+
+.review-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.review-text {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.review-author {
+    font-size: 14px;
+    font-style: italic;
+    margin: 5px 0;
+}
