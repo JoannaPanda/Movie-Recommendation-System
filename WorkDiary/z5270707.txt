@@ -29,3 +29,6 @@ week 3
 
 During this week, I worked on finalizing the proposal, including polishing Section 3 with Juliet, updating storyboards with Sookie, adding user stories to Jira, and drawing complete flow chart of our system. I submited the proposal as the scrum master on Sunday and checked with each memeber. I will be starting on frontend implementation soon.
 
+week 4
+
+This is a very productive week for the frontend team. By the weekend, we've completed most of the frontend for sprint 1. I wrote the register page, login page, preference pages and homepage. It's nice seeing everything gather together. We had coding sessions together and also hosted 2 teams meetings. The team worked smoothly together. 
