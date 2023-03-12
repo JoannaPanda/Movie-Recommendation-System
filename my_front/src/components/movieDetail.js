@@ -32,56 +32,6 @@ function MovieDetail() {
       ))
     : null;
   console.log(cast);
-  console.log(recommendation);
-  // const results = recommendation
-  //   ? recommendation.map((reco) => (
-  //       <li
-  //         key={reco.Mid}
-  //         className="shadow min-h-[200px] border border-black mt-3"
-  //         style={{
-  //           minHeight: 20,
-  //           borderColor: "black",
-  //           border: "none",
-  //           borderRadius: 30,
-  //           marginTop: 3,
-  //         }}
-  //       >
-  //         <Link to={`/movieinfo/${reco.mid}`}>
-  //           <img src={require("../images/titanic.jpg")} alt={reco.MovieName} />
-  //         </Link>
-  //         <div
-  //           className="flex justify-between px-2 items-center"
-  //           // style={{
-  //           //   display: "flex",
-  //           //   justifyContent: "spaceBetween",
-  //           //   alignItems: "center",
-  //           // }}
-  //         >
-  //           <span
-  //             className="text-2xl"
-  //             style={{
-  //               fontSize: 21,
-  //               color: "white",
-  //             }}
-  //           >
-  //             {" "}
-  //             {reco.MovieName}
-  //           </span>
-  //           <span
-  //             className="text-xl  text-yellow-500 font-bold"
-  //             style={{
-  //               fontSize: 11,
-  //               color: "yellow",
-  //               fontWeight: "bold",
-  //               marginLeft: "30%",
-  //             }}
-  //           >
-  //             {reco.Score}
-  //           </span>
-  //         </div>
-  //       </li>
-  //     ))
-  //   : null;
   return (
     <div
       className="movie-detail-page"
