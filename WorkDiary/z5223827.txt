@@ -10,3 +10,9 @@ Moreover, I also build some of the storyboards which would show how our site sho
 In the Sunday meeting, we discussed some further details that need to be finished by one or two days.
 week3:
 In this week (mainly usring lab), I design the front page, signout page, and finishlised the design with Zhiyue and Yuemeng. I put all the user stories that had been signed to me into Jira and (mainly in the sprint1), and I created epics for each functionality and assign the user stories to each functionality.
+
+week4:
+In this week, on Tuesday, Yuemeng and me, we met in school to try to start the front end design, I wrote some basic stucture for the register page. (But Yuemeng completed it).
+After lab, Yanting, Yuemeng and me work together to find our local host that could show our frontend design. I also complete the front end design for home page at that time.
+On Saturday, Yuemeng and me linked our frontend to the backend so that we can fetch data, I complete the search page design and started detail page design.
+On Sunday, I complete the movie detail page deish, which inclued the basic information and primary recommandation list. 
