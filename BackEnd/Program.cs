@@ -47,6 +47,7 @@ namespace UNSoftWare
             app.MapGet("/Movie/Info", Movie.Info);
             app.MapPost("/Movie/add", Movie.add);
             app.MapGet("/Movie/Search", Movie.Search);
+            app.MapGet("/Movie/ListOrder", Movie.ListOrder);
 
             //Comment
             app.MapPost("/Comment/add", Comment.add);
