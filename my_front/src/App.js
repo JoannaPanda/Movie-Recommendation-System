@@ -5,9 +5,13 @@ import Header from "./components/header";
 import Registerpage from "./components/registerpage";
 import Loginpage from "./components/loginpage";
 import SetPreferenceGenre from "./components/prefgenre";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SetPreferenceTag from "./components/preftag";
 import Homepage from "./components/homepage";
+import WelcomePage from "./components/welcomePage";
+import SearchPage from "./components/searchPage";
+import MovieDetail from "./components/movieDetail";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NotFound from "./components/notFound";
 
 function App() {
   return (
@@ -21,6 +25,14 @@ function App() {
           <Route path="/register" element={<Registerpage />} />
           <Route path="/setprefgenre" element={<SetPreferenceGenre />} />
           <Route path="/setpreftag" element={<SetPreferenceTag />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/404" element={<NotFound />} />
+          {/* <Route
+            path="/movieinfo/:id"
+            element={<MovieDetail mid=id />}
+          /> */}
+          <Route path="/movieinfo/:mid" element={<MovieDetail />} />
         </Routes>
       </div>
     </Router>
