@@ -8,17 +8,17 @@ function MovieDetail() {
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
+  // const [recommendation, setRecommendation] = useState([]);
   useEffect(() => {
     setMovie([]);
-    setRecommendation([]);
+    // setRecommendation([]);
     axios
       .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
         setMovie(response.data.movieinfo);
-        setRecommendation(response.data.recommendation);
+        // setRecommendation(response.data.recommendation);
       })
       .catch((error) => {
         console.log(error);
@@ -39,7 +39,7 @@ function MovieDetail() {
         backgroundColor: "white",
         backgroundSize: `cover`,
         width: "120%",
-        height: "800px",
+        height: "auto",
       }}
     >
       <div className="movie-header" style={{ marginLeft: 13 }}>
