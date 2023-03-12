@@ -95,7 +95,7 @@ function MovieDetail() {
       <div className="movie-header" style={{ marginLeft: 13 }}>
         <div className="movie-name-date">
           <h1 className="movie-title">{movie.MovieName}</h1>
-
+          <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
             Released on:{" "}
             {new Date(movie.PublishDate).toLocaleDateString("en-US", {
