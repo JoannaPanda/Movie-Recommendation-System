@@ -6,7 +6,7 @@ class registerpage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      name: "",
       email: "",
       password: "",
     };
@@ -15,12 +15,15 @@ class registerpage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { username, email, password } = this.state;
-    if (username === "") {
+    const { name, email, password } = this.state;
+
+    if (name === "") {
       alert("invalid username.");
+      return;
     }
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
       alert("invalid email address.");
+      return;
     }
 
     if (
@@ -36,25 +39,72 @@ class registerpage extends React.Component {
       return;
     }
 
+    console.log(
+      "API endpoint URL:",
+      "http://lbosau.exlb.org:9900/User/Register"
+    );
+
+    const params = new URLSearchParams();
+    params.append("name", name);
+    params.append("email", email);
+    params.append("password", password);
+
     fetch("http://lbosau.exlb.org:9900/User/Register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Registration failed: " + response.status);
+        }
+        console.log("Response status code:", response.status);
+        return response.text();
+      })
       .then((data) => {
-        console.log("Registration successful:", data);
-        alert("successful");
+        console.log("Response data:", data);
+        if (data.length === 0) {
+          throw new Error("Empty response data");
+        }
+        try {
+          const jsonData = JSON.parse(data);
+          console.log("Registration successful:", jsonData);
+          alert("successful");
+          const { token, userinfo } = jsonData;
+
+          // store token and user info in local storage
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userinfo));
+
+          // update state with token and user info
+          this.setState({ token, userinfo });
+
+          // redirect to preference setting
+          window.location.href = "/setprefgenre";
+        } catch (error) {
+          console.error("Registration failed:", error);
+          alert(error);
+        }
       })
       .catch((error) => {
-        console.error("Registration failed:", error);
+        console.error(error);
         alert(error);
       });
   }
 
   render() {
     return (
-      <div className="registration-page">
+      <div
+        className="registration-page"
+        style={{
+          backgroundColor: "#400b0a",
+          backgroundSize: `cover`,
+          width: "120%",
+          height: "800px",
+        }}
+      >
         <form
           onSubmit={this.handleSubmit}
           style={{
@@ -66,15 +116,13 @@ class registerpage extends React.Component {
         >
           <div>
             <h2>Create your account</h2>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="name">Username</label>
             <input
               className="form-input"
               type="text"
-              id="username"
-              value={this.state.username}
-              onChange={(event) =>
-                this.setState({ username: event.target.value })
-              }
+              id="name"
+              value={this.state.name}
+              onChange={(event) => this.setState({ name: event.target.value })}
             />
           </div>
           <div>
@@ -98,7 +146,7 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
-            <div class="pass-instruction">
+            <div className="pass-instruction">
               <span>&#63;</span>
             </div>
           </div>
@@ -106,7 +154,12 @@ class registerpage extends React.Component {
             Sign Up
           </button>
         </form>
-
+        {this.state.token && (
+          <div>
+            <p>Token: {this.state.token}</p>
+            <p>User Info: {JSON.stringify(this.state.userinfo)}</p>
+          </div>
+        )}
         <img
           style={{
             position: "absolute",
