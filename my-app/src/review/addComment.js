@@ -113,23 +113,32 @@ class addComment extends React.Component {
 
             <div style={{display: "flex"}}>
               <img class ="movieImage" src={require("../images/titanic.png")}></img>
-              <h2>Your Review</h2>
-              <table>
-                <tr>
-                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
-                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
-                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
-                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
-                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
-                </tr>
-              </table>
-              <script type="text/javascript">
-                
-              </script>
+              <div style={{marginTop: "-35px"}}>
+                <h2>Your Review</h2>
+                <div style={{display: "flex", marginTop:"-20px"}}>
+                  <h4>I would like to give</h4>
+                  <input
+                  className="score-input"
+                  type="score"
+                  id="score"
+                  value={this.state.score}
+                  onChange={(event) => this.setState({ score: event.target.value })}
+                  />
+                  <h4>marks!!</h4>
+                </div>
+              </div>
             </div>
-            
+            <div style={{marginLeft: "500px", marginTop: "-30px"}}>
+              <h5>Required characters: 200</h5>
+            </div>
+            <input
+              className="comment-input"
+              type="comment"
+              id="comment"
+              value={this.state.comment}
+              onChange={(event) => this.setState({ comment: event.target.value })}
+              />             
           </div>
-
         </div>
       );
     }

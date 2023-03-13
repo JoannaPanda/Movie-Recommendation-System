@@ -1,6 +1,8 @@
 import React from "react";
 import validator from "validator";
 import "../review/comment.css";
+import { useParams } from "react-router-dom";
+const { mid } = useParams();
 
 class listComment extends React.Component {
     constructor(props) {

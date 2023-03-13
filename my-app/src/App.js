@@ -19,7 +19,7 @@ function App() {
           <Route path="/register" element={<Registerpage />} />
           <Route path="/comment/list" element={<ListComment />} />
           <Route path="/comment/add" element={<AddComment />} />
-
+          <Route path="/review/:mid" element={<ListComment />} />
         </Routes>
       </div>
     </Router>
