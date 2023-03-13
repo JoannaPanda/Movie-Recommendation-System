@@ -1,5 +1,6 @@
 import React from "react";
 import validator from "validator";
+import "../review/comment.css";
 
 class addComment extends React.Component {
     constructor(props) {
@@ -82,16 +83,57 @@ class addComment extends React.Component {
     }
 
     render() {
-      const { comment } = this.state;
-  
       return (
-        <form onSubmit={this.handleSubmit}>
-          <textarea
-            value={comment}
-            onChange={(e) => this.setState({ comment: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <div class="container">
+          <div class="left-column">
+            <ul>
+              <li><a href="#">Detail</a></li>
+              <li><a href="#">Description</a></li>
+              <li><a href="#">Director</a></li>
+              <li><a href="#">Cast</a></li>
+              <li><a href="#">Review</a></li>
+              <li><a href="#">Recommandation</a></li>
+            </ul>
+          </div>
+
+          <div class="right-column">
+            <div style={{justifyContent: "space-between", display: "flex"}}>
+              <h4>titanic(1997)</h4>
+              <a href="http://google.com">
+                <img class ="buttonProfile" src={require("../images/profile.png")}></img>
+              </a>
+              <a href="http://google.com">
+                <img class ="buttonMessage" src={require("../images/message.png")}></img>
+              </a>
+              <a href="http://google.com">
+                <img class ="buttonMessage" src={require("../images/notice.png")}></img>
+              </a>
+            </div>
+            <h5>Romance/Drama</h5>
+
+            <div style={{display: "flex"}}>
+              <img class ="movieImage" src={require("../images/titanic.png")}></img>
+              <h2>Your Review</h2>
+              <table>
+                <tr>
+                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
+                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
+                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
+                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
+                  <td><img class ="emptyStarImage" src={require("../images/emptyStar.png")}></img></td>
+                </tr>
+              </table>
+              <script type="text/javascript">
+                
+              </script>
+            </div>
+            
+          </div>
+
+        </div>
       );
     }
 }
+
+
+export default addComment;
