@@ -12,6 +12,8 @@ import SearchPage from "./components/searchPage";
 import MovieDetail from "./components/movieDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
+import ListComment from "./review/listComment";
+import AddComment from "./review/addComment";
 
 function App() {
   return (
@@ -33,6 +35,9 @@ function App() {
             element={<MovieDetail mid=id />}
           /> */}
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
+          <Route path="/comment/list" element={<ListComment />} />
+          <Route path="/comment/add" element={<AddComment />} />
+          <Route path="/review/:mid" element={<ListComment />} />
         </Routes>
       </div>
     </Router>
