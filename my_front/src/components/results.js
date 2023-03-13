@@ -105,7 +105,7 @@ const MovieBox = (props) => {
           >
             <Link to={`/movieinfo/${movie.Mid}`}>
               <img
-                src={require("../images/titanic.jpg")}
+                src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
                 alt={movie.MovieName}
                 style={{ width: "100%", height: "70%", objectFit: "cover" }}
               />
