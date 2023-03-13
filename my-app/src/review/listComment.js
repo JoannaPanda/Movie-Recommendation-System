@@ -2,7 +2,6 @@ import React from "react";
 import validator from "validator";
 import "../review/comment.css";
 import { useParams } from "react-router-dom";
-const { mid } = useParams();
 
 class listComment extends React.Component {
     constructor(props) {
@@ -146,7 +145,7 @@ class listComment extends React.Component {
             <div style={{display: "flex"}}>
               <img class ="movieImage" src={require("../images/titanic.png")}></img>
               <h3>User Review</h3>
-              <a href="http://google.com">
+              <a href="http://localhost:3000/comment/add">
                 <img class ="buttonArrow" src={require("../images/arrow.png")}></img>
                 <button class="buttonWriteComment">Write a review here</button>
               </a>

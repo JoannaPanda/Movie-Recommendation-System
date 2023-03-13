@@ -1,6 +1,7 @@
 import React from "react";
 import validator from "validator";
-import "../review/listComment.css";
+import "../review/comment.css";
+import { useParams } from "react-router-dom";
 
 class listComment extends React.Component {
     constructor(props) {
@@ -29,15 +30,14 @@ class listComment extends React.Component {
         params.append("token", token)
 
         fetch("http://lbosau.exlb.org:9900/Comment/Movie", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: params.toString(),
+          method: "GET",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+          },
         })
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Show comments failed: " + response.status);
+            throw new Error("Show comments failed1: " + response.status);
           }
           return response.json();
         })
@@ -61,7 +61,7 @@ class listComment extends React.Component {
               this.setState({ commentinfo });
             } 
             catch (error) {
-              console.error("Show comments failed:", error);
+              console.error("Show comments failed2:", error);
               alert(error);
             }
         })
@@ -72,29 +72,40 @@ class listComment extends React.Component {
             commentinfo: [
               {
                 id: 1,
-                text: "This is a great movie!",
-                user: "user1"
+                text: "This is the best romance movie I have ever watched in my life time. My tears keeps on falling down from my eyes. If you have not see this one, you must add this one to your wish list.",
+                user: "Yanting",
+                score: "5"
               },
               {
                 id: 2,
-                text: "I really enjoyed the storyline.",
-                user: "user2"
+                text: "I have watched Titanic how many times I don't know. Everytime I watch it, I still cry, laugh, smile, and feel. The story flows with tension throughout the movie; two actors' acting and chemistry need applaud; Sinking ship is realistically filmed; 'My Heart Will Go On' is perfect fit for Jack and Roses' love story and is timeless as well. All the movie's factors are fully qualified.",
+                user: "Jin",
+                score: "3"
               },
               {
                 id: 3,
-                text: "The special effects were amazing!",
-                user: "user3"
+                text: "I am sorry, but I believe that this film was way over rated. It was too long , and really put myself to sleep. To really put it simple- the boat sank, get over it. :)",
+                user: "Zhiyue",
+                score: "4"
               },
               {
                 id: 4,
-                text: "I would definitely watch it again.",
-                user: "user4"
+                text: "This is the best romance movie I have ever watched in my life time. My tears keeps on falling down from my eyes. If you have not see this one, you must add this one to your wish list.",
+                user: "Yao",
+                score: "5"
               },
               {
                 id: 5,
-                text: "The acting was superb!",
-                user: "user5"
-              }
+                text: "I have watched Titanic how many times I don't know. Everytime I watch it, I still cry, laugh, smile, and feel. The story flows with tension throughout the movie; two actors' acting and chemistry need applaud; Sinking ship is realistically filmed; 'My Heart Will Go On' is perfect fit for Jack and Roses' love story and is timeless as well. All the movie's factors are fully qualified.",
+                user: "Yuemeng",
+                score: "3"
+              },
+              {
+                id: 6,
+                text: "I am sorry, but I believe that this film was way over rated. It was too long , and really put myself to sleep. To really put it simple- the boat sank, get over it. :)",
+                user: "Zhiyue",
+                score: "4"
+              },
             ]
           })
         });
@@ -104,25 +115,63 @@ class listComment extends React.Component {
       const { commentinfo } = this.state;
     
       return (
-        <div>
-          <div className="left-column" style={{ width: "20%" }}>
-            <img class="cinemaScopeSize" src="../images/iconBlack.png"></img>
-            <li><a href="#">Detail</a></li>
-            <h3><a href="#">Description</a></h3>
-            <h3><a href="#">Director</a></h3>
-            <h3><a href="#">Cast</a></h3>
-            <h3><a href="#">Review</a></h3>
-            <h3><a href="#">Recommandation</a></h3>
+        <div class="container">
+          <div class="left-column">
+            <ul>
+              <li><a href="#">Detail</a></li>
+              <li><a href="#">Description</a></li>
+              <li><a href="#">Director</a></li>
+              <li><a href="#">Cast</a></li>
+              <li><a href="#">Review</a></li>
+              <li><a href="#">Recommandation</a></li>
+            </ul>
           </div>
-          <div className="right-column" style={{ width: "75%" }}>
-            <canvas id="graphCanvas"></canvas>
-            <h3>User comments:</h3>
+
+          <div class="right-column">
+            <div style={{justifyContent: "space-between", display: "flex"}}>
+              <h4>titanic(1997)</h4>
+              <a href="http://google.com">
+                <img class ="buttonProfile" src={require("../images/profile.png")}></img>
+              </a>
+              <a href="http://google.com">
+                <img class ="buttonMessage" src={require("../images/message.png")}></img>
+              </a>
+              <a href="http://google.com">
+                <img class ="buttonMessage" src={require("../images/notice.png")}></img>
+              </a>
+            </div>
+            <h5>Romance/Drama</h5>
+
+            <div style={{display: "flex"}}>
+              <img class ="movieImage" src={require("../images/titanic.png")}></img>
+              <h3>User Review</h3>
+              <a href="http://localhost:3000/comment/add">
+                <img class ="buttonArrow" src={require("../images/arrow.png")}></img>
+                <button class="buttonWriteComment">Write a review here</button>
+              </a>
+            </div>
+
             <ul id="comments">
               {commentinfo && commentinfo.map((comment) => (
-                <li key={comment.id}>{comment.text}</li>
+                <li key={comment.id}>
+                  <div className="gray-box">
+                    <div className="userScore">
+                      <div style={{ display: "flex", margin: "10px 0", backgroundColor: "#f6f6f6"}}>
+                        <div class="userFont">{comment.user} gives {comment.score} marks!!</div>
+                        {Array.from({ length: comment.score }, (_, i) => (
+                          <img class="starImage" key={i} src={require("../images/star.png")}/>
+                        ))}
+                      </div>
+                    </div>
+                    <div class="white-box">
+                      <div class="commentFont">{comment.text}</div>
+                    </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>
+
         </div>
       );
     }
