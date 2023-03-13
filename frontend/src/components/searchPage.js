@@ -10,18 +10,6 @@ function SearchPage() {
     setSearch(event.target.value);
   };
 
-  // const getMovies = () => {
-  //   axios
-  //     .get(`http://lbosau.exlb.org:9900/Movie/Search?searchtext=${search}`)
-  //     .then((response) => {
-  //       console.log(response.data.movieinfo);
-  //       setResults(response.data.movieinfo);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   useEffect(() => {
     setResults([]);
     if (search !== "") {

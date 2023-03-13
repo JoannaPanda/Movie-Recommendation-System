@@ -8,17 +8,16 @@ function MovieDetail() {
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
-  // const [recommendation, setRecommendation] = useState([]);
+
   useEffect(() => {
     setMovie([]);
-    // setRecommendation([]);
+
     axios
       .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
         setMovie(response.data.movieinfo);
-        // setRecommendation(response.data.recommendation);
       })
       .catch((error) => {
         console.log(error);
@@ -26,11 +25,9 @@ function MovieDetail() {
       });
   }, [mid]);
   console.log(movie.Performers);
-  const cast = movie.Performers
-    ? movie.Performers.map((actor) => (
-        <li style={{ marginLeft: "10px" }}>{actor} </li>
-      ))
-    : null;
+  const cast = movie.Performers ? (
+    <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
+  ) : null;
   console.log(cast);
   return (
     <div
@@ -38,7 +35,7 @@ function MovieDetail() {
       style={{
         backgroundColor: "white",
         backgroundSize: `cover`,
-        width: "120%",
+        width: "150%",
         height: "auto",
       }}
     >
@@ -69,7 +66,10 @@ function MovieDetail() {
       </div>
       <div className="movie-description">
         <div className="movie-poster">
-          <img src={require("../images/titanic.jpg")} alt={movie.MovieName} />
+          <img
+            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
+            alt={movie.MovieName}
+          />
         </div>
         <div className="movie-summary" style={{ marginLeft: 20 }}>
           <h2 className="summary-heading">Summary</h2>
@@ -78,19 +78,23 @@ function MovieDetail() {
       </div>
       <div className="movie-cast">
         <h2 className="cast-heading">Director</h2>
-        <ul className="cast-list">{movie.Director}</ul>
+        <img
+          src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.Director}`}
+          alt={movie.Director}
+          style={{
+            width: "200px",
+            height: "240px",
+            objectFit: "cover",
+            borderRadius: "20px",
+          }}
+        />
+        <ul className="cast-list" style={{ fontSize: 20, fontWeight: "bold" }}>
+          {movie.Director}
+        </ul>
       </div>
       <div className="movie-cast">
         <h2 className="cast-heading">Cast</h2>
-        <ul className="cast-list">
-          {cast}
-          {/* {movie.Performers.map((actor) => (
-            <li className="cast-item">{actor} </li>
-            // <li key={actor.id} className="cast-item">
-            //   {actor.name} as {actor.character}
-            // </li>
-          ))} */}
-        </ul>
+        <ul className="cast-list">{cast}</ul>
       </div>
       {/* <Link to="/moviereview/1">
           
@@ -107,7 +111,7 @@ function MovieDetail() {
           ))}
         </ul>
       </div> */}
-      <div className="movie-cast">
+      <div className="movie-cast" style={{ margin: "auto" }}>
         <h2 className="cast-heading">Guess you like:</h2>
 
         <RecoMovies id={mid} />
@@ -117,6 +121,70 @@ function MovieDetail() {
 }
 
 export default MovieDetail;
+
+const MovieAttend = (props) => {
+  const actorNmae = props.name;
+  const title = props.movietitle;
+  return (
+    <div style={{ marginTop: "20px", color: "whitesmoke" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {actorNmae.map((actor) => (
+          <div
+            key={actor}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "10px",
+              width: "170px",
+              height: "220px auto",
+              backgroundColor: "gray",
+              borderRadius: "10px",
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={`http://lbosau.exlb.org:9900/image/${title}/${actor}`}
+              alt={title}
+              style={{ width: "100%", height: "70%", objectFit: "cover" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                height: "30%",
+                padding: "10px",
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                  marginBottom: "10px",
+                  color: "white",
+                }}
+              >
+                {actor}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const RecoMovies = (props) => {
   const [movies, setMovies] = useState([]);
@@ -163,8 +231,8 @@ const RecoMovies = (props) => {
               alignItems: "center",
               justifyContent: "center",
               margin: "10px",
-              width: "250px",
-              height: "400px",
+              width: "200px",
+              height: "350px auto",
               backgroundColor: "gray",
               borderRadius: "10px",
               boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
@@ -173,7 +241,7 @@ const RecoMovies = (props) => {
           >
             <Link to={`/movieinfo/${movie.Mid}`}>
               <img
-                src={require("../images/titanic.jpg")}
+                src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
                 alt={movie.MovieName}
                 style={{ width: "100%", height: "70%", objectFit: "cover" }}
               />
@@ -210,14 +278,6 @@ const RecoMovies = (props) => {
                     {movie.Score.toFixed(2)}
                   </div>
                   <span style={{ color: "yellow" }}>★</span>
-                </div>
-                <div style={{ fontWeight: "bold" }}>
-                  Released on{" "}
-                  {new Date(movie.PublishDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
                 </div>
               </div>
             </Link>
