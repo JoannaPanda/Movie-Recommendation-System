@@ -72,14 +72,20 @@ const SetPreferenceTag = () => {
 
   const handleNextButtonClick = () => {
     // when the user clicks Next, go to dashboard
-    console.log(selectedTags);
     const token = localStorage.getItem("token");
     const params = new URLSearchParams();
     params.append("token", token);
-    console.log(selectedTags);
-    params.append("tag", selectedTags);
+    console.log(token);
 
-    fetch("http://lbosau.exlb.org:9900//User/Recommend/set", {
+    const selectedPtags = selectedTags.map(
+      (id) => tagData.find((tag) => tag.id === id).name
+    );
+    const tagString = selectedPtags.join(", ");
+    console.log(tagString);
+
+    params.append("tag", tagString);
+
+    fetch("http://lbosau.exlb.org:9900/User/Recommend/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -87,21 +93,10 @@ const SetPreferenceTag = () => {
       body: params.toString(),
     })
       .then((response) => {
-        localStorage.setItem("userinfo", JSON.stringify(response.data));
+        // localStorage.setItem("userinfo", JSON.stringify(response.data));
         // navigate to the next page
         // redirect to preference tag setting
         window.location.href = "/dashboard";
-      })
-      .then((data) => {
-        console.log("Response data:", data);
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Preference successfully updated:", jsonData);
-          alert("successful");
-        } catch (error) {
-          console.error(error);
-          alert(error);
-        }
       })
       .catch((error) => {
         console.error(error);

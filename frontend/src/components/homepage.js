@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { Link } from "react-router-dom";
 const TopTenMovies = () => {
   const [movies, setMovies] = useState([]);
 
@@ -11,12 +11,13 @@ const TopTenMovies = () => {
       try {
         // intentionally disable API before database completes
         const res = await fetch(
-          "///http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&limit=10&desc=True"
+          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&limit=10&desc=True"
         );
         const data = await res.json();
         setMovies(data);
       } catch (error) {
         console.log("Error fetching movies:", error);
+        // manual list used for testing style
         setMovies([
           { MovieName: "The Shawshank Redemption", Score: 5 },
           { MovieName: "The Godfather", Score: 4.7 },
@@ -70,7 +71,11 @@ const TopTenMovies = () => {
               fontSize: "17px",
             }}
           >
-            <div style={{ marginRight: "10px" }}>{movie.MovieName}</div>
+            <Link to={`/movieinfo/${movie.Mid}`}>
+              <div style={{ marginRight: "10px", fontWeight: "bold" }}>
+                {movie.MovieName}
+              </div>
+            </Link>
             {[...Array(5)].map((_, i) => {
               const ratingValue = i + 1;
               return (
@@ -101,12 +106,13 @@ const NewMovies = () => {
       try {
         // intentionally disable API before database completes
         const res = await fetch(
-          "///http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
+          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
         );
         const data = await res.json();
         setMovies(data);
       } catch (error) {
         console.log("Error fetching movies:", error);
+        // manual list used for testing style
         setMovies([
           {
             MovieName: "The Shawshank Redemption",
@@ -192,10 +198,12 @@ const NewMovies = () => {
             }}
           >
             <img
-              src={require("../images/default-movie.png")}
+              // src={require("../images/default-movie.png")}
+              src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
               alt={movie.MovieName}
               style={{ width: "100%", height: "70%", objectFit: "cover" }}
             />
+
             <div
               style={{
                 display: "flex",
@@ -207,16 +215,18 @@ const NewMovies = () => {
                 padding: "10px",
               }}
             >
-              <div
-                style={{
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                  marginBottom: "10px",
-                  color: "white",
-                }}
-              >
-                {movie.MovieName}
-              </div>
+              <Link to={`/movieinfo/${movie.Mid}`}>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    marginBottom: "10px",
+                    color: "white",
+                  }}
+                >
+                  {movie.MovieName}
+                </div>
+              </Link>
               <div
                 style={{
                   display: "flex",

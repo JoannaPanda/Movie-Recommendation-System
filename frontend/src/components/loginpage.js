@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Form.css";
 import { Link } from "react-router-dom";
+const JSONbig = require("json-bigint");
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -31,24 +32,41 @@ class LoginPage extends React.Component {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Response not ok, please try again.");
+          throw new Error("Login failed: " + response.status);
         }
-        return response.json();
+        console.log("Response status code:", response.status);
+        return response.text();
       })
       .then((data) => {
-        console.log("Login successful:", data);
-        const { token, userinfo } = data;
+        alert("successful");
+        if (data.length === 0) {
+          throw new Error("Empty response data");
+        }
+        try {
+          const jsonData = JSONbig.parse(data);
 
-        // store token and user info in local storage
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(userinfo));
+          console.log("Login successful:", jsonData);
+          alert("successful");
+          const { token, userinfo } = jsonData;
 
-        // redirect to dashboard
-        window.location.href = "/dashboard";
+          // store token and user info in local storage
+          localStorage.setItem("token", String(token));
+          localStorage.setItem("user", JSON.stringify(userinfo));
+          console.log(String(token));
+
+          // update state with token and user info
+          this.setState({ token: String(token), userinfo });
+
+          // redirect to user dashboard
+          window.location.href = "/dashboard";
+        } catch (error) {
+          console.error("Registration failed:", error);
+          alert(error);
+        }
       })
       .catch((error) => {
-        console.error("Login failed:", error);
-        alert("Login failed.");
+        console.error(error);
+        alert(error);
       });
   }
 

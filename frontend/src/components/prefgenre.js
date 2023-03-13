@@ -29,10 +29,17 @@ const SetPreferenceGenre = () => {
     const token = localStorage.getItem("token");
     const params = new URLSearchParams();
     params.append("token", token);
-    console.log(genrePreferences);
-    params.append("tag", genrePreferences);
+    console.log(token);
 
-    fetch("http://lbosau.exlb.org:9900//User/Recommend/set", {
+    const selectedGenres = genrePreferences.map(
+      (id) => genreData.find((genre) => genre.id === id).name
+    );
+    const genreString = selectedGenres.join(", ");
+    console.log(genreString);
+
+    params.append("tag", genreString);
+
+    fetch("http://lbosau.exlb.org:9900/User/Recommend/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -40,21 +47,10 @@ const SetPreferenceGenre = () => {
       body: params.toString(),
     })
       .then((response) => {
-        localStorage.setItem("userinfo", JSON.stringify(response.data));
+        // localStorage.setItem("userinfo", JSON.stringify(response.data));
         // navigate to the next page
         // redirect to preference tag setting
         window.location.href = "/setpreftag";
-      })
-      .then((data) => {
-        console.log("Response data:", data);
-        try {
-          const jsonData = JSON.parse(data);
-          console.log("Preference successfully updated:", jsonData);
-          alert("successful");
-        } catch (error) {
-          console.error(error);
-          alert(error);
-        }
       })
       .catch((error) => {
         console.error(error);

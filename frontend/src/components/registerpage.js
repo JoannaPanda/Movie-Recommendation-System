@@ -1,6 +1,7 @@
 import React from "react";
 import validator from "validator";
 import "../styles/Form.css";
+const JSONbig = require("json-bigint");
 
 class registerpage extends React.Component {
   constructor(props) {
@@ -69,17 +70,19 @@ class registerpage extends React.Component {
           throw new Error("Empty response data");
         }
         try {
-          const jsonData = JSON.parse(data);
+          const jsonData = JSONbig.parse(data);
+
           console.log("Registration successful:", jsonData);
           alert("successful");
           const { token, userinfo } = jsonData;
 
           // store token and user info in local storage
-          localStorage.setItem("token", token);
+          localStorage.setItem("token", String(token));
           localStorage.setItem("user", JSON.stringify(userinfo));
+          console.log(String(token));
 
           // update state with token and user info
-          this.setState({ token, userinfo });
+          this.setState({ token: String(token), userinfo });
 
           // redirect to preference setting
           window.location.href = "/setprefgenre";
