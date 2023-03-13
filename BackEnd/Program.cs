@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Routing.Constraints;
+using Org.BouncyCastle.Crypto.Agreement.Kdf;
 using UNSoftWare.Map;
 
 namespace UNSoftWare
@@ -56,6 +57,19 @@ namespace UNSoftWare
             app.MapGet("/Comment/Movie", Comment.Movie);
             app.MapGet("/Movie/Comment", Comment.Movie);
             app.MapPost("/Comment/remove", Comment.remove);
+
+            app.MapGet("/Image/{MoveName}/{ImageName}", async (HttpContext context, string MoveName, string ImageName) =>
+            {
+                var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", MoveName, ImageName + ".jpg");
+                if (File.Exists(imgpath))
+                {
+                    await context.Response.SendFileAsync(imgpath);
+                }
+                else
+                {
+                    await context.Response.SendFileAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", $"Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png"));
+                }
+            });
 
             //app.UseEndpoints(endpoints =>
             //{
