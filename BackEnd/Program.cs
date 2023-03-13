@@ -67,7 +67,7 @@ namespace UNSoftWare
                 }
                 else
                 {
-                    await context.Response.SendFileAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", $"Default{imgpath.GetHashCode() % 3 + 1}.png"));
+                    await context.Response.SendFileAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", $"Default{(imgpath.GetHashCode() % 3 + 1)}.png"));
                 }
             });
 
