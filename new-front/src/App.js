@@ -36,7 +36,7 @@ function App() {
           /> */}
           <Route path="/comment/list/:mid" element={<ListComment />} />
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
-          <Route path="/comment/add" element={<AddComment />} />
+          <Route path="/comment/add/:mid" element={<AddComment />} />
           {/*<Route path="/review/:mid" element={<ListComment />} />*/}
         </Routes>
       </div>

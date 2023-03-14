@@ -83,7 +83,7 @@ function ListComment () {
                 <div style={{ display: "flex" }}>
                     <div>{movieImage}</div>
                     <h3>User Review</h3>
-                    <a href="http://localhost:3000/comment/add">
+                    <a href={`http://localhost:3000/comment/add/${mid}`}>
                         <img
                         class="buttonArrow"
                         src={require("../images/arrow.png")}
