@@ -34,10 +34,10 @@ function App() {
             path="/movieinfo/:id"
             element={<MovieDetail mid=id />}
           /> */}
+          <Route path="/comment/list/:mid" element={<ListComment />} />
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
-          <Route path="/comment/list" element={<ListComment />} />
           <Route path="/comment/add" element={<AddComment />} />
-          <Route path="/review/:mid" element={<ListComment />} />
+          {/*<Route path="/review/:mid" element={<ListComment />} />*/}
         </Routes>
       </div>
     </Router>

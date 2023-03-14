@@ -5,7 +5,7 @@ import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
 
 function MovieDetail() {
-  const { mid } = useParams();
+  const { mid, token} = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
 
@@ -29,6 +29,7 @@ function MovieDetail() {
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
   console.log(cast);
+
   return (
     <div
       className="movie-detail-page"

@@ -113,14 +113,16 @@ li a:hover {
   margin-left: 120px;
 }
 .movieImage {
-  width: 200px;
-  height: 100px;
+  width: 100px;
+  height: 150px;   
   margin-bottom: 20px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 
 .starImage {
-  width: 45px;
-  height: 30px;
+  width: 30px;
+  height: 20px;
   background-color: #f6f6f6;
 }
 

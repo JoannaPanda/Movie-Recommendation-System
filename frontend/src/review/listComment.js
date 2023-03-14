@@ -170,7 +170,7 @@ class listComment extends React.Component {
               src={require("../images/titanic.png")}
             ></img>
             <h3>User Review</h3>
-            <a href="http://google.com">
+            <a href="http://localhost:3000/comment/add">
               <img
                 class="buttonArrow"
                 src={require("../images/arrow.png")}
