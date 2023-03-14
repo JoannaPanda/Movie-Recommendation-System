@@ -63,7 +63,7 @@ function MovieDetail() {
           </p>
         </div>
         <div onClick={handleClick()}>
-          <Link to={`/review/${movie.Mid}`}>
+          <Link to={`/comment/list/${movie.Mid}`}>
             <div
               className="movie-rating"
               style={{ marginLeft: 300, width: 30, height: 30 }}
@@ -79,6 +79,7 @@ function MovieDetail() {
           </Link>
         </div>
       </div>
+
       <div className="movie-description">
         <div className="movie-poster">
           <img
@@ -91,6 +92,23 @@ function MovieDetail() {
           <p className="summary-text">{movie.Info}</p>
         </div>
       </div>
+
+      <Link to={`/comment/list/${movie.Mid}`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "black",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE COMMENTS →
+        </button>
+      </Link>
       <div className="movie-cast">
         <h2 className="cast-heading">Director</h2>
         <img
@@ -111,21 +129,7 @@ function MovieDetail() {
         <h2 className="cast-heading">Cast</h2>
         <ul className="cast-list">{cast}</ul>
       </div>
-      {/* <Link to="/moviereview/1">
-          
-      </Link> */}
-      {/* <div className="movie-reviews">
-        <h2 className="reviews-heading">Reviews</h2>
-        <ul className="reviews-list">
-          {movie.reviews.map((review) => (
-            <li key={review.id} className="review-item">
-              <h3 className="review-title">{review.title}</h3>
-              <p className="review-text">{review.text}</p>
-              <p className="review-author">By {review.author}</p>
-            </li>
-          ))}
-        </ul>
-      </div> */}
+
       <div className="movie-cast" style={{ margin: "auto" }}>
         <h2 className="cast-heading">Guess you like:</h2>
 

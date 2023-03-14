@@ -37,15 +37,25 @@ function AddComment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://lbosau.exlb.org:9900/Comment/add", {
-        Mid: mid,
-        token: token,
-        score: score,
-        comment: comment,
-      })
-      .then((response) => {
-        console.log(response);
+
+    const params = new URLSearchParams();
+    console.log("heretoken", token);
+    params.append("Mid", mid);
+    params.append("token", token);
+    params.append("score", score);
+    params.append("comment", comment);
+
+    fetch("http://lbosau.exlb.org:9900/Comment/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        alert("success!");
       })
       .catch((error) => {
         console.log(error);
