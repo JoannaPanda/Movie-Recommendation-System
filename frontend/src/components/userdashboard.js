@@ -11,6 +11,23 @@ function Dashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchUserinfo = async () => {
+      try {
+        const response = await fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+        );
+        const data = await response.json();
+        setUserinfo(data);
+      } catch (error) {
+        console.error("Error fetching user info: ", error);
+      }
+    };
+    if (userinfo) {
+      fetchUserinfo();
+    }
+  }, [userinfo]);
+
   const getUsername = () => {
     if (userinfo && userinfo.UserName) {
       return userinfo.UserName;
@@ -18,7 +35,17 @@ function Dashboard() {
       return "User";
     }
   };
-  console.log(userinfo);
+
+  const getUid = () => {
+    if (userinfo && userinfo.Uid) {
+      return userinfo.Uid;
+    } else {
+      return "User";
+    }
+  };
+
+  console.log("currinfo", userinfo);
+  console.log("currid", userinfo && userinfo.Uid);
 
   return (
     <div
