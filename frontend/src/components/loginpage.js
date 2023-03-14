@@ -1,13 +1,13 @@
 import React from "react";
 import "../styles/Form.css";
 import { Link } from "react-router-dom";
+const JSONbig = require("json-bigint");
 
-class loginpage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      email: "",
+      idoremail: "",
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,36 +15,58 @@ class loginpage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { username, password } = this.state;
-    if (username === "") {
+    const { idoremail, password } = this.state;
+    if (idoremail === "") {
       alert("invalid username.");
+      return;
     }
+
+    const formData = new URLSearchParams();
+    formData.append("idoremail", idoremail);
+    formData.append("password", password);
 
     fetch("http://lbosau.exlb.org:9900/User/Login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString(),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Response not ok, please try again.");
+          throw new Error("Login failed: " + response.status);
         }
-        return response.json();
+        console.log("Response status code:", response.status);
+        return response.text();
       })
       .then((data) => {
-        console.log("Login successful:", data);
-        const { token, user } = data;
+        alert("successful");
+        if (data.length === 0) {
+          throw new Error("Empty response data");
+        }
+        try {
+          const jsonData = JSONbig.parse(data);
 
-        // store token and user info in local storage
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+          console.log("Login successful:", jsonData);
+          alert("successful");
+          const { token, userinfo } = jsonData;
 
-        // redirect to dashboard
-        window.location.href = "/dashboard";
+          // store token and user info in local storage
+          localStorage.setItem("token", String(token));
+          localStorage.setItem("user", JSON.stringify(userinfo));
+          console.log(String(token));
+
+          // update state with token and user info
+          this.setState({ token: String(token), userinfo });
+
+          // redirect to user dashboard
+          window.location.href = "/dashboard";
+        } catch (error) {
+          console.error("Registration failed:", error);
+          alert(error);
+        }
       })
       .catch((error) => {
-        console.error("Login failed:", error);
-        alert("Login failed.");
+        console.error(error);
+        alert(error);
       });
   }
 
@@ -62,14 +84,14 @@ class loginpage extends React.Component {
         >
           <div>
             <h2>Hello Again!</h2>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="idoremail">Username</label>
             <input
               className="form-input"
               type="text"
-              id="username"
-              value={this.state.username}
+              id="idoremail"
+              value={this.state.idoremail}
               onChange={(event) =>
-                this.setState({ username: event.target.value })
+                this.setState({ idoremail: event.target.value })
               }
             />
           </div>
@@ -95,7 +117,7 @@ class loginpage extends React.Component {
         {this.state.token && (
           <div>
             <p>Token: {this.state.token}</p>
-            <p>User Info: {JSON.stringify(this.state.userInfo)}</p>
+            <p>User Info: {JSON.stringify(this.state.userinfo)}</p>
           </div>
         )}
         <img
@@ -115,4 +137,4 @@ class loginpage extends React.Component {
   }
 }
 
-export default loginpage;
+export default LoginPage;
