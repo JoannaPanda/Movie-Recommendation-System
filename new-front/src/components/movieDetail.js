@@ -29,6 +29,9 @@ function MovieDetail() {
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
   console.log(cast);
+  const handleClick = () => {
+    console.log("Clickable area clicked!");
+  };
   return (
     <div
       className="movie-detail-page"
@@ -52,16 +55,21 @@ function MovieDetail() {
             })}
           </p>
         </div>
-        <div
-          className="movie-rating"
-          style={{ marginLeft: 300, width: 30, height: 30 }}
-        >
-          {Number(movie.Score).toFixed(2)}/5
-          <img
-            src={require("../images/star.png")}
-            alt="star"
-            style={{ marginLeft: 10, width: 30, height: 30 }}
-          />
+        <div onClick={handleClick()}>
+          <Link to={`/review/${movie.Mid}`}>
+            <div
+              className="movie-rating"
+              style={{ marginLeft: 300, width: 30, height: 30 }}
+              onClick={handleClick()}
+            >
+              {Number(movie.Score).toFixed(2)}/5
+              <img
+                src={require("../images/star.png")}
+                alt="star"
+                style={{ marginLeft: 10, width: 30, height: 30 }}
+              />
+            </div>
+          </Link>
         </div>
       </div>
       <div className="movie-description">
