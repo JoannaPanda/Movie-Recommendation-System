@@ -29,6 +29,8 @@ function Dashboard() {
         maxWidth: "50%",
         alignItems: "center",
         textAlign: "center",
+        textShadow: "inherit",
+        textEmphasisColor: "Highlight",
       }}
     >
       <h1>{getUsername()}'s Dashboard</h1>
@@ -36,7 +38,7 @@ function Dashboard() {
         <div>
           <p>Name: {userinfo.UserName}</p>
           <p>Email: {userinfo.Email}</p>
-          <p>Preference: {Object.keys(userinfo.PreferenceModels).join(" ")}</p>
+          <p>Preference: {Object.keys(userinfo.PreferenceModels).join(", ")}</p>
           <p>Click the button below to change Preference.</p>
           <Link to="/setprefgenre" className="login-link">
             <button

@@ -24,7 +24,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          {/* <Route exact path="/" component={index} /> */}
+          <Route exact path="/" element={<Homepage />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
