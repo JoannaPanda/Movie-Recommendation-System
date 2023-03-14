@@ -8,12 +8,16 @@ function MovieDetail() {
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
+  const { token } = localStorage.getItem("token");
 
   useEffect(() => {
     setMovie([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .get(
+        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}
+      `
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
@@ -188,12 +192,17 @@ const MovieAttend = (props) => {
 
 const RecoMovies = (props) => {
   const [movies, setMovies] = useState([]);
+  const { token } = localStorage.getItem("token");
+
   const recoid = props.id;
   useEffect(() => {
     setMovies([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}`)
+      .get(
+        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}
+      `
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.recommendation);

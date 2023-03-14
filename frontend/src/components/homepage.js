@@ -343,13 +343,15 @@ function Homepage() {
 
       <Slider {...settings}>
         {movies.map((movie) => (
-          <div key={movie.MovieName}>
-            <img
-              src={movie.imageUrl}
-              alt={movie.MovieName}
-              style={{ width: "100%", height: "600px" }}
-            />
-          </div>
+          <Link to={`/movieinfo/${movie.Mid}`}>
+            <div key={movie.MovieName}>
+              <img
+                src={movie.imageUrl}
+                alt={movie.MovieName}
+                style={{ width: "100%", height: "600px" }}
+              />
+            </div>
+          </Link>
         ))}
       </Slider>
 
