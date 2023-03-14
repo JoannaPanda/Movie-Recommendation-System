@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import Logo from "../images/icon.png";
 // import { Link } from "react-router-dom";
 import "../styles/Header.css";
@@ -11,18 +12,32 @@ import "../styles/Header.css";
 // import MenuIcon from "@mui/icons-material/Menu";
 
 function Header() {
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
   return (
     <header>
       <img src={Logo} alt="Logo" className="logo" />
       <ul className="navigation-links">
         <li>
+          {token === null ? (
+            <a href="login">Log In</a>
+          ) : (
+            <a href="logout">Log Out</a>
+          )}
+        </li>
+        <li>
           <a href="Home">Home</a>
         </li>
         <li>
-          <a href="About">About</a>
+          <a href="search">Search</a>
         </li>
         <li>
-          <a href="Content">Contact</a>
+          <a href="contact">About&Contact</a>
         </li>
       </ul>
     </header>

@@ -8,12 +8,18 @@ function MovieDetail() {
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
-
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
   useEffect(() => {
     setMovie([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
@@ -29,6 +35,9 @@ function MovieDetail() {
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
   console.log(cast);
+  const handleClick = () => {
+    console.log("Clickable area clicked!");
+  };
   return (
     <div
       className="movie-detail-page"
@@ -52,16 +61,21 @@ function MovieDetail() {
             })}
           </p>
         </div>
-        <div
-          className="movie-rating"
-          style={{ marginLeft: 300, width: 30, height: 30 }}
-        >
-          {Number(movie.Score).toFixed(2)}/5
-          <img
-            src={require("../images/star.png")}
-            alt="star"
-            style={{ marginLeft: 10, width: 30, height: 30 }}
-          />
+        <div onClick={handleClick()}>
+          <Link to={`/review/${movie.Mid}`}>
+            <div
+              className="movie-rating"
+              style={{ marginLeft: 300, width: 30, height: 30 }}
+              onClick={handleClick()}
+            >
+              {Number(movie.Score).toFixed(2)}/5
+              <img
+                src={require("../images/star.png")}
+                alt="star"
+                style={{ marginLeft: 10, width: 30, height: 30 }}
+              />
+            </div>
+          </Link>
         </div>
       </div>
       <div className="movie-description">
@@ -189,11 +203,21 @@ const MovieAttend = (props) => {
 const RecoMovies = (props) => {
   const [movies, setMovies] = useState([]);
   const recoid = props.id;
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
   useEffect(() => {
     setMovies([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}`)
+      .get(
+        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}`
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.recommendation);

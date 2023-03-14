@@ -96,7 +96,7 @@ const MovieBox = (props) => {
               justifyContent: "center",
               margin: "10px",
               width: "250px",
-              height: "400px",
+              height: "400px auto",
               backgroundColor: "gray",
               borderRadius: "10px",
               boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
