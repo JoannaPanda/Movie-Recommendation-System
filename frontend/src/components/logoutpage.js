@@ -23,8 +23,8 @@ class Logout extends Component {
         localStorage.removeItem("token");
         localStorage.removeItem("userinfo");
 
-        // redirect to login page
-        this.props.history.push("/login");
+        // redirect to welcome page
+        window.location.href = "/welcome";
       })
       .catch((error) => console.log(error));
   }
