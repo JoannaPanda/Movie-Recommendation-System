@@ -14,3 +14,18 @@ Finalise the story board with my groupmates, and moving the user stories we wort
 
 5/03/2023
 Complete the Sprints section and the novel functionalities section for the proposal. The novel functionality section includes 9 sections of Reward point system:,Trailer on the front page:,preference system:,banned review writer(s):,More precise recommender system:,Goal setting:,Dark/light mode and Advanced Review metrics. Also finalise the proposal alonge with Yuemeng Yin. 
+
+Week3
+This week I starting working on the coding part that I was assigned to. My task for this program was to generate data that will be later used for our movie review website. The datas that needs to be generate includes three parts. The first part is the movie information that includes 'movie id', 'name', 'director', 'actor', 'release date', 'cover link', 'details', 'type' and 'tag'. The second part of informations that needs to be generate is reviews. As we are a movie review website, each movie needs to have large amount of comments so that users could use these informations to choose the movies that they might watch later. The informations that related to the movie generation includes 'Comment ID', 'User ID', 'Movie ID', 'Star Rating (0-5)', 'Comment Text' ‘like' 'dislike'. The third parts of informations that needs to be generated refers to the users. The users need to have user name and user id. 
+The group leader give me two choices to get this job done. The first one is to manually copy all the informations down from the existing movie review website, and the other one was to write a A web crawler capable of automatically scraping data from movie websites. The first method seems much easier but requires larger amount of time as we need a minimal of 30 movies and each movie needs 100-300 comments. The second method obviously takes less time and would allow our team to generate as much informations as we want. However, as there wasn't a course that taught us to write a crawler, this will be a very challenging task. 
+However, consider the nature of this project is computer science, and having a crawler would make our website much better. I decided to go with the second option. 
+
+
+week3 Sat+Sun
+Today I tried to write the crawler code.
+
+week4 Wed
+Today I completed the first version of my crawler. This crawer is written in python and is able to generate the movie informations after putting the movie link. 
+
+week4 Sat+SUn
+Today I was required by the frontend group to have a new function which could download all the movie poster and actor's pictures. So that they could later post the pictures on the movie information page. I worked on the weekends and completed this function. 
