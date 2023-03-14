@@ -15,6 +15,7 @@ function MovieDetail() {
       setToken(storedToken);
     }
   }, []);
+  console.log("token:", token);
   useEffect(() => {
     setMovie([]);
 
