@@ -14,6 +14,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
 import ListComment from "./components/listComment";
 import AddComment from "./components/addComment";
+import ContactPage from "./components/contactPage";
+import Logout from "./components/logoutpage";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
           <Route path="/comment/list" element={<ListComment />} />
           <Route path="/comment/add" element={<AddComment />} />
           <Route path="/review/:mid" element={<ListComment />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </div>
     </Router>

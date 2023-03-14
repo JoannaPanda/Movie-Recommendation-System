@@ -8,12 +8,18 @@ function MovieDetail() {
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
-
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
   useEffect(() => {
     setMovie([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
@@ -197,11 +203,21 @@ const MovieAttend = (props) => {
 const RecoMovies = (props) => {
   const [movies, setMovies] = useState([]);
   const recoid = props.id;
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
   useEffect(() => {
     setMovies([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}`)
+      .get(
+        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}`
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.recommendation);

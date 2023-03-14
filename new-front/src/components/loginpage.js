@@ -39,6 +39,7 @@ class LoginPage extends React.Component {
       })
       .then((data) => {
         alert("successful");
+        console.log("token is :", data);
         if (data.length === 0) {
           throw new Error("Empty response data");
         }
