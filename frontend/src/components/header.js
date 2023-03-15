@@ -28,7 +28,11 @@ function Header() {
       <ul className="navigation-links">
         <li>
           {token === null ? (
-            <a href=" ">Log In</a>
+            <div onClick={handleClick}>
+              <Link to="/login">
+                <div>Log In</div>
+              </Link>
+            </div>
           ) : (
             <div onClick={handleClick}>
               <Link to="/logout">
