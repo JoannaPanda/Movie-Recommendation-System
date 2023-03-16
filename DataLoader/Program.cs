@@ -31,6 +31,13 @@ namespace DataLoader
                 case "3":
                     LoadUser(data);
                     break;
+                case "4":
+                    for(int i = 62; i < 95;i++)
+                    {
+                        FSQL.Update<MV_Moive>().Where(x => x.Mid == i).Set(y => y.Score,
+                            MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == i).ToList())).ExecuteAffrows();
+                    }
+                    break;
             }
 
             Console.WriteLine("Bye, Data!");
