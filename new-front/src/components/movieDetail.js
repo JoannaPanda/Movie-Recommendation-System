@@ -5,15 +5,22 @@ import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
 
 function MovieDetail() {
-  const { mid, token} = useParams();
+  const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
-
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+  console.log("token:", token);
   useEffect(() => {
     setMovie([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
@@ -29,7 +36,9 @@ function MovieDetail() {
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
   console.log(cast);
-
+  const handleClick = () => {
+    console.log("Clickable area clicked!");
+  };
   return (
     <div
       className="movie-detail-page"
@@ -53,18 +62,24 @@ function MovieDetail() {
             })}
           </p>
         </div>
-        <div
-          className="movie-rating"
-          style={{ marginLeft: 300, width: 30, height: 30 }}
-        >
-          {Number(movie.Score).toFixed(2)}/5
-          <img
-            src={require("../images/star.png")}
-            alt="star"
-            style={{ marginLeft: 10, width: 30, height: 30 }}
-          />
+        <div onClick={handleClick()}>
+          <Link to={`/comment/list/${movie.Mid}`}>
+            <div
+              className="movie-rating"
+              style={{ marginLeft: 300, width: 30, height: 30 }}
+              onClick={handleClick()}
+            >
+              {Number(movie.Score).toFixed(2)}/5
+              <img
+                src={require("../images/star.png")}
+                alt="star"
+                style={{ marginLeft: 10, width: 30, height: 30 }}
+              />
+            </div>
+          </Link>
         </div>
       </div>
+
       <div className="movie-description">
         <div className="movie-poster">
           <img
@@ -77,6 +92,23 @@ function MovieDetail() {
           <p className="summary-text">{movie.Info}</p>
         </div>
       </div>
+
+      <Link to={`/comment/list/${movie.Mid}`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "black",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE COMMENTS →
+        </button>
+      </Link>
       <div className="movie-cast">
         <h2 className="cast-heading">Director</h2>
         <img
@@ -97,21 +129,7 @@ function MovieDetail() {
         <h2 className="cast-heading">Cast</h2>
         <ul className="cast-list">{cast}</ul>
       </div>
-      {/* <Link to="/moviereview/1">
-          
-      </Link> */}
-      {/* <div className="movie-reviews">
-        <h2 className="reviews-heading">Reviews</h2>
-        <ul className="reviews-list">
-          {movie.reviews.map((review) => (
-            <li key={review.id} className="review-item">
-              <h3 className="review-title">{review.title}</h3>
-              <p className="review-text">{review.text}</p>
-              <p className="review-author">By {review.author}</p>
-            </li>
-          ))}
-        </ul>
-      </div> */}
+
       <div className="movie-cast" style={{ margin: "auto" }}>
         <h2 className="cast-heading">Guess you like:</h2>
 
@@ -190,11 +208,21 @@ const MovieAttend = (props) => {
 const RecoMovies = (props) => {
   const [movies, setMovies] = useState([]);
   const recoid = props.id;
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
   useEffect(() => {
     setMovies([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}`)
+      .get(
+        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}`
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.recommendation);

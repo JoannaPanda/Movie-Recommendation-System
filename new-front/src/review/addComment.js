@@ -4,26 +4,63 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function AddComment () {
-  const { mid, token } = useParams();
+function AddComment() {
+  const { mid } = useParams();
   console.log("mid:", mid);
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+  console.log("token:", token);
   const [movie, setMovie] = useState([]);
+  const [score, setScore] = useState("");
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
-      setMovie([]);
+    setMovie([]);
 
-      axios
-        .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
-        .then((response) => {
-            console.log(response);
-            console.log(response.data.movieinfo);
-            setMovie(response.data.movieinfo);
-        })
-        .catch((error) => {
-            console.log(error);
-            window.location.href = "/404";
-        });
+    axios
+      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .then((response) => {
+        console.log(response);
+        console.log(response.data.movieinfo);
+        setMovie(response.data.movieinfo);
+      })
+      .catch((error) => {
+        console.log(error);
+        window.location.href = "/404";
+      });
   }, [mid]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams();
+    console.log("heretoken", token);
+    params.append("Mid", mid);
+    params.append("token", token);
+    params.append("score", score);
+    params.append("comment", comment);
+
+    fetch("http://lbosau.exlb.org:9900/Comment/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        alert("success!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div class="container">
@@ -85,12 +122,10 @@ function AddComment () {
               <h4>I would like to give</h4>
               <input
                 className="score-input"
-                type="score"
+                type="number"
                 id="score"
-                // value={this.state.score}
-                // onChange={(event) =>
-                //   this.setState({ score: event.target.value })
-                // }
+                value={score}
+                onChange={(event) => setScore(event.target.value)}
               />
               <h4>marks!!</h4>
             </div>
@@ -103,22 +138,15 @@ function AddComment () {
           className="comment-input"
           type="comment"
           id="comment"
-          // value={this.state.comment}
-          // onChange={(event) => this.setState({ comment: event.target.value })}
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
         />
-        <button
-          className="submit-button"
-          type="submit"
-        >
+        <button className="submit-button" type="submit" onClick={handleSubmit}>
           Submit
         </button>
-
       </div>
     </div>
   );
 }
 
-
 export default AddComment;
-
-
