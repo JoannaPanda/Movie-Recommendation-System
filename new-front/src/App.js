@@ -12,17 +12,20 @@ import SearchPage from "./components/searchPage";
 import MovieDetail from "./components/movieDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
-import ListComment from "./review/listComment";
+//import ListComment from "./review/listComment";
+import ListComment from "./newReview/review";
 import AddComment from "./review/addComment";
 import ContactPage from "./components/contactPage";
 import Logout from "./components/logoutpage";
 import Dashboard from "./components/userdashboard";
 
+
+
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
+      {/* <div className="App">
+        <Header /> */}
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route path="/home" element={<Homepage />} />
@@ -38,14 +41,14 @@ function App() {
             element={<MovieDetail mid=id />}
           /> */}
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
-          <Route path="/comment/list/:mid" element={<ListComment />} />
-          <Route path="/comment/add/:mid" element={<AddComment />} />
           {/* <Route path="/review/:mid" element={<ListComment />} /> */}
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/comment/list/:mid" element={<ListComment />} />
+          <Route path="/comment/add/:mid" element={<AddComment />} />
         </Routes>
-      </div>
+      {/* </div> */}
     </Router>
   );
 }

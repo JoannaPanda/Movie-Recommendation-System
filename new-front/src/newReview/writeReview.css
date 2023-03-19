@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'Trip Sans Regular';
+    src: url('TripSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Trip Sans Regular', sans-serif;
+}
+
+.inline-element {
+    display:flex;
+}
+
+/* container */
+.left-column {
+    width: 42%;
+    border-right: 1px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1);
+    padding-left: 180px;
+}
+
+.score-display {
+    position: relative;
+    display: inline-block;
+    background-color: #4caf50;
+    padding: 8px 20px;
+    color: white;
+    font-size: 18px;
+    border-radius: 4px;
+    margin-left: 12px;
+    margin-top: -5px;
+}
+
+.right-column {
+    width: 45%;
+}
+
+.rating-container {
+    margin-top: -10px;
+    cursor: pointer;
+}
+
+/* poster */
+.movie-poster {
+    margin-top: 30px;
+    width: 120px;
+    height: 150px;
+}
+
+.circle-poster {
+    width: 25px;
+    height: 23px;
+}
+/* fonts */
+
+.title {
+    margin-top: 45px;
+    margin-left: 40px;
+}
+
+.director {
+    font-weight: normal;
+    margin-left: 40px;
+    margin-top: -15px;
+}
+
+.adv {
+    letter-spacing: -0.2px;
+    color: #4a4a4a;
+    margin-top: 30px;
+    font-weight: 500;
+}
+
+.adv2 {
+    margin-top: -20px;
+    color: #4a4a4a;
+    letter-spacing: -0.2px;
+}
+
+/* line */
+
+.line {
+    /* borderColor: '#e0e0e0';
+    borderWidth: '1px';
+    width: '95%';
+    marginTop: '10px',
+    marginBottom: '10px', */
+    border-color: #d2d2d2;
+    border-width: 1px;
+    width: 95%;
+    margin-top: -15px;
+    margin-bottom: 30px;
+    margin-left: 0px;
+    opacity: 0.5;
+}
