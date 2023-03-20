@@ -15,12 +15,13 @@ namespace UNSoftWare.Map
             var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", MoveName, ImageName + ".jpg");
             if (File.Exists(imgpath))
             {
-                await context.Response.SendFileAsync(imgpath);
+                context.Response.Redirect($"http://lbosau.exlb.org:9901/{MoveName}/{ImageName}.jpg", true);
             }
             else
             {
-                await context.Response.SendFileAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", $"Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png"));
+                context.Response.Redirect($"http://lbosau.exlb.org:9901/Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png", true);
             }
+            await context.Response.CompleteAsync();
         }
         /// <summary>
         /// User Image
@@ -35,14 +36,8 @@ namespace UNSoftWare.Map
                     v.SaveAsPng(imgpath);
                 }
             }
-            try
-            {
-                await context.Response.SendFileAsync(imgpath);
-            }
-            catch
-            {
-
-            }
+            context.Response.Redirect($"http://lbosau.exlb.org:9901/User/{uid}.png", true);
+            await context.Response.CompleteAsync();
         }
 
         /// <summary>
@@ -64,6 +59,7 @@ namespace UNSoftWare.Map
             var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "User", usr.Uid + ".jpg");
             File.WriteAllBytes(imgpath, mem.ToArray());
             await context.Response.WriteAsync("Success");
+            await context.Response.CompleteAsync();
         }
 
         #region From https://github.com/LorisYounger/VUPSimulator.Interface
