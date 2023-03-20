@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Routing.Constraints;
 using Org.BouncyCastle.Crypto.Agreement.Kdf;
+using SixLabors.ImageSharp;
 using UNSoftWare.Map;
 
 namespace UNSoftWare
@@ -21,6 +22,18 @@ namespace UNSoftWare
             .AllowAnyMethod().AllowAnyHeader()));
 
             var app = builder.Build();
+
+            for (int i = 0; i < Images.ProfileImage.len; i++)
+            {
+                DirectoryInfo tmpdi = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PIRND",i.ToString()));
+                if (tmpdi.Exists)
+                {
+                    foreach (FileInfo tmpfi in tmpdi.EnumerateFiles("*.png"))
+                    {
+                        Images.Profile.Files[i].Add(tmpfi.FullName);
+                    }
+                }
+            }
 
             app.UseCors();
 
@@ -58,19 +71,9 @@ namespace UNSoftWare
             app.MapGet("/Movie/Comment", Comment.Movie);
             app.MapPost("/Comment/remove", Comment.remove);
 
-            app.MapGet("/Image/{MoveName}/{ImageName}", async (HttpContext context, string MoveName, string ImageName) =>
-            {
-                var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", MoveName, ImageName + ".jpg");
-                if (File.Exists(imgpath))
-                {
-                    await context.Response.SendFileAsync(imgpath);
-                }
-                else
-                {
-                    await context.Response.SendFileAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", $"Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png"));
-                }
-            });
-
+            app.MapGet("/Image/{MoveName}/{ImageName}", Images.Base);
+            app.MapGet("/Image/User/{uid:int}", Images.User);
+            app.MapPost("UploadImage/User", Images.UploadUser);
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
