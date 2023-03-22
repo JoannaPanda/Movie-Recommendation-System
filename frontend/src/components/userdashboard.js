@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Dashboard() {
+  const [movie, setMovie] = useState([]);
   const [userinfo, setUserinfo] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   useEffect(() => {
     const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -28,6 +38,27 @@ function Dashboard() {
     }
   }, [userinfo]);
 
+  useEffect(() => {
+    if (userinfo) {
+      const mids = Object.values(userinfo.WishList);
+      const requests = mids.map((mid) =>
+        axios.get(
+          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`
+        )
+      );
+      Promise.all(requests)
+        .then((responses) => {
+          const movies = responses.map((response) => response.data.movieinfo);
+          setMovie(movies);
+          // console.log("movies", movies);
+        })
+        .catch((error) => {
+          console.log(error);
+          window.location.href = "/404";
+        });
+    }
+  }, [userinfo, token]);
+
   const getUsername = () => {
     if (userinfo && userinfo.UserName) {
       return userinfo.UserName;
@@ -44,8 +75,9 @@ function Dashboard() {
     }
   };
 
-  console.log("currinfo", userinfo);
-  console.log("currid", userinfo && userinfo.Uid);
+  // console.log("currinfo", userinfo);
+  // console.log("currid", userinfo && userinfo.Uid);
+  console.log("movies", movie);
 
   return (
     <div
@@ -66,6 +98,8 @@ function Dashboard() {
           <p>Name: {userinfo.UserName}</p>
           <p>Email: {userinfo.Email}</p>
           <p>Preference: {Object.keys(userinfo.PreferenceModels).join(", ")}</p>
+          {/* <p>WishList: {Object.values(userinfo.WishList).join(", ")}</p> */}
+          <p>WishList: {movie.map((m) => m.MovieName).join(", ")}</p>
           <p>Click the button below to change Preference.</p>
           <Link to="/setprefgenre" className="login-link">
             <button

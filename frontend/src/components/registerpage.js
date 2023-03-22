@@ -121,7 +121,7 @@ class registerpage extends React.Component {
         } catch (error) {
           console.error("Registration failed:", error);
           // alert(error);
-          toast.error("Registration failed:", error, {
+          toast.error("Registration failed", error, {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -132,7 +132,14 @@ class registerpage extends React.Component {
       .catch((error) => {
         console.error(error);
         // alert(error);
-        toast.error("Registration failed:", error, {
+        toast.error("Registration failed: the email has been registered", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
+
+        toast.error("Please try again with a different email.", {
           position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: false,
