@@ -1,7 +1,8 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../images/icon.png";
 // import { Link } from "react-router-dom";
 import "../styles/Header.css";
+import { Link } from "react-router-dom";
 
 // import AppBar from "@mui/material/AppBar";
 // import Toolbar from "@mui/material/Toolbar";
@@ -18,15 +19,26 @@ function Header() {
       setToken(storedToken);
     }
   }, []);
+  const handleClick = () => {
+    console.log("Clickable area clicked!");
+  };
   return (
     <header>
       <img src={Logo} alt="Logo" className="logo" />
       <ul className="navigation-links">
         <li>
           {token === null ? (
-            <a href="login">Log In</a>
+            <div onClick={handleClick}>
+              <Link to="/login">
+                <div>Log In</div>
+              </Link>
+            </div>
           ) : (
-            <a href="logout">Log Out</a>
+            <div onClick={handleClick}>
+              <Link to="/logout">
+                <div>Log Out</div>
+              </Link>
+            </div>
           )}
         </li>
         <li>
