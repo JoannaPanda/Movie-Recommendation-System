@@ -4,20 +4,18 @@ import image from "../images/cinema.png";
 import BounceWindow from "./bounceWindow";
 
 function WelcomePage() {
-  const [showPrompt, setShowPrompt] = useState(false);
+  const [showWindow, setShowWindow] = useState(false);
 
-  const handleExploreClick = () => {
-    setShowPrompt(true);
+  const handleWindowClick = () => {
+    setShowWindow(true);
   };
 
-  const handlePromptChoice = (choice) => {
-    setShowPrompt(false);
+  const handleWindowChoice = (choice) => {
+    setShowWindow(false);
     if (choice === "Yes") {
-      // User clicked "Yes", do something here...
-      console.log("User is ready to explore!");
+      console.log("cliked yes");
     } else {
-      // User clicked "No", do something else here...
-      console.log("User is not ready to explore yet.");
+      console.log("clicked no");
     }
   };
 
@@ -67,15 +65,15 @@ function WelcomePage() {
             marginTop: 50,
             cursor: "pointer",
           }}
-          onClick={handleExploreClick}
+          onClick={handleWindowClick}
         >
           EXPLORE NOW →
         </button>
-        {showPrompt && (
+        {showWindow && (
           <BounceWindow
             message="Are you ready to explore?"
-            choices={["Yes", "No"]}
-            onChoice={handlePromptChoice}
+            choices={["No", "Yes"]}
+            onChoice={handleWindowChoice}
             link="/login"
           />
         )}

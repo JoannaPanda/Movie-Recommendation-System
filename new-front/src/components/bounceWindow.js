@@ -16,15 +16,14 @@ function BounceWindow(props) {
           <h2>{message}</h2>
         </div>
         <div className="windowButton">
+          <button onClick={() => handleButtonClick(choices[0])}>
+            {choices[0]}
+          </button>
           <Link to={link}>
-            <button onClick={() => handleButtonClick(choices[0])}>
-              {choices[0]}
+            <button onClick={() => handleButtonClick(choices[1])}>
+              {choices[1]}
             </button>
           </Link>
-
-          <button onClick={() => handleButtonClick(choices[1])}>
-            {choices[1]}
-          </button>
         </div>
       </div>
     </div>
