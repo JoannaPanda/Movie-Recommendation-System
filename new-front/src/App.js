@@ -17,6 +17,8 @@ import AddComment from "./review/addComment";
 import ContactPage from "./components/contactPage";
 import Logout from "./components/logoutpage";
 import Dashboard from "./components/userdashboard";
+import DirectorPage from "./components/directorPage";
+import MyComponent from "./components/directorPage";
 
 function App() {
   return (
@@ -44,6 +46,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/director/:director" element={<DirectorPage />} />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MovieResults from "./results";
 import axios from "axios";
+import "../styles/search.css";
 
 function SearchPage() {
   const [search, setSearch] = useState("");
@@ -39,30 +40,25 @@ function SearchPage() {
 
   return (
     <div>
-      {/* <form
-        onSubmit={handleSearchSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: 100,
-        }}
-      > */}
       <input
+        id="Search"
+        name="Search"
         type="search"
-        value={search}
+        placeholder="Search"
         onChange={handleChange}
         style={{
           backgroundColor: "#877878",
           border: "none",
           borderRadius: 30,
           color: "#0e153a",
-          cursor: "pointer",
-          fontSize: 30,
+          // cursor: "pointer",
+          fontSize: 50,
           fontWeight: "bold",
           padding: "20px 100px",
           marginTop: 100,
         }}
       />
+
       {!results ? <h1>loading...</h1> : <MovieResults movies={results} />}
     </div>
   );
