@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 
 const GenreBar = ({ genres, onSelect }) => {
   const [selectedGenre, setSelectedGenre] = useState(null);
@@ -18,7 +17,12 @@ const GenreBar = ({ genres, onSelect }) => {
     <nav>
       <ul
         className="nav nav-tabs"
-        style={{ display: "flex", flexDirection: "row" }}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          textAlign: "center",
+          alignItems: "center",
+        }}
       >
         {genres.map((genre) => (
           <li key={genre} className="nav-item">
