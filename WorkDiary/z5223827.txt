@@ -16,3 +16,11 @@ In this week, on Tuesday, Yuemeng and me, we met in school to try to start the f
 After lab, Yanting, Yuemeng and me work together to find our local host that could show our frontend design. I also complete the front end design for home page at that time.
 On Saturday, Yuemeng and me linked our frontend to the backend so that we can fetch data, I complete the search page design and started detail page design.
 On Sunday, I complete the movie detail page deish, which inclued the basic information and primary recommandation list. 
+
+week5：
+Before this week's demo, I complete all the tickets that had been assigned to me. On Tuesday, I met robert and Joanna to finishlise the communacation between different
+page in the front end. I further modified the header so that it can work properly. I added commoent for all the Jira ticket that had been assigned to me. In the demo, I
+showed the web page of search and detail page (which had been assigned to me). After the demo, my teammate and me had discuss the content for retrospective A report.
+
+week6:
+I build the bounce window in the front end so that we don't need to use alert. I complete my part fot the retrospective A report.
