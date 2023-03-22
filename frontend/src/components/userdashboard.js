@@ -75,7 +75,7 @@ function Dashboard() {
     }
   };
 
-  // console.log("currinfo", userinfo);
+  console.log("currinfo", userinfo);
   // console.log("currid", userinfo && userinfo.Uid);
   console.log("movies", movie);
 
