@@ -1,42 +1,60 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 class Logout extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      token: "",
-      userinfo: {},
-    };
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleConfirmLogout = this.handleConfirmLogout.bind(this);
+    this.handleCancelLogout = this.handleCancelLogout.bind(this);
   }
 
-  handleLogout = () => {
-    const token = this.state.token;
-
-    axios
-      .post("http://lbosau.exlb.org:9900/User/Logout", { token })
+  handleLogout() {
+    // call API to log out user using token from state
+    fetch("http://lbosau.exlb.org:9900/User/Logout", {
+      method: "POST",
+      body: JSON.stringify({ token: this.state.token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         // remove token and userinfo from local storage
         localStorage.removeItem("token");
         localStorage.removeItem("userinfo");
 
-        // clear state
-        this.setState({ token: "", userinfo: {} });
-
-        // redirect to login page
-        this.props.history.push("/login");
+        // redirect to welcome page
+        window.location.href = "/welcome";
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+      .catch((error) => console.log(error));
+  }
+
+  handleConfirmLogout() {
+    if (window.confirm("Are you sure you want to log out?")) {
+      this.handleLogout();
+    }
+  }
+
+  handleCancelLogout() {
+    // do nothing, just close the confirmation dialog
+  }
+
+  componentDidMount() {
+    // get token and userinfo from local storage
+    const token = localStorage.getItem("token");
+    const userinfoString = localStorage.getItem("userinfo");
+    const userinfo = userinfoString ? JSON.parse(userinfoString) : {};
+
+    // update state with token and userinfo
+    this.setState({ token, userinfo });
+  }
 
   render() {
     return (
       <div style={{ marginTop: "77px", color: "whitesmoke" }}>
-        <h1>Logout Page</h1>
-        <button onClick={this.handleLogout}>Logout</button>
+        <h1>Logout</h1>
+        <p>Click the button below to log out.</p>
+        <button onClick={this.handleConfirmLogout}>Log out</button>
       </div>
     );
   }
