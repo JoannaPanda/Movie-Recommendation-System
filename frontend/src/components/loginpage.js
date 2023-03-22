@@ -51,7 +51,7 @@ class LoginPage extends React.Component {
 
           // store token and user info in local storage
           localStorage.setItem("token", String(token));
-          localStorage.setItem("user", JSON.stringify(userinfo));
+          localStorage.setItem("userinfo", JSON.stringify(userinfo));
           console.log(String(token));
 
           // update state with token and user info

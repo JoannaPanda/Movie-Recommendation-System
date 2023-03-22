@@ -25,10 +25,15 @@ Sunday 2023/02/26
 Since Wednesday, I've been working on making wireframes for our website on Canva. By Sunday's meeting, I completed the parts of proposal that I was working on. I would add the complete user storied on Jira after the meeting. We set the goal to complete our proposal by mid next week so that we could move on to actual implementation.
 
 
-week 3
+Week 3
 
 During this week, I worked on finalizing the proposal, including polishing Section 3 with Juliet, updating storyboards with Sookie, adding user stories to Jira, and drawing complete flow chart of our system. I submited the proposal as the scrum master on Sunday and checked with each memeber. I will be starting on frontend implementation soon.
 
-week 4
+Week 4
 
 This is a very productive week for the frontend team. By the weekend, we've completed most of the frontend for sprint 1. I wrote the register page, login page, preference pages and homepage. It's nice seeing everything gather together. We had coding sessions together and also hosted 2 teams meetings. The team worked smoothly together. 
+
+Week 5
+
+This week is the Demo A week. I completed all the tickets assigned to me during sprint 1 before our Wednesday's demo, and I also helped fixing bugs with other team members. I helped with manage the Jira tickets and prepare for the demo presentation. During the demo I was responsable for intro and introducing the tickets Ive completed ( 2 authentication tickets, 3 preference tickets and the website home page). Our group had the retrospective A meeting during the lab as we had the spare time after demo. I helped darft the retrospective A report in the weekend. Form next week we'll move on to sprint 2 tickets.
+

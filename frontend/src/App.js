@@ -12,6 +12,11 @@ import SearchPage from "./components/searchPage";
 import MovieDetail from "./components/movieDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
+import ListComment from "./review/listComment";
+import AddComment from "./review/addComment";
+import ContactPage from "./components/contactPage";
+import Logout from "./components/logoutpage";
+import Dashboard from "./components/userdashboard";
 
 function App() {
   return (
@@ -19,7 +24,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          {/* <Route exact path="/" component={index} /> */}
+          <Route exact path="/" element={<Homepage />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Registerpage />} />
@@ -33,6 +38,12 @@ function App() {
             element={<MovieDetail mid=id />}
           /> */}
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
+          <Route path="/comment/list/:mid" element={<ListComment />} />
+          <Route path="/comment/add/:mid" element={<AddComment />} />
+          {/* <Route path="/review/:mid" element={<ListComment />} /> */}
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
