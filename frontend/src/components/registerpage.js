@@ -1,6 +1,10 @@
 import React from "react";
 import validator from "validator";
+import { Link } from "react-router-dom";
 import "../styles/Form.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const JSONbig = require("json-bigint");
 
 class registerpage extends React.Component {
@@ -19,11 +23,23 @@ class registerpage extends React.Component {
     const { name, email, password } = this.state;
 
     if (name === "") {
-      alert("invalid username.");
+      // alert("invalid username.");
+      toast.error("Invalid username.", {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
       return;
     }
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
       alert("invalid email address.");
+      toast.error("Invalid email address.", {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
       return;
     }
 
@@ -36,7 +52,13 @@ class registerpage extends React.Component {
         minSymbols: 1,
       })
     ) {
-      alert("Your password is not a strong password.");
+      // alert("Your password is not a strong password.");
+      toast.error("Your password is not a strong password.", {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
       return;
     }
 
@@ -73,7 +95,7 @@ class registerpage extends React.Component {
           const jsonData = JSONbig.parse(data);
 
           console.log("Registration successful:", jsonData);
-          alert("successful");
+          // alert("successful");
           const { token, userinfo } = jsonData;
 
           // store token and user info in local storage
@@ -85,15 +107,37 @@ class registerpage extends React.Component {
           this.setState({ token: String(token), userinfo });
 
           // redirect to preference setting
-          window.location.href = "/setprefgenre";
+          toast.success("Registration Successful!", {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            onClose: () => {
+              setTimeout(() => {
+                window.location.href = "/setprefgenre";
+              }, 3000); // Delay redirect by 2 seconds
+            },
+          });
         } catch (error) {
           console.error("Registration failed:", error);
-          alert(error);
+          // alert(error);
+          toast.error("Registration failed:", error, {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
         }
       })
       .catch((error) => {
         console.error(error);
-        alert(error);
+        // alert(error);
+        toast.error("Registration failed:", error, {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
       });
   }
 
@@ -156,6 +200,16 @@ class registerpage extends React.Component {
           <button type="submit" className="form-submit">
             Sign Up
           </button>
+          <Link
+            to="/login"
+            className="login-link"
+            style={{
+              marginTop: "20px",
+              color: "white",
+            }}
+          >
+            Already Registered? Back to login
+          </Link>
         </form>
         {this.state.token && (
           <div>
@@ -175,6 +229,7 @@ class registerpage extends React.Component {
           src={require("../images/iconFull.png")}
           alt="Icon"
         />
+        <ToastContainer />
       </div>
     );
   }
