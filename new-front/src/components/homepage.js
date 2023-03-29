@@ -369,7 +369,42 @@ function Homepage() {
         ))}
       </Slider>
       <TopTenMovies />
+      <Link to={`/movierankings`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "white",
+            borderColor: "white",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE ALL →
+        </button>
+      </Link>
+
       <NewMovies />
+      <Link to={`/newmoviepage`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "white",
+            borderColor: "white",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE ALL →
+        </button>
+      </Link>
       <div
         style={{
           display: "flex",
@@ -383,8 +418,8 @@ function Homepage() {
             "Action",
             "Horror",
             "Romance",
-            "Adventure",
-            "Scientific",
+            "Sci-fi",
+            "Kids & family",
           ]}
           onSelect={handleGenreSelect}
           style={{

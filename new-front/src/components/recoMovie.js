@@ -67,8 +67,8 @@ function RecoMovies(props) {
           "Action",
           "Horror",
           "Romance",
-          "Adventure",
-          "Scientific",
+          "Sci-fi",
+          "Kids & family",
         ]}
         onSelect={handleGenreSelect}
       />

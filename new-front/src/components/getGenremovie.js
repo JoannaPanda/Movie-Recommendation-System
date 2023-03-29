@@ -42,7 +42,13 @@ function GenreMovies(props) {
 
   return (
     <div>
-      {!results ? <h1>loading...</h1> : <MovieResults movies={results} />}
+      {!results ? (
+        <h1>loading...</h1>
+      ) : (
+        <MovieResults
+          movies={results.filter((movie) => movie.Type === genre)}
+        />
+      )}
     </div>
   );
 }
