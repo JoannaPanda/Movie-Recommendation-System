@@ -70,6 +70,9 @@ namespace UNSoftWare
             app.MapGet("/Comment/Movie", Comment.Movie);
             app.MapGet("/Movie/Comment", Comment.Movie);
             app.MapPost("/Comment/remove", Comment.remove);
+            app.MapPost("/Comment/Like",Comment.Like);
+            app.MapPost("/Comment/DisLike", Comment.DisLike);
+
 
             app.MapGet("/Image/{MoveName}/{ImageName}", Images.Base);
             app.MapGet("/Image/User/{uid:int}", Images.User);

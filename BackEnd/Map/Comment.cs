@@ -164,5 +164,65 @@ namespace UNSoftWare.Map
                 return;
             }
         }
+        /// <summary>
+        /// Like Comment
+        /// </summary>
+        /// <param name="context"></param>
+        public static async void Like(HttpContext context)
+        {
+            var usr = PostUserInfofromToken(context);
+            if (usr != null)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Error Token");
+                return;
+            }
+            if (int.TryParse(context.Request.Query["Cid"], out int Cid))
+            {
+                MV_Comment comm = FSQL.Select<MV_Comment>().Where(x => x.Cid == Cid).First();
+                if (comm != null)
+                {
+                    comm.Like++;
+                    FSQL.Update<MV_Comment>().Where(x => x.Cid == Cid).Set(x => x.Like, comm.Like).ExecuteAffrows();
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(comm));
+                    return;
+                }
+            }
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync("No Movie Found");
+                return;
+            }
+        }
+        /// <summary>
+        /// Like Comment
+        /// </summary>
+        /// <param name="context"></param>
+        public static async void DisLike(HttpContext context)
+        {
+            var usr = PostUserInfofromToken(context);
+            if (usr != null)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Error Token");
+                return;
+            }
+            if (int.TryParse(context.Request.Query["Cid"], out int Cid))
+            {
+                MV_Comment comm = FSQL.Select<MV_Comment>().Where(x => x.Cid == Cid).First();
+                if (comm != null)
+                {
+                    comm.DisLike++;
+                    FSQL.Update<MV_Comment>().Where(x => x.Cid == Cid).Set(x => x.DisLike, comm.DisLike).ExecuteAffrows();
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(comm));
+                    return;
+                }
+            }
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync("No Movie Found");
+                return;
+            }
+        }
     }
 }
