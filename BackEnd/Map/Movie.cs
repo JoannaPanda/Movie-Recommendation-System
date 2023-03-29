@@ -153,11 +153,7 @@ namespace UNSoftWare.Map
         public static async void ListOrder(HttpContext context)
         {
             var moviesql = FSQL.Select<MV_Moive>();
-
-            if (int.TryParse(context.Request.Query["limit"], out int limit))
-            {
-                moviesql.Limit(limit);
-            }
+            moviesql.OrderBy(x => x.MovieName);
             if (bool.TryParse(context.Request.Query["desc"], out bool desc) && desc)
                 switch (context.Request.Query["orderby"])
                 {
@@ -190,6 +186,10 @@ namespace UNSoftWare.Map
                         moviesql.OrderBy(x => x.MovieName);
                         break;
                 }
+            if (int.TryParse(context.Request.Query["limit"], out int limit))
+            {
+                moviesql.Limit(limit);
+            }
             await context.Response.WriteAsync(JsonConvert.SerializeObject(moviesql.ToList().ToArray()));
         }
     }
