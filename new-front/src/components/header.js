@@ -42,34 +42,28 @@ function Header() {
           )}
         </li>
         <li>
-          <a href="Home">Home</a>
+          <div onClick={handleClick}>
+            <Link to="/home">
+              <div>Home</div>
+            </Link>
+          </div>
         </li>
         <li>
-          <a href="search">Search</a>
+          <div onClick={handleClick}>
+            <Link to="/search">
+              <div>Search</div>
+            </Link>
+          </div>
         </li>
         <li>
-          <a href="contact">About&Contact</a>
+          <div onClick={handleClick}>
+            <Link to="/contact">
+              <div>About&Contact</div>
+            </Link>
+          </div>
         </li>
       </ul>
     </header>
-    //   <AppBar position="static">
-    //     <Toolbar>
-    //       <IconButton
-    //         size="large"
-    //         edge="start"
-    //         color="inherit"
-    //         aria-label="menu"
-    //         sx={{ mr: 2 }}
-    //       >
-    //         <MenuIcon />
-    //       </IconButton>
-
-    //       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-    //         GeeksforGeeks Header
-    //       </Typography>
-    //       <Button color="inherit">Login</Button>
-    //     </Toolbar>
-    //   </AppBar>
   );
 }
 

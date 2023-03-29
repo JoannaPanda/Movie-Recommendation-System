@@ -420,6 +420,11 @@ function Homepage() {
             "Romance",
             "Sci-fi",
             "Kids & family",
+            "Mystery & thriller",
+            "Crime",
+            "History",
+            "Western",
+            "Fantasy",
           ]}
           onSelect={handleGenreSelect}
           style={{
