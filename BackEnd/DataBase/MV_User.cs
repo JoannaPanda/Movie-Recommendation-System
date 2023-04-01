@@ -52,7 +52,7 @@ namespace UNSoftWare.DataBase
         /// Get Preference model
         /// </summary>
         [Column(IsIgnore = true)]
-        public Dictionary<string,int> PreferenceModels => JsonConvert.DeserializeObject<Dictionary<string, int>>(PreferenceModel);
+        public Dictionary<string, int> PreferenceModels => JsonConvert.DeserializeObject<Dictionary<string, int>>(PreferenceModel);
         /// <summary>
         /// Set Preference model
         /// </summary>
@@ -125,5 +125,11 @@ namespace UNSoftWare.DataBase
                     list.Add(int.Parse(wish));
             return list;
         }
+        /// <summary>
+        /// User JSON
+        /// </summary>
+        [Column(DbType = "TEXT", IsNullable = false)]
+        [JsonIgnore]
+        public string JSON { get; set; } = "{}";
     }
 }

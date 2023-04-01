@@ -25,7 +25,7 @@ namespace UNSoftWare
 
             for (int i = 0; i < Images.ProfileImage.len; i++)
             {
-                DirectoryInfo tmpdi = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PIRND",i.ToString()));
+                DirectoryInfo tmpdi = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PIRND", i.ToString()));
                 if (tmpdi.Exists)
                 {
                     foreach (FileInfo tmpfi in tmpdi.EnumerateFiles("*.png"))
@@ -56,6 +56,9 @@ namespace UNSoftWare
             app.MapPost("/User/Recommend/add", User.Recommend.add);
             app.MapPost("/User/Recommend/Clear", User.Recommend.Clear);
 
+            app.MapPost("/User/JSON", User.setJSON);
+            app.MapGet("/User/JSON", User.getJSON);
+
             //Movie
             app.MapGet("/Movie/Recommend", Movie.Recommend);
             app.MapGet("/Movie/Info", Movie.Info);
@@ -70,7 +73,7 @@ namespace UNSoftWare
             app.MapGet("/Comment/Movie", Comment.Movie);
             app.MapGet("/Movie/Comment", Comment.Movie);
             app.MapPost("/Comment/remove", Comment.remove);
-            app.MapPost("/Comment/Like",Comment.Like);
+            app.MapPost("/Comment/Like", Comment.Like);
             app.MapPost("/Comment/DisLike", Comment.DisLike);
 
 
