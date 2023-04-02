@@ -101,7 +101,9 @@ function ListComment() {
                     }}
                   >
                     <div class="userFont">
-                      User {comment.Uid} gives {comment.Score} marks!!
+                      <Link to={`/wishlist/${comment.Uid}`}>
+                        User {comment.Uid} gives {comment.Score} marks!!
+                      </Link>
                     </div>
                     {Array.from({ length: comment.Score }, (_, i) => (
                       <img
