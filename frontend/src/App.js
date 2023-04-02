@@ -17,6 +17,8 @@ import AddComment from "./review/addComment";
 import ContactPage from "./components/contactPage";
 import Logout from "./components/logoutpage";
 import Dashboard from "./components/userdashboard";
+import MovieWishlist from "./components/userWishlist";
+import OtherWishlist from "./components/otherWishlist";
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/wishlist" element={<MovieWishlist />} />
+          <Route path="/wishlist/:uid" element={<OtherWishlist />} />
         </Routes>
       </div>
     </Router>

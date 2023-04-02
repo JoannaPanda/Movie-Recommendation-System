@@ -67,13 +67,13 @@ function Dashboard() {
     }
   };
 
-  const getUid = () => {
-    if (userinfo && userinfo.Uid) {
-      return userinfo.Uid;
-    } else {
-      return "User";
-    }
-  };
+  // const getUid = () => {
+  //   if (userinfo && userinfo.Uid) {
+  //     return userinfo.Uid;
+  //   } else {
+  //     return "User";
+  //   }
+  // };
 
   console.log("currinfo", userinfo);
   // console.log("currid", userinfo && userinfo.Uid);
