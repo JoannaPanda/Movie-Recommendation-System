@@ -37,3 +37,11 @@ Week 5
 
 This week is the Demo A week. I completed all the tickets assigned to me during sprint 1 before our Wednesday's demo, and I also helped fixing bugs with other team members. I helped with manage the Jira tickets and prepare for the demo presentation. During the demo I was responsable for intro and introducing the tickets Ive completed ( 2 authentication tickets, 3 preference tickets and the website home page). Our group had the retrospective A meeting during the lab as we had the spare time after demo. I helped darft the retrospective A report in the weekend. Form next week we'll move on to sprint 2 tickets.
 
+Week 6
+
+Week 6 is flexible week so nothing major happened. I contributed to writing most of the retro A report.
+
+
+Week 7
+
+This week I spent most of the time working on sprint 2 tickets. I completed the 3 tickets relating to adding/removing movies from user wishlist by mid week 7. Then during the weekend, I completed the wishlist listing page. I plan to complete the user dashbooard part by early next week and start merging & preparing for demo.
