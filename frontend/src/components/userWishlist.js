@@ -10,6 +10,7 @@ const MovieWishlist = () => {
   const [moviesPerPage] = useState(10);
   const [userinfo, setUserinfo] = useState(null);
   const [token, setToken] = useState(null);
+  const [filterOption, setFilterOption] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -52,7 +53,20 @@ const MovieWishlist = () => {
       );
       Promise.all(requests)
         .then((responses) => {
-          const movies = responses.map((response) => response.data.movieinfo);
+          // default order is the order of adding to wishlist
+          let movies = responses.map((response) => response.data.movieinfo);
+          if (filterOption === "releaseDate") {
+            // filter for newest to oldest release date
+            movies = movies.sort(
+              (a, b) => new Date(b.PublishDate) - new Date(a.PublishDate)
+            );
+          } else if (filterOption === "score") {
+            movies = movies.sort((a, b) => b.Score - a.Score);
+          } else if (filterOption === "title") {
+            movies = movies.sort((a, b) =>
+              a.MovieName.localeCompare(b.MovieName)
+            );
+          }
           setMovies(movies);
         })
         .catch((error) => {
@@ -60,7 +74,7 @@ const MovieWishlist = () => {
           window.location.href = "/404";
         });
     }
-  }, [userinfo, token]);
+  }, [userinfo, token, filterOption]);
 
   // Logic for displaying movies
   const indexOfLastMovie = currentPage * moviesPerPage;
@@ -70,6 +84,10 @@ const MovieWishlist = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleFilterChange = (e) => {
+    setFilterOption(e.target.value);
+  };
+
   return (
     <div
       className="movie-wishlist-container"
@@ -77,6 +95,15 @@ const MovieWishlist = () => {
         marginTop: "100px",
       }}
     >
+      <div className="filter-option">
+        <label htmlFor="filter-select">Filter by:</label>
+        <select id="filter-select" onChange={handleFilterChange}>
+          <option value="">Select an option</option>
+          <option value="releaseDate">Release Date</option>
+          <option value="score">Score</option>
+          <option value="title">Title</option>
+        </select>
+      </div>
       <h2
         style={{
           color: "whitesmoke",
@@ -100,7 +127,12 @@ const MovieWishlist = () => {
             <HeartButton movieId={movie.Mid} />
             <p className="movie-wishlist-date">
               {/* fix user date added later */}
-              Added to Wishlist on date added
+              Released on:{" "}
+              {new Date(movie.PublishDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </p>
           </div>
         </div>

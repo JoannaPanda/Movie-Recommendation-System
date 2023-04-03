@@ -62,3 +62,30 @@
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
+
+.filter-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-option label {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.filter-option select {
+  padding: 10px;
+  font-size: 16px;
+  color: #000;
+  border-radius: 4px;
+  border: none;
+  background-color: #fff;
+  outline: none;
+}
+
+.filter-option select:hover {
+  cursor: pointer;
+}
