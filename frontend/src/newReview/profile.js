@@ -144,16 +144,16 @@ const Profile = () => {
                   className="ban-poster"
                   src={require("../CommentImage/ban.png")}
                   onClick={() => {
-                    const data = {
-                      token: token,
-                      Uid: uid,
-                    };
+                    const params = new URLSearchParams();
+                    params.append("token", token);
+                    params.append("Uid", uid);
+                    console.log(params.toString());
                     fetch(`http://lbosau.exlb.org:9900/User/Banlist/add`, {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                       },
-                      body: JSON.stringify(data),
+                      body: params.toString(),
                     })
                       .then((response) => {
                         if (response.ok) {
@@ -219,10 +219,10 @@ const Profile = () => {
                                   className="banlist_delete"
                                   src={require("../CommentImage/delete.png")}
                                   onClick={() => {
-                                    const data = {
-                                      token: token,
-                                      Uid: uid,
-                                    };
+                                    const params = new URLSearchParams();
+                                    params.append("token", token);
+                                    params.append("Uid", user.Uid);
+                                    console.log(params.toString());
                                     fetch(
                                       `http://lbosau.exlb.org:9900/User/Banlist/remove`,
                                       {
@@ -231,7 +231,7 @@ const Profile = () => {
                                           "Content-Type":
                                             "application/x-www-form-urlencoded",
                                         },
-                                        body: JSON.stringify(data),
+                                        body: params.toString(),
                                       }
                                     )
                                       .then((response) => {
@@ -293,16 +293,16 @@ const Profile = () => {
                       className="delete_poster"
                       src={require("../CommentImage/close.png")}
                       onClick={() => {
-                        const data = {
-                          Cid: comment.Cid,
-                          token: token,
-                        };
+                        const params = new URLSearchParams();
+                        params.append("Cid", comment.Cid);
+                        params.append("token", token);
+                        console.log(params.toString());
                         fetch(`http://lbosau.exlb.org:9900/Comment/remove`, {
                           method: "POST",
                           headers: {
-                            "Content-Type": "application/json",
+                            "Content-Type": "application/x-www-form-urlencoded",
                           },
-                          body: JSON.stringify(data),
+                          body: params.toString(),
                         })
                           .then((response) => {
                             if (response.ok) {
