@@ -72,7 +72,13 @@ const TopTenMovies = () => {
             }}
           >
             <Link to={`/movieinfo/${movie.Mid}`}>
-              <div style={{ marginRight: "10px", fontWeight: "bold" }}>
+              <div
+                style={{
+                  marginRight: "10px",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
                 {movie.MovieName}
               </div>
             </Link>

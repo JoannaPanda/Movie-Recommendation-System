@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
+import HeartButton from "./heartButton";
 
 function MovieDetail() {
   const { mid } = useParams();
@@ -51,7 +52,17 @@ function MovieDetail() {
     >
       <div className="movie-header" style={{ marginLeft: 13 }}>
         <div className="movie-name-date">
-          <h1 className="movie-title">{movie.MovieName}</h1>
+          <div
+            className="movie-wishlist-watch"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <h1 className="movie-title">{movie.MovieName}</h1>
+            <HeartButton movieId={mid} />
+          </div>
           <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
             Released on:{" "}
