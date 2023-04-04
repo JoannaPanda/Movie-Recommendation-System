@@ -1,0 +1,100 @@
+@charset "utf-8";
+
+/* Text Pattern*/
+.openingRemarks {
+  font-family: "Times New Roman", Times, serif;
+  color: white;
+  font-size: 80px;
+
+  text-align: center;
+  justify-content: center;
+}
+
+.statements {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 20px;
+}
+
+.statementsBlack {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 20px;
+}
+
+.statementsUnderline {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.titleEachPage {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 38px;
+
+  text-align: center;
+}
+
+.buttonFontBlueBased {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.buttonFontTransparentBased {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.searchBoxFont {
+  font-family: Arial, Helvetica, sans-serif;
+  color: gray;
+  font-size: 22px;
+}
+
+.movieColumnName {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.profileTitle {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.profileStatements {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.subTitle {
+  font-family: Arial, Helvetica, sans-serif;
+  color: gray;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.Pop-upFonts {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.TimeFonts {
+  font-family: Arial, Helvetica, sans-serif;
+  color: grey;
+  font-size: 7px;
+  font-weight: normal;
+}
