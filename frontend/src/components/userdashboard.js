@@ -16,6 +16,7 @@ function Dashboard() {
       setToken(storedToken);
     }
   }, []);
+  console.log("Token", token);
 
   useEffect(() => {
     const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
