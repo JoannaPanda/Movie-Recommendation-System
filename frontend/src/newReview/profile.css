@@ -191,3 +191,11 @@ body {
   height: 100vh;
   overflow: auto;
 }
+
+.progChart {
+  width: 350px;
+  height: 350px;
+  float: right;
+  margin-right: -100px;
+  margin-top: 200px;
+}

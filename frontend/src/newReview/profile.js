@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./profile.css";
 import axios from "axios";
+import * as d3 from "d3";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -17,6 +19,11 @@ const Profile = () => {
   const [token, setToken] = useState([]);
 
   const [scrollIndex, setScrollIndex] = useState(0);
+
+  const [progress, setProgress] = useState(0);
+  const [userinfo, setUserinfo] = useState(null);
+  const [ouid, setOuid] = useState(null);
+  const targetCount = 10;
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -126,10 +133,139 @@ const Profile = () => {
       });
   }, [visibleComments]);
 
+  useEffect(() => {
+    const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
+    if (storedUserinfo) {
+      setUserinfo(storedUserinfo);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchUserinfo = async () => {
+      try {
+        const response = await fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+        );
+        const data = await response.json();
+        setUserinfo(data);
+      } catch (error) {
+        console.error("Error fetching user info: ", error);
+      }
+    };
+    if (userinfo) {
+      fetchUserinfo();
+    }
+  }, [userinfo]);
+
+  useEffect(() => {
+    if (userinfo) {
+      const ouid = userinfo.Uid;
+      setOuid(ouid.toString());
+      const mids = Object.values(userinfo.WishList);
+      const wishlistCount = mids.length;
+      console.log("wishlist count", wishlistCount);
+
+      // Calculate the progress
+      const progress = Math.min(wishlistCount / targetCount, 1);
+      setProgress(progress);
+    }
+  }, [userInfo, token]);
+
+  console.log(ouid, uid);
+
+  const chartRef = useRef();
+
+  useEffect(() => {
+    const data = [
+      { label: "Completed", value: progress * 100 },
+      { label: "Remaining", value: 100 - progress * 100 },
+    ];
+
+    const svg = d3.select(chartRef.current);
+    const width = 300;
+    const height = 300;
+    const radius = Math.min(width, height) / 2;
+    const color = d3.scaleOrdinal().range(["#004AAD", "#ADD8E6"]);
+
+    const pie = d3.pie().value((d) => d.value);
+
+    const arc = d3
+      .arc()
+      .outerRadius(radius - 10)
+      .innerRadius(radius / 2);
+
+    const outerArc = d3
+      .arc()
+      .outerRadius((radius - 10) * 1.07)
+      .innerRadius((radius / 2) * 1.07);
+
+    const g = svg
+      .append("g")
+      .attr("transform", `translate(${width / 2},${height / 2})`);
+
+    const path = g
+      .selectAll("path")
+      .data(pie(data))
+      .enter()
+      .append("path")
+      .attr("d", arc)
+      .attr("fill", (d) => color(d.data.label))
+      .on("mouseover", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", outerArc);
+      })
+      .on("mouseout", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", arc);
+      })
+      .each(function(d) {
+        this._current = d;
+      });
+
+    const text = g
+      .selectAll("text")
+      .data(pie(data))
+      .enter()
+      .append("text")
+      .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
+      .style("text-anchor", "middle")
+      .style("font-weight", "bold");
+
+    text
+      .append("tspan")
+      .text((d) => d.data.label)
+      .attr("x", 0)
+      .attr("dy", "-0.5em");
+
+    text
+      .append("tspan")
+      .text((d) => `${Math.round(d.data.value)}%`)
+      .attr("x", 0)
+      .attr("dy", "1em");
+
+    return () => {
+      svg.selectAll("*").remove();
+    };
+  }, [progress]);
+
   return (
     <div id="profile">
       <div className="background">
         <div className="profile-white-box">
+          <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
+            {ouid === uid ? (
+              <svg
+                className="progChart"
+                ref={chartRef}
+                width="350"
+                height="350"
+              ></svg>
+            ) : null}
+          </Link>
           <div className="inline">
             <img
               src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
@@ -178,6 +314,17 @@ const Profile = () => {
                   <h4 style={{ marginLeft: "55%", marginTop: "-20px" }}>
                     {banlist.length}
                   </h4>
+                </div>
+                <div>
+                  <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
+                    <h4 style={{ marginLeft: "60px" }}>Wishlist</h4>
+                  </Link>
+
+                  {userInfo.WishList && (
+                    <h4 style={{ marginTop: "-20px", marginLeft: "60px" }}>
+                      {Object.keys(userInfo.WishList).length}
+                    </h4>
+                  )}
                 </div>
                 {isDialogOpen && (
                   <div className="modal">

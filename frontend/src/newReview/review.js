@@ -2,10 +2,11 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./review.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ListComment = () => {
-  // extract "mid" and "token" information from URL
-  const { mid, token } = useParams();
+  // extract "mid" information from URL
+  const { mid } = useParams();
   // initial comment as empty
   const [comments, setComment] = useState([]);
   const [score, setScore] = useState([]);
@@ -15,6 +16,14 @@ const ListComment = () => {
   const [visibleComments, setVisibleComments] = useState([]);
   const [scrollIndex, setScrollIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState([]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   useEffect(() => {
     // fetch comment
@@ -250,10 +259,12 @@ const ListComment = () => {
                   <div key={comment.id}>
                     <div className="inline-element">
                       <div style={{ width: "30%", marginLeft: "50px" }}>
-                        <img
-                          className="user_poster"
-                          src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
-                        />
+                        <Link to={`/profile/${comment.Uid}`}>
+                          <img
+                            className="user_poster"
+                            src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
+                          />
+                        </Link>
                       </div>
                       <div style={{ marginLeft: "-55px" }}>
                         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -272,18 +283,19 @@ const ListComment = () => {
                             className="good-poster"
                             src={require("../CommentImage/emptyGood.png")}
                             onClick={() => {
-                              const data = {
-                                Cid: comment.Cid,
-                                token: token,
-                              };
+                              const params = new URLSearchParams();
+                              params.append("Cid", comment.Cid);
+                              params.append("token", token);
+                              console.log(params.toString());
                               fetch(
                                 `http://lbosau.exlb.org:9900/Comment/Like`,
                                 {
                                   method: "POST",
                                   headers: {
-                                    "Content-Type": "application/json",
+                                    "Content-Type":
+                                      "application/x-www-form-urlencoded",
                                   },
-                                  body: JSON.stringify(data),
+                                  body: params.toString(),
                                 }
                               )
                                 .then((response) => {
