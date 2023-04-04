@@ -14,10 +14,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
 //import ListComment from "./review/listComment";
 import ListComment from "./newReview/review";
-import AddComment from "./review/addComment";
+//import AddComment from "./review/addComment";
+import AddComment from "./newReview/writeReview";
 import ContactPage from "./components/contactPage";
 import Logout from "./components/logoutpage";
 import Dashboard from "./components/userdashboard";
+import Profile from "./newReview/profile";
 
 
 
@@ -47,6 +49,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/comment/list/:mid" element={<ListComment />} />
           <Route path="/comment/add/:mid" element={<AddComment />} />
+          <Route path="/profile/:uid" element={<Profile />} />
         </Routes>
       {/* </div> */}
     </Router>
