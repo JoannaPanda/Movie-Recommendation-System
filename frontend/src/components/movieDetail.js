@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
+import RecoMovies from "./recoMovie";
 import HeartButton from "./heartButton";
 
 function MovieDetail() {
@@ -52,17 +53,8 @@ function MovieDetail() {
     >
       <div className="movie-header" style={{ marginLeft: 13 }}>
         <div className="movie-name-date">
-          <div
-            className="movie-wishlist-watch"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <h1 className="movie-title">{movie.MovieName}</h1>
-            <HeartButton movieId={mid} />
-          </div>
+          <h1 className="movie-title">{movie.MovieName}</h1>
+          <HeartButton movieId={mid} />
           <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
             Released on:{" "}
@@ -120,18 +112,23 @@ function MovieDetail() {
           SEE COMMENTS →
         </button>
       </Link>
+
       <div className="movie-cast">
         <h2 className="cast-heading">Director</h2>
-        <img
-          src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.Director}`}
-          alt={movie.Director}
-          style={{
-            width: "200px",
-            height: "240px",
-            objectFit: "cover",
-            borderRadius: "20px",
-          }}
-        />
+        <Link to={`/director/${movie.Director}`}>
+          <img
+            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.Director}`}
+            alt={movie.Director}
+            style={{
+              width: "200px",
+              height: "240px",
+              objectFit: "cover",
+              borderRadius: "20px",
+            }}
+            onClick={handleClick()}
+          />
+        </Link>
+
         <ul className="cast-list" style={{ fontSize: 20, fontWeight: "bold" }}>
           {movie.Director}
         </ul>
@@ -143,8 +140,7 @@ function MovieDetail() {
 
       <div className="movie-cast" style={{ margin: "auto" }}>
         <h2 className="cast-heading">Guess you like:</h2>
-
-        <RecoMovies id={mid} />
+        <RecoMovies id={mid} director={movie.Director} />
       </div>
     </div>
   );
@@ -209,118 +205,6 @@ const MovieAttend = (props) => {
                 {actor}
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const RecoMovies = (props) => {
-  const [movies, setMovies] = useState([]);
-  const recoid = props.id;
-  const [token, setToken] = useState(null);
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
-
-  useEffect(() => {
-    setMovies([]);
-
-    axios
-      .get(
-        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}`
-      )
-      .then((response) => {
-        console.log(response);
-        console.log(response.data.recommendation);
-        setMovies(response.data.recommendation);
-      })
-      .catch((error) => {
-        console.log(error);
-        window.location.href = "/404";
-      });
-  }, [recoid]);
-  console.log(movies.Mid);
-  const handleClick = () => {
-    console.log("Clickable area clicked!");
-  };
-
-  return (
-    <div
-      style={{ marginTop: "20px", color: "whitesmoke" }}
-      onClick={handleClick()}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        {movies.map((movie) => (
-          <div
-            key={movie.MovieName}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "10px",
-              width: "200px",
-              height: "350px auto",
-              backgroundColor: "gray",
-              borderRadius: "10px",
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
-              overflow: "hidden",
-            }}
-          >
-            <Link to={`/movieinfo/${movie.Mid}`}>
-              <img
-                src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
-                alt={movie.MovieName}
-                style={{ width: "100%", height: "70%", objectFit: "cover" }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-                  height: "30%",
-                  padding: "10px",
-                }}
-              >
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    marginBottom: "10px",
-                    color: "white",
-                  }}
-                >
-                  {movie.MovieName}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <div style={{ marginRight: "5px" }}>
-                    {movie.Score.toFixed(2)}
-                  </div>
-                  <span style={{ color: "yellow" }}>★</span>
-                </div>
-              </div>
-            </Link>
           </div>
         ))}
       </div>

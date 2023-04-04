@@ -19,6 +19,9 @@ import Logout from "./components/logoutpage";
 import Dashboard from "./components/userdashboard";
 import MovieWishlist from "./components/userWishlist";
 import OtherWishlist from "./components/otherWishlist";
+import DirectorPage from "./components/directorPage";
+import MovieRankings from "./components/movieRanking";
+import NewMoviePage from "./components/newMoviePage";
 
 function App() {
   return (
@@ -48,6 +51,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/wishlist" element={<MovieWishlist />} />
           <Route path="/wishlist/:uid" element={<OtherWishlist />} />
+          <Route path="/director/:director" element={<DirectorPage />} />
+          <Route path="/movierankings" element={<MovieRankings />} />
+          <Route path="/newmoviepage" element={<NewMoviePage />} />
         </Routes>
       </div>
     </Router>
