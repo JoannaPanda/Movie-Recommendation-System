@@ -129,106 +129,108 @@ const AddComment = () => {
   };
 
   return (
-    <div className="inline">
-      <div>
-        <a href={`http://localhost:3000/comment/list/${mid}`}>
-          <img
-            className="back_poster"
-            src={require("../CommentImage/back.png")}
-          />
-        </a>
-      </div>
-      <div className="left-column">
-        <div className="inline-element">
-          {
+    <div className="container-grey2">
+      <div className="inline">
+        <div>
+          <a href={`http://localhost:3000/comment/list/${mid}`}>
             <img
-              className="movie-poster"
-              src={`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`}
+              className="back_poster"
+              src={require("../CommentImage/back.png")}
             />
-          }
-          <div>
-            <h3 className="title">{movieName}</h3>
-            <h5 className="director">{movieDirector}</h5>
-          </div>
+          </a>
         </div>
-        <h4 className="adv">
-          Your first-hand experiences really help other Movie Finders.
-        </h4>
-        <h4 className="adv2">Thanks!</h4>
-        <hr className="line" />
-        <h5>Your overall rating of this movie</h5>
-        <div className="rating-container">
+        <div className="left-column">
           <div className="inline-element">
-            <img
-              src={require("../CommentImage/emptyCircle.png")}
-              alt="1"
-              className="circle-poster"
-              onClick={(e) => rate(e.target)}
-            />
-            <img
-              src={require("../CommentImage/emptyCircle.png")}
-              alt="2"
-              className="circle-poster"
-              onClick={(e) => rate(e.target)}
-            />
-            <img
-              src={require("../CommentImage/emptyCircle.png")}
-              alt="3"
-              className="circle-poster"
-              onClick={(e) => rate(e.target)}
-            />
-            <img
-              src={require("../CommentImage/emptyCircle.png")}
-              alt="4"
-              className="circle-poster"
-              onClick={(e) => rate(e.target)}
-            />
-            <img
-              src={require("../CommentImage/emptyCircle.png")}
-              alt="5"
-              className="circle-poster"
-              onClick={(e) => rate(e.target)}
-            />
-            <div className="score-display">
-              <span id="score">Click to rate</span>
+            {
+              <img
+                className="movie-poster-display"
+                src={`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`}
+              />
+            }
+            <div>
+              <h3 className="title">{movieName}</h3>
+              <h5 className="director">{movieDirector}</h5>
             </div>
           </div>
-          <div className="inline-element">
-            <h5>Your review</h5>
-            <h6 className="tips">
-              <abbr
-                data-tips="Describe the movie you experienced&#x0a;Tell us how you liked the movie&#x0a;Talk about the atmosphere&#x0a;Say what you liked best & least&#x0a;"
-              >
-                Tips for writing a great review
-              </abbr>
-            </h6>
+          <h4 className="adv">
+            Your first-hand experiences really help other Movie Finders.
+          </h4>
+          <h4 className="adv2">Thanks!</h4>
+          <hr className="line" />
+          <h5>Your overall rating of this movie</h5>
+          <div className="rating-container">
+            <div className="inline-element">
+              <img
+                src={require("../CommentImage/emptyCircle.png")}
+                alt="1"
+                className="circle-poster"
+                onClick={(e) => rate(e.target)}
+              />
+              <img
+                src={require("../CommentImage/emptyCircle.png")}
+                alt="2"
+                className="circle-poster"
+                onClick={(e) => rate(e.target)}
+              />
+              <img
+                src={require("../CommentImage/emptyCircle.png")}
+                alt="3"
+                className="circle-poster"
+                onClick={(e) => rate(e.target)}
+              />
+              <img
+                src={require("../CommentImage/emptyCircle.png")}
+                alt="4"
+                className="circle-poster"
+                onClick={(e) => rate(e.target)}
+              />
+              <img
+                src={require("../CommentImage/emptyCircle.png")}
+                alt="5"
+                className="circle-poster"
+                onClick={(e) => rate(e.target)}
+              />
+              <div className="score-display">
+                <span id="score">Click to rate</span>
+              </div>
+            </div>
+            <div className="inline-element">
+              <h5>Your review</h5>
+              <h6 className="tips">
+                <abbr
+                  data-tips="Describe the movie you experienced&#x0a;Tell us how you liked the movie&#x0a;Talk about the atmosphere&#x0a;Say what you liked best & least&#x0a;"
+                >
+                  Tips for writing a great review
+                </abbr>
+              </h6>
+            </div>
+            <textarea
+              type="text"
+              id="input-box"
+              placeholder="Tell people about your expierence"
+              className="input"
+              onChange={handleInputChange}
+            ></textarea>
+            <hr className="line2" />
+            <h4>Submit your review</h4>
+            <div className="inline-element">
+              <label className="certify">
+                <input type="checkbox" name="submit" />I certify that this
+                review is based on my own experience and is my genuine opinion
+                of this restaurant, and that I have no personal or business
+                relationship with this establishment, and have not been offered
+                any incentive or payment originating from the establishment to
+                write this review. I understand that Tripadvisor has a
+                zero-tolerance policy on fake reviews.
+              </label>
+            </div>
+            <button className="submit" type="submit" onClick={handleSubmit}>
+              Submit your review
+            </button>
           </div>
-          <textarea
-            type="text"
-            id="input-box"
-            placeholder="Tell people about your expierence"
-            className="input"
-            onChange={handleInputChange}
-          ></textarea>
-          <hr className="line2" />
-          <h4>Submit your review</h4>
-          <div className="inline-element">
-            <label className="certify">
-              <input type="checkbox" name="submit" />I certify that this review
-              is based on my own experience and is my genuine opinion of this
-              restaurant, and that I have no personal or business relationship
-              with this establishment, and have not been offered any incentive
-              or payment originating from the establishment to write this
-              review. I understand that Tripadvisor has a zero-tolerance policy
-              on fake reviews.
-            </label>
-          </div>
-          <button className="submit" type="submit" onClick={handleSubmit}>
-            Submit your review
-          </button>
         </div>
+        <script src="script.js"></script>
       </div>
-      <script src="script.js"></script>
     </div>
   );
 };
