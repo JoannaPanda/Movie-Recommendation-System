@@ -1,10 +1,8 @@
-
-
 body {
-    background-image: url("../images/cinema.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 88%;
-    height: 800;
-  }
+  background-image: url("../images/cinema.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 88%;
+  height: 800;
+}

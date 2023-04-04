@@ -25,6 +25,7 @@ import OtherWishlist from "./components/otherWishlist";
 import DirectorPage from "./components/directorPage";
 import MovieRankings from "./components/movieRanking";
 import NewMoviePage from "./components/newMoviePage";
+import Profile from "./newReview/profile";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/director/:director" element={<DirectorPage />} />
           <Route path="/movierankings" element={<MovieRankings />} />
           <Route path="/newmoviepage" element={<NewMoviePage />} />
+          <Route path="/profile/:uid" element={<Profile />} />
         </Routes>
       </div>
     </Router>
