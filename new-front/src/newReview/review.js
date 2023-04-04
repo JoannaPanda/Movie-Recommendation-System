@@ -91,11 +91,13 @@ const ListComment = () => {
                     />
                 </div>
                 <div style={{ marginTop: "50px", fontSize: "15px" }}>Claimed</div>
-                <div>
-                    <img
-                        className="profile_poster"
-                        src={require("../CommentImage/profile.png")}
-                    />
+                {/* <div>
+                    <a href={`http://localhost:3000/profile/${Uid}`}> 
+                        <img
+                            className="profile_poster"
+                            src={require("../CommentImage/profile.png")}
+                        />
+                    </a>
                     <img
                         className="setting_poster"
                         src={require("../CommentImage/global.png" )}
@@ -104,7 +106,7 @@ const ListComment = () => {
                         className="setting_poster"
                         src={require("../CommentImage/setting.png")}
                     />
-                </div>
+                </div> */}
             </div>
 
             <div className="container-green">
@@ -136,13 +138,13 @@ const ListComment = () => {
                                 />
                             ))}
                         </div>
-                        <h5 style={{ marginTop: "0px", marginBottom: "10px" }}># {comments.length} of movie in Movie Finder</h5>
+                        <h5 style={{ marginTop: "0px", marginBottom: "10px" }}># {Math.floor(Math.random() * 200) + 1} of movie in Movie Finder</h5>
                         <h5 style={{ marginTop: "0px", marginBottom: "40px" }}># {comments.length} of movie finders reviews</h5>
 
                         <hr style={{ borderColor: '#e0e0e0', borderWidth: '1px', width: '90%' , opacity: '0.3'}} />
 
                         <h4 style={{ marginTop: "40px" }}>Type</h4>
-                        <h5>Drama / Comedy</h5>
+                        <h5>{movieInfo.Type}</h5>
                     </div>
                     </div>
                     <div className="white-box">
@@ -229,6 +231,27 @@ const ListComment = () => {
                                                 <img
                                                     className='good-poster'
                                                     src={require("../CommentImage/emptyGood.png")}
+                                                    onClick={() => {
+                                                        const data = {
+                                                            Cid: comment.Cid,
+                                                            token: token
+                                                        };
+                                                        fetch(`http://lbosau.exlb.org:9900/Comment/Like`, {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json'
+                                                        },
+                                                        body: JSON.stringify(data)
+                                                        }).then(response => {
+                                                        if (response.ok) {
+                                                            alert('Comment likes successfully');
+                                                            } else {
+                                                            throw new Error('Failed to likes comment');
+                                                            }
+                                                        }).catch(error => {
+                                                            console.log(error);
+                                                        });
+                                                    }}
                                                 />
                                             </div>
                                         </div>

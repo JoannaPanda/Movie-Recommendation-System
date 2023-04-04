@@ -13,12 +13,17 @@ const AddComment = () => {
     const [movieInfo, setMovieInfo] = useState([]);
     const [movieName, setMovieName] = useState([]);
     const [movieDirector, setMovieDirector] = useState([]);
+    const [givenScore, setGivenScore] = useState([]);
+    const [inputValue, setInputValue] = useState("");
 
     // useEffect(() => {
     //   const script = document.createElement("script");
     //   script.src = "./script.js";
     //   document.body.appendChild(script);
     // }, []);
+    function handleInputChange(event) {
+      setInputValue(event.target.value);
+    }
   
     useEffect(() => {
         // initial as empty when mid changed
@@ -69,6 +74,7 @@ const AddComment = () => {
     const rate = (circle) => {
       const circles = document.getElementsByClassName("circle-poster");
       const score = parseInt(circle.alt);
+      setGivenScore(score)
 
       for (let i = 0; i < circles.length; i++) {
           if (i < score) {
@@ -87,7 +93,15 @@ const AddComment = () => {
     };
 
     return (
-        <>
+        <div className='inline'>
+          <div>
+            <a href={`http://localhost:3000/comment/list/${mid}`}>
+              <img
+                  className="back_poster"
+                  src={require("../CommentImage/back.png")}
+              />
+            </a>
+          </div>
           <div className="left-column">
             <div className="inline-element">
               {<img 
@@ -156,6 +170,7 @@ const AddComment = () => {
                 id="input-box"
                 placeholder="Tell people about your expierence"
                 className="input"
+                onChange={handleInputChange}
               ></textarea>
               <hr className="line2" />
               <h4>Submit your review</h4>
@@ -170,11 +185,36 @@ const AddComment = () => {
                   policy on fake reviews.
                 </label>
               </div>
-              <button className="submit">Submit your review</button>
+              <button 
+                className="submit"
+                onClick={() => {
+                  const data = {
+                      Mid: mid,
+                      token: token,
+                      score: givenScore,
+                      comment: inputValue,
+                  };
+                  fetch(`http://lbosau.exlb.org:9900/Comment/add`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(data)
+                  }).then(response => {
+                  if (response.ok) {
+                      alert('Add comment successfully');
+                      } else {
+                      throw new Error('Failed to add comment');
+                      }
+                  }).catch(error => {
+                      console.log(error);
+                  });
+              }}
+                >Submit your review</button>
             </div>
           </div>
           <script src="script.js"></script>
-        </>
+        </div>
     );
 }
 

@@ -9,6 +9,11 @@ body {
     font-family: 'Trip Sans Regular', sans-serif;
 }
 
+.background {
+    background: linear-gradient(#e0e0e0 150px, #f2f2f2 50px);
+    padding-top: 30px;
+}
+
 .inline {
     display: flex;
 }
@@ -17,17 +22,16 @@ body {
     cursor: pointer;
 }
 
-
-
 /* container */
-.white-box {
+.profile-white-box {
     border: 2px solid #fff;
     padding: 20px;
     background-color: #ffffff;
 
     margin-left: 7%;
-    width: 83% !important;
+    width: 75% !important;
     height: 150px;
+    margin-top: 50px;
 }
 
 .white-small-box {
@@ -48,6 +52,13 @@ body {
     border: 2px solid #ddd;
 }
 
+.ban-poster {
+    width: 40px;
+    height: 40px;
+    margin-left: 700px;
+    cursor: pointer;
+}
+
 .user_poster {
     width: 60px;
     height: 60px;
@@ -56,7 +67,39 @@ body {
     border: 2px solid #ddd;
 }
 
-.movie_poster {
+.banlist_user_poster {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    margin-right: 15px;
+}
+
+.banlist_user_name {
+    margin-top: 2px;
+}
+
+.banlist_delete {
+    margin-left: auto; 
+    margin-right: 20px; 
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.banlist_email {
+    margin-top: -20px;
+    color: gray;
+    font-weight: 400;
+}
+
+.banlist_desc {
+    margin-top: -10px;
+    font-size:x-small;
+    font-weight: 700;
+}
+
+.profile-movie_poster {
     width: 60px;
     height: 80px;
     margin-left: -1px;
@@ -127,6 +170,8 @@ body {
 .modal-content {
     background-color: white;
     padding: 1rem;
+    width: 700px;
+    height: 500px;
 }
 
 .close-background {
@@ -140,4 +185,9 @@ body {
     height: 30px;
     margin-top: 10px;
     cursor: pointer;
+}
+
+#profile {
+    height: 100vh;
+    overflow: auto;
 }
