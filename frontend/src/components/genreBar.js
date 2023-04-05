@@ -33,8 +33,8 @@ const GenreBar = ({ genres, onSelect }) => {
               style={{
                 fontSize: "16px",
                 padding: "10px 20px",
-                backgroundColor: selectedGenre === genre ? "blue" : "grey",
-                color: selectedGenre === genre ? "white" : "black",
+                backgroundColor: selectedGenre === genre ? "blue" : "#5A5A5A",
+                color: selectedGenre === genre ? "white" : "white",
               }}
             >
               {genre}
