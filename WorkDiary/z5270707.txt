@@ -45,3 +45,7 @@ Week 6 is flexible week so nothing major happened. I contributed to writing most
 Week 7
 
 This week I spent most of the time working on sprint 2 tickets. I completed the 3 tickets relating to adding/removing movies from user wishlist by mid week 7. Then during the weekend, I completed the wishlist listing page. I plan to complete the user dashbooard part by early next week and start merging & preparing for demo.
+
+Week 8
+
+This week I completed my assigned user stories before the Sprint 2 demo, and helped other frontend teammates with fixing their bugs so that thier webpage could be connected to Backend API. I also modified the overall style of frontend before the demo so that it looks more consistent. After the demo, I hosted the retro meeting as the scrum master. I started writing the sprint 2 report in the later half of the week. 
