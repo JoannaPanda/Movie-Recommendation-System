@@ -153,7 +153,7 @@ namespace UNSoftWare.Map
         public static async void ListOrder(HttpContext context)
         {
             var moviesql = FSQL.Select<MV_Moive>();
-            moviesql.OrderBy(x => x.MovieName);
+            //moviesql.OrderBy(x => x.MovieName);
             if (bool.TryParse(context.Request.Query["desc"], out bool desc) && desc)
                 switch (context.Request.Query["orderby"])
                 {
@@ -190,7 +190,40 @@ namespace UNSoftWare.Map
             {
                 moviesql.Limit(limit);
             }
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(moviesql.ToList().ToArray()));
+            var mvs = moviesql.ToList().OrderBy(x => x.MovieName);
+            if (desc)
+                switch (context.Request.Query["orderby"])
+                {
+                    case "WishListCount":
+                        mvs = mvs.OrderByDescending(x => x.WishListCount);
+                        break;
+                    case "PublishDate":
+                        mvs = mvs.OrderByDescending(x => x.PublishDate);
+                        break;
+                    case "Score":
+                        mvs = mvs.OrderByDescending(x => x.Score);
+                        break;
+                    default:
+                        mvs = mvs.OrderByDescending(x => x.MovieName);
+                        break;
+                }
+            else
+                switch (context.Request.Query["orderby"])
+                {
+                    case "WishListCount":
+                        mvs = mvs.OrderBy(x => x.WishListCount);
+                        break;
+                    case "PublishDate":
+                        mvs = mvs.OrderBy(x => x.PublishDate);
+                        break;
+                    case "Score":
+                        mvs = mvs.OrderBy(x => x.Score);
+                        break;
+                    default:
+                        mvs = mvs.OrderBy(x => x.MovieName);
+                        break;
+                }
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(mvs.ToArray()));
         }
     }
 }

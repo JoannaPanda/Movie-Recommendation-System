@@ -31,12 +31,12 @@ namespace DataLoader
                 case "3":
                     LoadUser(data);
                     break;
-                case "4":
-                    for(int i = 62; i < 95;i++)
-                    {
-                        FSQL.Update<MV_Moive>().Where(x => x.Mid == i).Set(y => y.Score,
-                            MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == i).ToList())).ExecuteAffrows();
-                    }
+                //case "4":
+                //    for(int i = 62; i < 95;i++)
+                //    {
+                //        FSQL.Update<MV_Moive>().Where(x => x.Mid == i).Set(y => y.Score,
+                //            MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == i).ToList())).ExecuteAffrows();
+                //    }
                     break;
             }
 
@@ -61,6 +61,8 @@ namespace DataLoader
         {
             foreach (var d in data)
             {
+                if(d.Replace("\t","").Length == 0)
+                    continue;
                 var ds = d.Split('\t');
                 FSQL.Insert(new MV_Comment()
                 {
@@ -68,8 +70,8 @@ namespace DataLoader
                     Mid = int.Parse(ds[1]),
                     Score = byte.Parse(ds[2]),
                     Comment = ds[3],
-                    Like = int.Parse(ds[4]),
-                    DisLike = int.Parse(ds[5]),
+                    Like = rnd.Next(5) != 0 ? rnd.Next(0,200) : rnd.Next(0, 2000),
+                    DisLike = rnd.Next(5) != 0 ? rnd.Next(0, 200) : rnd.Next(0, 2000),
                 }).ExecuteAffrows();
             }
         }
