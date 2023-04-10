@@ -23,4 +23,14 @@ page in the front end. I further modified the header so that it can work properl
 showed the web page of search and detail page (which had been assigned to me). After the demo, my teammate and me had discuss the content for retrospective A report.
 
 week6:
-I build the bounce window in the front end so that we don't need to use alert. I complete my part fot the retrospective A report.
+I build the bounce window in the front end so that we don't need to use alert. I complete my part fot the retrospective A report. I create director page for the detail page, and I also created genrebar that can be used for home, sorting, searching page and recommandation list. 
+
+week7:
+I have completed all my task (sorting and filtering) for sprint 2 and the task the is left to be improved from sprint1 (for example the icon in the searching bar, bounce window). I fix the header so that if would not jump to 404 under some situcations. 
+
+Week8:
+I merged all my front end code with Yuemeng and Robert, so that our functionality can smoothly work together on Monday evening. 
+In the lab On Wenesday, I attend the demo B and perform the functionality that had been achieved by me, after the demo, I had the retrive meeting with other members.
+
+Week9:
+In the beginning of this week (Monday), I write the things td do for the report B.
