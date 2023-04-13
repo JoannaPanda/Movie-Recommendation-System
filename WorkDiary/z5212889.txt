@@ -29,3 +29,19 @@ Today I completed the first version of my crawler. This crawer is written in pyt
 
 week4 Sat+SUn
 Today I was required by the frontend group to have a new function which could download all the movie poster and actor's pictures. So that they could later post the pictures on the movie information page. I worked on the weekends and completed this function. 
+
+Week5 Sat
+This week I managed the implement the first version of the image downloading function. I crawed poster, cast pictures with each actor's name for all 70 movies.
+I updated the databass and our website can now display all these pictures with correct name.
+
+Week6 
+This week I continued to work on my crawler to make it faster. I also continue to generate data and update the database for the rest of the movies.
+
+Week 7 
+This week I workinf on extending the database by increase the number of movies to 200. I also modify the crawler to make it generate more comments and exclude the repetated comments. The frontend team asked me to add more zero mark movies to the database. This will make our movie ranking looks better. 
+
+week8 
+This week I encourter a challenge. I was planning to complete generating data on Tuesday. But at Tuesday evening, when I only have 20 movies left for the movie data generation, my crawler suddenly runs very slowly and eventually stopped responding. I was very confused as this situation never happened before. I went to the website rotten tomato and found that the website was responding extremly slowly as well. I tried to run and fix the code for 30 minutes but still could not get it generate datas as before. I was very worried as we must finalising everything tonight in order to get the demo presentation go well tomorrow. As the rotten tomato stopped responding, I decidede to manually download the data. It was a very painful experience as I have to copy all the comments, and click to download the pictures for all the actors one by one. But eventually, I managed to generate all the data in time, and our database was successfually updated before the demo. 
+
+Week 8 Sat
+Right after the wed demo, I had another looked at my code and rotten tomato, and realised there was a big change of the website. The structure and tags has been changed a lot, so my oriangal code could no longer generate movie informations. I rewrite the codes during the weekend and kept working on updating the databse. 
