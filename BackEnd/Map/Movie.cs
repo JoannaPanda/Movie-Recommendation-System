@@ -92,14 +92,38 @@ namespace UNSoftWare.Map
                         usr.SetPreferenceModel(pm);
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                     }
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
+                }
+            }
+            else
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync("No Movie Found");
+                return;
+            }
+        }
+        /// <summary>
+        /// Get Movie Recommend for Movie
+        /// </summary>
+        public static async void RecommendforMovie(HttpContext context)
+        {
+            if (long.TryParse(context.Request.Query["Mid"], out long mid))
+            {
+                var movie = FSQL.Select<MV_Moive>().Where(a => a.Mid == mid).First();
+                if (movie == null)
+                {
+                    context.Response.StatusCode = 404;
+                    await context.Response.WriteAsync("No Movie Found");
+                    return;
+                }
+                else
+                {
                     var recom = FSQL.Select<MV_Moive>()
                         .Where(a => a.Type == movie.Type || a.Director == movie.Director || movie.Tags.Any(y => a.Tag.Contains(y))).ToList();
                     recom.RemoveAll(x => x.Mid == mid);
 
-                    var jret = new JObject();
-                    jret["movieinfo"] = JObject.Parse(JsonConvert.SerializeObject(movie));
-                    jret["recommendation"] = JArray.Parse(JsonConvert.SerializeObject(recom.ToArray()));
-                    await context.Response.WriteAsync(jret.ToString());
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(recom.ToArray()));
                 }
             }
             else
