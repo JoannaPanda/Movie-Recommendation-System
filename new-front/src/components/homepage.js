@@ -3,6 +3,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import GenreBar from "./genreBar";
+import axios from "axios";
+import GenreMovies from "./getGenremovie";
 const TopTenMovies = () => {
   const [movies, setMovies] = useState([]);
 
@@ -69,10 +72,17 @@ const TopTenMovies = () => {
               margin: "10px 0",
               width: "100%",
               fontSize: "17px",
+              color: "white",
             }}
           >
             <Link to={`/movieinfo/${movie.Mid}`}>
-              <div style={{ marginRight: "10px", fontWeight: "bold" }}>
+              <div
+                style={{
+                  marginRight: "10px",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
                 {movie.MovieName}
               </div>
             </Link>
@@ -290,6 +300,7 @@ const movies = [
 ];
 
 function Homepage() {
+  const [selectedGenre, setSelectedGenre] = useState("xxxxxxxxxxxxx");
   const settings = {
     dots: false,
     infinite: true,
@@ -329,6 +340,12 @@ function Homepage() {
     ],
   };
 
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+  };
+
+  const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
+
   return (
     <div>
       <input
@@ -345,7 +362,6 @@ function Homepage() {
           fontWeight: "bold",
         }}
       />
-
       <Slider {...settings}>
         {movies.map((movie) => (
           <Link to={`/movieinfo/${movie.Mid}`}>
@@ -359,9 +375,77 @@ function Homepage() {
           </Link>
         ))}
       </Slider>
-
       <TopTenMovies />
+      <Link to={`/movierankings`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "white",
+            borderColor: "white",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE ALL →
+        </button>
+      </Link>
+
       <NewMovies />
+      <Link to={`/newmoviepage`}>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            border: "2px solid black",
+            color: "white",
+            borderColor: "white",
+            padding: "12px 20px",
+            fontSize: 12,
+            borderRadius: 4,
+            marginTop: 50,
+            cursor: "pointer",
+          }}
+        >
+          SEE ALL →
+        </button>
+      </Link>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          borderRadius: "10px",
+        }}
+      >
+        <GenreBar
+          genres={[
+            "Comedy",
+            "Action",
+            "Horror",
+            "Romance",
+            "Sci-fi",
+            "Kids & family",
+            "Mystery & thriller",
+            "Crime",
+            "History",
+            "Western",
+            "Fantasy",
+          ]}
+          onSelect={handleGenreSelect}
+          style={{
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "100px",
+            borderRadius: "10px",
+          }}
+        />
+      </div>
+
+      <GenreMovies genre={usedGenre} />
     </div>
   );
 }

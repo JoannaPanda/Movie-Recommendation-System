@@ -59,7 +59,7 @@ button img {
   height: 100px;
 }
 
-/* body {
+body {
   background-image: url("../images/prefbg.png");
   background-size: cover;
   background-position: center;
@@ -67,7 +67,7 @@ button img {
   width: 100%;
   height: 800px;
   opacity: 0.75;
-} */
+}
 
 .movie-preference-container {
   display: flex;
