@@ -315,6 +315,12 @@ namespace UNSoftWare.Map
 
                 if (int.TryParse(context.Request.Form["Uid"], out int uid))
                 {
+                    if (uid == usr.Uid)
+                    {
+                        context.Response.StatusCode = 406;
+                        await context.Response.WriteAsync("Can not ban Self");
+                        return;
+                    }
                     var banusr = FSQL.Select<MV_User>().Where(a => a.Uid == uid).First();
                     if (banusr == null)
                     {
