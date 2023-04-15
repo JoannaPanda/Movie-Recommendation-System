@@ -19,11 +19,11 @@ const AddComment = () => {
   const [movieDirector, setMovieDirector] = useState([]);
   const [givenScore, setGivenScore] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [ratingValue, setRatingValue] = useState(3);
-  const [rating1Value, setRating1Value] = useState(3);
-  const [rating2Value, setRating2Value] = useState(3);
-  const [rating3Value, setRating3Value] = useState(3);
-  const [rating4Value, setRating4Value] = useState(3);
+  const [ratingValue, setRatingValue] = useState(0);
+  const [rating1Value, setRating1Value] = useState(0);
+  const [rating2Value, setRating2Value] = useState(0);
+  const [rating3Value, setRating3Value] = useState(0);
+  const [rating4Value, setRating4Value] = useState(0);
   // const [rating1String, setRating1String] = useState("");
   // const [rating2String, setRating2String] = useState("");
   // const [rating3String, setRating3String] = useState("");
@@ -95,15 +95,17 @@ const AddComment = () => {
   // }, []);
   function handleInputChange(event) {
     const ratestr =
-      "Plot: " +
-      ratingStrings[rating1Value] +
-      ";\n Actors: " +
-      ratingStrings[rating2Value] +
-      ";\n Music: " +
-      ratingStrings[rating3Value] +
-      ";\n Production: " +
-      ratingStrings[rating4Value] +
-      ".\n";
+      ratingValue == 0
+        ? ""
+        : "Plot: " +
+          ratingStrings[rating1Value] +
+          ";\n Actors: " +
+          ratingStrings[rating2Value] +
+          ";\n Music: " +
+          ratingStrings[rating3Value] +
+          ";\n Production: " +
+          ratingStrings[rating4Value] +
+          ".\n";
     setInputValue(ratestr + event.target.value);
     // setRatingString(event.target.value);
   }
