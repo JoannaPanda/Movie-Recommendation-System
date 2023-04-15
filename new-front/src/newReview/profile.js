@@ -5,6 +5,7 @@ import axios from "axios";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
+import "../styles/progress.css";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -255,9 +256,7 @@ const Profile = () => {
     used_comment_length < 50 ? (used_comment_length % 10) * 10 : 100;
   const rewards =
     used_comment_length < 50
-      ? `You can have ${level * 5} positions in your Ban list and Wish List, ${
-          10 - (used_comment_length % 10)
-        } more reviews to ${nextLevel}`
+      ? `${10 - (used_comment_length % 10)} more reviews to ${nextLevel}`
       : `Great!!! You have unlimited positions for your Ban list and Wish List`;
   return (
     <div id="profile">
@@ -339,13 +338,26 @@ const Profile = () => {
                     {level}
                   </h4>
                 </div>
-                <div style={{ marginLeft: 40 }}>
-                  <h4>{rewards}</h4>
+                <div>
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginTop: -40,
+                      marginRight: "1rem",
+                      marginLeft: "170px",
+                    }}
+                  >
+                    <h4 style={{ marginRight: "1rem" }}>{rewards}</h4>
+                    <div className="pass-instruction">
+                      <span>&#63;</span>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: -30,
                     }}
                   >
                     <h4 style={{ marginRight: "10px" }}>Level {level}</h4>
@@ -359,6 +371,7 @@ const Profile = () => {
                         style={{ marginTop: "-10px" }}
                       />
                     </div>
+
                     <h4 style={{ marginLeft: "10px" }}>{nextLevel}</h4>
                   </div>
                 </div>

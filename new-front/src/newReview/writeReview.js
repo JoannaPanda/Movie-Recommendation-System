@@ -94,17 +94,18 @@ const AddComment = () => {
   //   document.body.appendChild(script);
   // }, []);
   function handleInputChange(event) {
-    const ratestr =
-      "Plot: " +
-      ratingStrings[rating1Value] +
-      ";\n Actors: " +
-      ratingStrings[rating2Value] +
-      ";\n Music: " +
-      ratingStrings[rating3Value] +
-      ";\n Production: " +
-      ratingStrings[rating4Value] +
-      ".\n";
-    setInputValue(ratestr + event.target.value);
+    const ratestr = (ratingValue = 0
+      ? ""
+      : "Plot: " +
+        ratingStrings[rating1Value] +
+        ";\n Actors: " +
+        ratingStrings[rating2Value] +
+        ";\n Music: " +
+        ratingStrings[rating3Value] +
+        ";\n Production: " +
+        ratingStrings[rating4Value] +
+        ".\n");
+    setInputValue(event.target.value);
     // setRatingString(event.target.value);
   }
 
@@ -242,7 +243,7 @@ const AddComment = () => {
 
           <h4 className="adv2">Thanks!</h4>
           <hr className="line" />
-          <StarRating
+          {/* <StarRating
             name="Plot"
             value={rating1Value}
             onValueChange={handleRating1Change}
@@ -265,7 +266,7 @@ const AddComment = () => {
           <p>
             According to your four sub-ratings, the advised overall rating is{" "}
             {Math.round(ratingValue / 4)}.
-          </p>
+          </p> */}
           <h5>Your overall rating of this movie</h5>
           <div className="rating-container">
             <div className="inline-element">
