@@ -4,6 +4,8 @@ import "./profile.css";
 import axios from "axios";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
+import ProgressBar from "@ramonak/react-progress-bar";
+import "../styles/progress.css";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -71,9 +73,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       banlist.map((uid) =>
-        fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
-        ).then((response) => response.json())
+        fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`).then(
+          (response) => response.json()
+        )
       )
     ).then((users) => {
       setBanUser(users);
@@ -109,9 +111,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       visibleComments.map((comment) =>
-        fetch(
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
-        ).then((response) => response.json())
+        fetch(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`).then(
+          (response) => response.json()
+        )
       )
     )
       .then((data) => {
@@ -210,19 +212,13 @@ const Profile = () => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d) => color(d.data.label))
-      .on("mouseover", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("d", outerArc);
+      .on("mouseover", function () {
+        d3.select(this).transition().duration(200).attr("d", outerArc);
       })
-      .on("mouseout", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("d", arc);
+      .on("mouseout", function () {
+        d3.select(this).transition().duration(200).attr("d", arc);
       })
-      .each(function(d) {
+      .each(function (d) {
         this._current = d;
       });
 
@@ -252,6 +248,16 @@ const Profile = () => {
     };
   }, [progress]);
 
+  const used_comment_length = comments.length;
+  const level =
+    used_comment_length < 50 ? Math.floor(used_comment_length / 10) + 1 : 5;
+  const nextLevel = level < 4 ? `Level ${level + 1}` : "Complete";
+  const completed =
+    used_comment_length < 50 ? (used_comment_length % 10) * 10 : 100;
+  const rewards =
+    used_comment_length < 50
+      ? `${10 - (used_comment_length % 10)} more reviews to ${nextLevel}`
+      : `Great!!! You have unlimited positions for your Ban list and Wish List`;
   return (
     <div id="profile">
       <div className="background">
@@ -325,6 +331,49 @@ const Profile = () => {
                       {Object.keys(userInfo.WishList).length}
                     </h4>
                   )}
+                </div>
+                <div>
+                  <h4 style={{ marginLeft: "40px" }}>Level</h4>
+                  <h4 style={{ marginLeft: "50%", marginTop: "-20px" }}>
+                    {level}
+                  </h4>
+                </div>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "1rem",
+                      marginLeft: "170px",
+                    }}
+                  >
+                    <h4 style={{ marginRight: "1rem" }}>{rewards}</h4>
+                    <div className="pass-instruction">
+                      <span>&#63;</span>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: -30,
+                    }}
+                  >
+                    <h4 style={{ marginRight: "10px" }}>Level {level}</h4>
+                    <div style={{ width: "400px" }}>
+                      {/* learnt progress bar from
+                      https://www.tutorialspoint.com/how-to-create-progress-bar-in-reactjs */}
+                      <ProgressBar
+                        completed={completed}
+                        bgColor="green"
+                        animateOnRender={true}
+                        style={{ marginTop: "-10px" }}
+                      />
+                    </div>
+
+                    <h4 style={{ marginLeft: "10px" }}>{nextLevel}</h4>
+                  </div>
                 </div>
                 {isDialogOpen && (
                   <div className="modal">

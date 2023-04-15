@@ -24,6 +24,10 @@ const AddComment = () => {
   const [rating2Value, setRating2Value] = useState(0);
   const [rating3Value, setRating3Value] = useState(0);
   const [rating4Value, setRating4Value] = useState(0);
+  const [rating1Num, setrating1Num] = useState(0);
+  const [rating2Num, setrating2Num] = useState(0);
+  const [rating3Num, setrating3Num] = useState(0);
+  const [rating4Num, setrating4Num] = useState(0);
   // const [rating1String, setRating1String] = useState("");
   // const [rating2String, setRating2String] = useState("");
   // const [rating3String, setRating3String] = useState("");
@@ -44,7 +48,6 @@ const AddComment = () => {
     3: "Average",
     2: "Below Average",
     1: "Poor",
-    0: "Terrible",
   };
 
   const handleRating1Change = (newValue) => {
@@ -52,6 +55,12 @@ const AddComment = () => {
     const updatedRatingValue =
       newValue + rating2Value + rating3Value + rating4Value;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating1Num(1);
+    } else {
+      setrating1Num(0);
+    }
+
     // setRating1String("Plot is " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -62,6 +71,11 @@ const AddComment = () => {
     const updatedRatingValue =
       rating1Value + newValue + rating3Value + rating4Value;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating2Num(1);
+    } else {
+      setrating2Num(0);
+    }
     // setRating2String("Characters are " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -72,6 +86,11 @@ const AddComment = () => {
     const updatedRatingValue =
       rating1Value + rating2Value + newValue + rating4Value;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating3Num(1);
+    } else {
+      setrating3Num(0);
+    }
     // setRating3String("Audio is " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -82,6 +101,11 @@ const AddComment = () => {
     const updatedRatingValue =
       rating1Value + rating2Value + rating3Value + newValue;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating4Num(1);
+    } else {
+      setrating4Num(0);
+    }
     // setRating4String("Visuals are " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -266,7 +290,13 @@ const AddComment = () => {
           />
           <p>
             According to your four sub-ratings, the advised overall rating is{" "}
-            {Math.round(ratingValue / 4)}.
+            {Math.round(
+              ratingValue / (rating1Num + rating2Num + rating3Num + rating4Num)
+            )}
+            {console.log(rating1Num)}
+            {console.log(rating2Num)}
+            {console.log(rating3Num)}
+            {console.log(rating4Num)}.
           </p>
           <h5>Your overall rating of this movie</h5>
           <div className="rating-container">

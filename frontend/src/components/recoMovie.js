@@ -18,25 +18,25 @@ function RecoMovies(props) {
       setToken(storedToken);
     }
   }, []);
-
+  console.log(token);
   useEffect(() => {
     setMovies([]);
-
+    console.log(`recoused token ${token}`);
     axios
       .get(
-        `http://lbosau.exlb.org:9900/Movie/Info?Mid=${recoid}&token=${token}`
+        `http://lbosau.exlb.org:9900/Movie/Recommend?Mid=${recoid}&token=${token}`
       )
       .then((response) => {
         console.log(response);
-        console.log(response.data.recommendation);
-        setMovies(response.data.recommendation);
+        console.log(response.data);
+        setMovies(response.data);
       })
       .catch((error) => {
         console.log(error);
-        window.location.href = "/404";
+        // window.location.href = "/404";
       });
   }, [recoid]);
-  console.log(movies.Mid);
+
   const handleClick = () => {
     console.log("Clickable area clicked!");
   };
@@ -44,7 +44,7 @@ function RecoMovies(props) {
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-
+  console.log(`get reco as ${movies}`);
   const recommendedMovies = selectedGenre
     ? movies.filter((movie) => movie.Type === selectedGenre)
     : movies;
