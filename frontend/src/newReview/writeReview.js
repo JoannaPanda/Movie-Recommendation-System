@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./writeReview.css";
 import axios from "axios";
+import StarRating from "./starRating";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddComment = () => {
   // extract "mid" information from URL
@@ -16,6 +19,16 @@ const AddComment = () => {
   const [movieDirector, setMovieDirector] = useState([]);
   const [givenScore, setGivenScore] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [ratingValue, setRatingValue] = useState(3);
+  const [rating1Value, setRating1Value] = useState(3);
+  const [rating2Value, setRating2Value] = useState(3);
+  const [rating3Value, setRating3Value] = useState(3);
+  const [rating4Value, setRating4Value] = useState(3);
+  // const [rating1String, setRating1String] = useState("");
+  // const [rating2String, setRating2String] = useState("");
+  // const [rating3String, setRating3String] = useState("");
+  // const [rating4String, setRating4String] = useState("");
+  // const [ratingString, setRatingString] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -25,6 +38,55 @@ const AddComment = () => {
   }, []);
 
   console.log(token);
+  const ratingStrings = {
+    5: "Excellent",
+    4: "Good",
+    3: "Average",
+    2: "Below Average",
+    1: "Poor",
+    0: "Terrible",
+  };
+
+  const handleRating1Change = (newValue) => {
+    setRating1Value(newValue);
+    const updatedRatingValue =
+      newValue + rating2Value + rating3Value + rating4Value;
+    setRatingValue(updatedRatingValue);
+    // setRating1String("Plot is " + ratingStrings[newValue] + ", ");
+    // const rsting =
+    //   rating1String + rating2String + rating3String + rating4String;
+    // setRatingString(rsting);
+  };
+  const handleRating2Change = (newValue) => {
+    setRating2Value(newValue);
+    const updatedRatingValue =
+      rating1Value + newValue + rating3Value + rating4Value;
+    setRatingValue(updatedRatingValue);
+    // setRating2String("Characters are " + ratingStrings[newValue] + ", ");
+    // const rsting =
+    //   rating1String + rating2String + rating3String + rating4String;
+    // setRatingString(rsting);
+  };
+  const handleRating3Change = (newValue) => {
+    setRating3Value(newValue);
+    const updatedRatingValue =
+      rating1Value + rating2Value + newValue + rating4Value;
+    setRatingValue(updatedRatingValue);
+    // setRating3String("Audio is " + ratingStrings[newValue] + ", ");
+    // const rsting =
+    //   rating1String + rating2String + rating3String + rating4String;
+    // setRatingString(rsting);
+  };
+  const handleRating4Change = (newValue) => {
+    setRating4Value(newValue);
+    const updatedRatingValue =
+      rating1Value + rating2Value + rating3Value + newValue;
+    setRatingValue(updatedRatingValue);
+    // setRating4String("Visuals are " + ratingStrings[newValue] + ", ");
+    // const rsting =
+    //   rating1String + rating2String + rating3String + rating4String;
+    // setRatingString(rsting);
+  };
 
   // useEffect(() => {
   //   const script = document.createElement("script");
@@ -32,7 +94,18 @@ const AddComment = () => {
   //   document.body.appendChild(script);
   // }, []);
   function handleInputChange(event) {
-    setInputValue(event.target.value);
+    const ratestr =
+      "Plot: " +
+      ratingStrings[rating1Value] +
+      ";\n Actors: " +
+      ratingStrings[rating2Value] +
+      ";\n Music: " +
+      ratingStrings[rating3Value] +
+      ";\n Production: " +
+      ratingStrings[rating4Value] +
+      ".\n";
+    setInputValue(ratestr + event.target.value);
+    // setRatingString(event.target.value);
   }
 
   useEffect(() => {
@@ -100,10 +173,21 @@ const AddComment = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        alert("success!");
+        toast.success("Success!", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          onClose: () => {
+            setTimeout(() => {
+              window.location.href = `/comment/list/${mid}`;
+            }, 3000); // Delay redirect by 2 seconds
+          },
+        });
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Error!");
       });
   };
 
@@ -155,8 +239,33 @@ const AddComment = () => {
           <h4 className="adv">
             Your first-hand experiences really help other Movie Finders.
           </h4>
+
           <h4 className="adv2">Thanks!</h4>
           <hr className="line" />
+          <StarRating
+            name="Plot"
+            value={rating1Value}
+            onValueChange={handleRating1Change}
+          />
+          <StarRating
+            name="Actors"
+            value={rating2Value}
+            onValueChange={handleRating2Change}
+          />
+          <StarRating
+            name="Music"
+            value={rating3Value}
+            onValueChange={handleRating3Change}
+          />
+          <StarRating
+            name="Production"
+            value={rating4Value}
+            onValueChange={handleRating4Change}
+          />
+          <p>
+            According to your four sub-ratings, the advised overall rating is{" "}
+            {Math.round(ratingValue / 4)}.
+          </p>
           <h5>Your overall rating of this movie</h5>
           <div className="rating-container">
             <div className="inline-element">
@@ -210,9 +319,21 @@ const AddComment = () => {
               placeholder="Tell people about your expierence"
               className="input"
               onChange={handleInputChange}
-            ></textarea>
+              // value={
+              //   "Plot is " +
+              //   ratingStrings[rating1Value] +
+              //   ", Characters are " +
+              //   ratingStrings[rating2Value] +
+              //   ", Audio is " +
+              //   ratingStrings[rating3Value] +
+              //   ", Visuals are " +
+              //   ratingStrings[rating4Value]
+              // }
+            >
+              {console.log(comments)}
+            </textarea>
             <hr className="line2" />
-            <h4>Submit your review</h4>
+            {/* <h4>Submit your review</h4> */}
             <div className="inline-element">
               <label className="certify">
                 <input type="checkbox" name="submit" />I certify that this
@@ -231,6 +352,8 @@ const AddComment = () => {
         </div>
         <script src="script.js"></script>
       </div>
+      <ToastContainer />
+      {console.log(comments)}
     </div>
   );
 };
