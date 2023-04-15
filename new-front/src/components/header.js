@@ -13,12 +13,46 @@ import { Link } from "react-router-dom";
 
 function Header() {
   const [token, setToken] = useState(null);
+  const [userinfo, setUserinfo] = useState(null);
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
+
+  useEffect(() => {
+    const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
+    if (storedUserinfo) {
+      setUserinfo(storedUserinfo);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchUserinfo = async () => {
+      try {
+        const response = await fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+        );
+        const data = await response.json();
+        setUserinfo(data);
+      } catch (error) {
+        console.error("Error fetching user info: ", error);
+      }
+    };
+    if (userinfo) {
+      fetchUserinfo();
+    }
+  }, [userinfo]);
+
+  const getUid = () => {
+    if (userinfo && userinfo.Uid) {
+      return userinfo.Uid;
+    } else {
+      return "User";
+    }
+  };
+
   const handleClick = () => {
     console.log("Clickable area clicked!");
   };
@@ -42,34 +76,35 @@ function Header() {
           )}
         </li>
         <li>
-          <a href="Home">Home</a>
+          <div onClick={handleClick}>
+            <Link to="/home">
+              <div>Home</div>
+            </Link>
+          </div>
         </li>
         <li>
-          <a href="search">Search</a>
+          <div onClick={handleClick}>
+            <Link to="/search">
+              <div>Search</div>
+            </Link>
+          </div>
         </li>
         <li>
-          <a href="contact">About&Contact</a>
+          <div onClick={handleClick}>
+            <Link to="/contact">
+              <div>About&Contact</div>
+            </Link>
+          </div>
+        </li>
+        <li>
+          <div onClick={handleClick}>
+            <Link to={`/profile/${getUid()}`}>
+              <div>Dashboard</div>
+            </Link>
+          </div>
         </li>
       </ul>
     </header>
-    //   <AppBar position="static">
-    //     <Toolbar>
-    //       <IconButton
-    //         size="large"
-    //         edge="start"
-    //         color="inherit"
-    //         aria-label="menu"
-    //         sx={{ mr: 2 }}
-    //       >
-    //         <MenuIcon />
-    //       </IconButton>
-
-    //       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-    //         GeeksforGeeks Header
-    //       </Typography>
-    //       <Button color="inherit">Login</Button>
-    //     </Toolbar>
-    //   </AppBar>
   );
 }
 

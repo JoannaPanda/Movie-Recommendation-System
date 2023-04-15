@@ -1,15 +1,39 @@
-
-
-
-
-
-button:hover {
-    background-color: #0e153a;
-    color: #fff;
+.searchInputs {
+  margin-top: 105px;
+  display: flex;
+  place-items: center;
 }
 
-button.selected {
-    background-color: #0e153a;
-    color: #fff;
+.search input {
+  background-color: white;
+  border: 0;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-size: 35px;
+  padding: 15px;
+  height: 50px;
+  width: 600px;
+  margin-left: 27%;
+  font-weight: bold;
+}
+.searchIcon {
+  height: 80px;
+  width: 70px;
+  background-color: white;
+  display: grid;
+  place-items: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: large;
 }
 
+input:focus {
+  outline: none;
+}
+.searchIcon sve {
+  font-size: 35px;
+}
+#clearBtn {
+  cursor: pointer;
+}
