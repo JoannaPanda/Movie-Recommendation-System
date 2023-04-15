@@ -94,16 +94,17 @@ const AddComment = () => {
   //   document.body.appendChild(script);
   // }, []);
   function handleInputChange(event) {
-    const ratestr =
-      "Plot: " +
-      ratingStrings[rating1Value] +
-      ";\n Actors: " +
-      ratingStrings[rating2Value] +
-      ";\n Music: " +
-      ratingStrings[rating3Value] +
-      ";\n Production: " +
-      ratingStrings[rating4Value] +
-      ".\n";
+    const ratestr = (ratingValue = 0
+      ? ""
+      : "Plot: " +
+        ratingStrings[rating1Value] +
+        ";\n Actors: " +
+        ratingStrings[rating2Value] +
+        ";\n Music: " +
+        ratingStrings[rating3Value] +
+        ";\n Production: " +
+        ratingStrings[rating4Value] +
+        ".\n");
     setInputValue(event.target.value);
     // setRatingString(event.target.value);
   }
