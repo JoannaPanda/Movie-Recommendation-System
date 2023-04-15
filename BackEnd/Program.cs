@@ -62,7 +62,6 @@ namespace UNSoftWare
             //Movie
             app.MapGet("/Movie/Recommend", Movie.Recommend);
             app.MapGet("/Movie/Info", Movie.Info);
-            app.MapGet("/Movie/RecommendforMovie", Movie.RecommendforMovie);
             app.MapPost("/Movie/add", Movie.add);
             app.MapGet("/Movie/Search", Movie.Search);
             app.MapGet("/Movie/ListOrder", Movie.ListOrder);

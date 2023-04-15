@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Xml.Linq;
@@ -36,33 +36,7 @@ namespace UNSoftWare.Map
                  ((string)form["performer"]).Replace(", ", ","), Convert.ToDateTime(form["publishdate"]), usr.Uid);
             movie.Mid = (int)FSQL.Insert(movie).ExecuteIdentity();
             await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
-        }
-        /// <summary>
-        /// Recommend Movie for User
-        /// </summary>
-        public static async void Recommend(HttpContext context)
-        {
-            var usr = GetUserInfofromToken(context);
-            if (usr == null || usr.PreferenceModels.Count == 0)
-            {
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(FSQL.Select<MV_Moive>().OrderBy("rand()").Limit(20).ToList().ToArray()));
-            }
-            else
-            {
-                var moives = FSQL.Select<MV_Moive>().ToList();
-
-                foreach (var moive in moives)
-                {
-                    foreach (var jr in usr.PreferenceModels)
-                    {
-                        if (moive.Tag.ToLower().Contains(jr.Key) || moive.Performer.ToLower().Contains(jr.Key)
-                            || moive.Director.ToLower() == jr.Key || moive.Type.ToLower() == jr.Key)
-                            moive.RankPoint += (int)jr.Value;
-                    }
-                }
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(moives.OrderByDescending(x => x.RankPoint).Take(20).ToArray()));
-            }
-        }
+        }        
         /// <summary>
         /// Get Movie Info
         /// </summary>
@@ -104,9 +78,9 @@ namespace UNSoftWare.Map
             }
         }
         /// <summary>
-        /// Get Movie Recommend for Movie
+        /// Get Movie Recommend
         /// </summary>
-        public static async void RecommendforMovie(HttpContext context)
+        public static async void Recommend(HttpContext context)
         {
             if (long.TryParse(context.Request.Query["Mid"], out long mid))
             {
@@ -121,8 +95,35 @@ namespace UNSoftWare.Map
                 {
                     var recom = FSQL.Select<MV_Moive>()
                         .Where(a => a.Type == movie.Type || a.Director == movie.Director || movie.Tags.Any(y => a.Tag.Contains(y))).ToList();
-                    recom.RemoveAll(x => x.Mid == mid);
 
+                    var usr = GetUserInfofromToken(context);
+                    if (usr != null)
+                    {
+                        var pm = usr.PreferenceModels;
+                        pm[movie.Type.ToLower()] = pm.GetValueOrDefault(movie.Type.ToLower()) + 1;
+                        pm[movie.Director.ToLower()] = pm.GetValueOrDefault(movie.Director.ToLower()) + 1;
+                        foreach (string tag in movie.Tags)
+                            pm[tag.ToLower()] = pm.GetValueOrDefault(tag.ToLower()) + 1;
+                        foreach (string per in movie.Performers)
+                            pm[per.ToLower()] = pm.GetValueOrDefault(per.ToLower()) + 1;
+                        usr.SetPreferenceModel(pm);
+                        FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
+
+                        var moives = FSQL.Select<MV_Moive>().ToList();
+
+                        foreach (var moive in moives)
+                        {
+                            foreach (var jr in usr.PreferenceModels)
+                            {
+                                if (moive.Tag.ToLower().Contains(jr.Key) || moive.Performer.ToLower().Contains(jr.Key)
+                                    || moive.Director.ToLower() == jr.Key || moive.Type.ToLower() == jr.Key)
+                                    moive.RankPoint += (int)jr.Value;
+                            }
+                        }
+                        recom.AddRange(moives.OrderByDescending(x => x.RankPoint).Take(20));
+                        recom.DistinctBy(x => x.Mid);
+                    }
+                    recom.RemoveAll(x => x.Mid == mid);
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(recom.ToArray()));
                 }
             }
@@ -132,7 +133,7 @@ namespace UNSoftWare.Map
                 await context.Response.WriteAsync("No Movie Found");
                 return;
             }
-        }
+        }       
         /// <summary>
         /// Search Movie
         /// </summary>
