@@ -25,27 +25,34 @@ const ListComment = () => {
     }
   }, []);
 
-  useEffect(() => {
-    // fetch comment
-    setIsLoading(true);
-    axios
-      .get(`http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}`)
-      .then((response) => {
-        setComment(response.data.commentinfo);
-        setVisibleComments(response.data.commentinfo.slice(0, 10));
-        setScore(response.data.score);
-        setScrollIndex(10);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  console.log("Token", token);
 
-    // fetch Movieinfo
-    axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
-      .then((response) => {
-        setMovieInfo(response.data.movieinfo);
-        setMovieName(response.data.movieinfo.MovieName);
+  useEffect(() => {
+    // fetch comment and movie info
+    setIsLoading(true);
+    Promise.all([
+      axios.get(
+        `http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=${token}`
+      ),
+      axios.get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`),
+    ])
+      .then(([commentResponse, movieResponse]) => {
+        setComment(commentResponse.data.commentinfo);
+        setVisibleComments(commentResponse.data.commentinfo.slice(0, 10));
+        setScore(commentResponse.data.score);
+        setScrollIndex(10);
+        console.log("Comment response", commentResponse.data);
+        console.log(
+          "Comment request URL: ",
+          `http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=${token}`
+        );
+        setMovieInfo(movieResponse.data.movieinfo);
+        setMovieName(movieResponse.data.movieinfo.MovieName);
+        console.log("Movie response", movieResponse.data);
+        console.log(
+          "Movie request URL: ",
+          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +60,7 @@ const ListComment = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [mid]);
+  }, [mid, token]);
 
   const loadMoreComments = useCallback(() => {
     if (scrollIndex >= comments.length) return;
