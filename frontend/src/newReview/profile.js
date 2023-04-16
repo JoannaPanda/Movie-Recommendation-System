@@ -6,6 +6,7 @@ import * as d3 from "d3";
 import { Link } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
 import "../styles/progress.css";
+import UserProfileImageUpload from "../components/profilePhoto";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -15,6 +16,7 @@ const Profile = () => {
   const [movieNames, setMovieNames] = useState([]);
   const [movieInfo, setMovieInfo] = useState([]);
   const [banlist, setBanlist] = useState([]);
+  const [ownBan, setOwnBan] = useState(0);
   const [banUser, setBanUser] = useState([]);
   const [director, setDirector] = useState([]);
   const [scores, setScores] = useState([]);
@@ -26,6 +28,15 @@ const Profile = () => {
   const [userinfo, setUserinfo] = useState(null);
   const [ouid, setOuid] = useState(null);
   const targetCount = 10;
+
+  // user level and according banlist & wishlist limits
+  const MAX_BANWISHS = {
+    1: 5,
+    2: 10,
+    3: 15,
+    4: 20,
+    5: 25,
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -70,12 +81,22 @@ const Profile = () => {
     document.body.classList.remove("modal-open");
   };
 
+  // profile image upload
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const handleImageDialogOpen = () => {
+    setIsImageDialogOpen(true);
+  };
+
+  const handleImageDialogClose = () => {
+    setIsImageDialogOpen(false);
+  };
+
   useEffect(() => {
     Promise.all(
       banlist.map((uid) =>
-        fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
+        ).then((response) => response.json())
       )
     ).then((users) => {
       setBanUser(users);
@@ -111,9 +132,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       visibleComments.map((comment) =>
-        fetch(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
+        ).then((response) => response.json())
       )
     )
       .then((data) => {
@@ -150,6 +171,7 @@ const Profile = () => {
         );
         const data = await response.json();
         setUserinfo(data);
+        setOwnBan(data.BanList.length);
       } catch (error) {
         console.error("Error fetching user info: ", error);
       }
@@ -171,9 +193,9 @@ const Profile = () => {
       const progress = Math.min(wishlistCount / targetCount, 1);
       setProgress(progress);
     }
-  }, [userInfo, token]);
+  }, [userinfo, token]);
 
-  console.log(ouid, uid);
+  // console.log(ouid, uid);
 
   const chartRef = useRef();
 
@@ -212,13 +234,19 @@ const Profile = () => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d) => color(d.data.label))
-      .on("mouseover", function () {
-        d3.select(this).transition().duration(200).attr("d", outerArc);
+      .on("mouseover", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", outerArc);
       })
-      .on("mouseout", function () {
-        d3.select(this).transition().duration(200).attr("d", arc);
+      .on("mouseout", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", arc);
       })
-      .each(function (d) {
+      .each(function(d) {
         this._current = d;
       });
 
@@ -277,36 +305,72 @@ const Profile = () => {
               src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
               className="user-poster"
             />
+            <img
+              src={require("../CommentImage/upload.png")}
+              onClick={handleImageDialogOpen}
+              className="imageUpload"
+              style={{ width: "30px", height: "30px", marginTop: "100px" }}
+            ></img>
+            {console.log(isImageDialogOpen)}
+            {isImageDialogOpen && (
+              <div className="modal">
+                <div>
+                  <div
+                    className="close-background"
+                    onClick={handleImageDialogClose}
+                  >
+                    {
+                      <img
+                        className="delete_poster2"
+                        src={require("../CommentImage/close.png")}
+                      />
+                    }
+                  </div>
+                  <div className="modal-content">
+                    <UserProfileImageUpload />
+                  </div>
+                </div>
+              </div>
+            )}
             <div>
               <div className="inline">
                 <h3 style={{ marginBottom: "6px", marginTop: "6px" }}>
-                  {userInfo.UserName !== "" ? userInfo.UserName : "Tong Xia"}
+                  {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
+                {/* {console.log(ownBan, level, MAX_BANWISHS[level])} */}
                 <img
                   className="ban-poster"
                   src={require("../CommentImage/ban.png")}
                   onClick={() => {
-                    const params = new URLSearchParams();
-                    params.append("token", token);
-                    params.append("Uid", uid);
-                    console.log(params.toString());
-                    fetch(`http://lbosau.exlb.org:9900/User/Banlist/add`, {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                      },
-                      body: params.toString(),
-                    })
-                      .then((response) => {
-                        if (response.ok) {
-                          alert("The user has been added to the banning list");
-                        } else {
-                          throw new Error("Failed to add banning list");
-                        }
+                    if (ownBan >= MAX_BANWISHS[level] && level !== "Complete") {
+                      alert(
+                        "You have exceeded the maximum number of bans for your user level."
+                      );
+                    } else {
+                      const params = new URLSearchParams();
+                      params.append("token", token);
+                      params.append("Uid", uid);
+                      console.log(params.toString());
+                      fetch(`http://lbosau.exlb.org:9900/User/Banlist/add`, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: params.toString(),
                       })
-                      .catch((error) => {
-                        console.log(error);
-                      });
+                        .then((response) => {
+                          if (response.ok) {
+                            alert(
+                              "The user has been added to the banning list"
+                            );
+                          } else {
+                            throw new Error("Failed to add banning list");
+                          }
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }
                   }}
                 />
               </div>
@@ -480,7 +544,7 @@ const Profile = () => {
                   />
                 </div>
                 <h5 className="userName">
-                  {userInfo.UserName !== "" ? userInfo.UserName : "Tong Xia"}
+                  {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h5>
                 <h6 className="writeReview">wrote a review</h6>
                 <div>
