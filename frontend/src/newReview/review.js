@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./review.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import LikeComment from "../components/likeComment";
 
 const ListComment = () => {
   // extract "mid" information from URL
@@ -286,7 +287,8 @@ const ListComment = () => {
                         <div className="comment">{comment.Comment}</div>
                         <div className="inline-element">
                           <h6>helpful?</h6>
-                          <img
+                          <LikeComment Cid={comment.Cid} />
+                          {/* <img
                             className="good-poster"
                             src={require("../CommentImage/emptyGood.png")}
                             onClick={() => {
@@ -316,7 +318,7 @@ const ListComment = () => {
                                   console.log(error);
                                 });
                             }}
-                          />
+                          /> */}
                         </div>
                       </div>
                     </div>
