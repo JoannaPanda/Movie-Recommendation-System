@@ -121,15 +121,20 @@ const AddComment = () => {
     const ratestr =
       ratingValue == 0
         ? ""
-        : "Plot: " +
-          ratingStrings[rating1Value] +
-          ";\n Actors: " +
-          ratingStrings[rating2Value] +
-          ";\n Music: " +
-          ratingStrings[rating3Value] +
-          ";\n Production: " +
-          ratingStrings[rating4Value] +
+        : (rating1Value > 0
+            ? "Plot: " + ratingStrings[rating1Value] + ";\n "
+            : "") +
+          (rating2Value > 0
+            ? "Actors: " + ratingStrings[rating2Value] + ";\n "
+            : "") +
+          (rating3Value > 0
+            ? "Music: " + ratingStrings[rating3Value] + ";\n "
+            : "") +
+          (rating4Value > 0
+            ? "Production: " + ratingStrings[rating4Value] + ";\n "
+            : "") +
           ".\n";
+
     setInputValue(ratestr + event.target.value);
     // setRatingString(event.target.value);
   }
