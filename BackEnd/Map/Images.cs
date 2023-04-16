@@ -54,9 +54,11 @@ namespace UNSoftWare.Map
                 await context.Response.WriteAsync("Error Token");
                 return;
             }
-            var mem = new Memory<byte>();
-            await context.Request.Body.ReadAsync(mem);
-            var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "User", usr.Uid + ".jpg");
+            var mem = new MemoryStream();
+            context.Request.EnableBuffering();
+            context.Request.Body.Position = 0;
+            await context.Request.Body.CopyToAsync(mem);
+            var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "User", usr.Uid + ".png");
             File.WriteAllBytes(imgpath, mem.ToArray());
             await context.Response.WriteAsync("Success");
             await context.Response.CompleteAsync();

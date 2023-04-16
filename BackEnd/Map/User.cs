@@ -225,6 +225,7 @@ namespace UNSoftWare.Map
                         usr.SetPreferenceModel(pm);
 
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
+                        FSQL.Update<MV_Moive>().Set(x => x.WishListCount, movie.WishListCount + 1).ExecuteAffrows();
                         await context.Response.WriteAsync("Success");
                         return;
                     }
@@ -436,61 +437,6 @@ namespace UNSoftWare.Map
             }
         }
 
-        /// <summary>
-        /// Add WishList
-        /// </summary>
-        public static async void add(HttpContext context)
-        {
-            var usr = PostUserInfofromToken(context);
-            if (usr == null)
-            {
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Error Token");
-                return;
-            }
-
-            if (int.TryParse(context.Request.Form["Mid"], out int mid))
-            {
-                var movie = FSQL.Select<MV_Moive>().Where(a => a.Mid == mid).First();
-                if (movie == null)
-                {
-                    context.Response.StatusCode = 404;
-                    await context.Response.WriteAsync("No Movie Found");
-                    return;
-                }
-                else
-                {
-                    var list = usr.GetWishlist();
-                    if (list.Contains(mid))
-                    {
-                        context.Response.StatusCode = 406;
-                        await context.Response.WriteAsync("Movie Already exists");
-                        return;
-                    }
-                    list.Add(mid);
-                    usr.SetWishlist(list);
-
-                    var pm = usr.PreferenceModels;
-                    pm[movie.Director.ToLower()] = pm.GetValueOrDefault(movie.Director.ToLower()) + 25;
-                    pm[movie.Type.ToLower()] = pm.GetValueOrDefault(movie.Type.ToLower()) + 25;
-                    foreach (string tag in movie.Tags)
-                        pm[tag.ToLower()] = pm.GetValueOrDefault(tag.ToLower()) + 25;
-                    foreach (string per in movie.Performers)
-                        pm[per.ToLower()] = pm.GetValueOrDefault(per.ToLower()) + 25;
-                    usr.SetPreferenceModel(pm);
-
-                    FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
-                    await context.Response.WriteAsync("Success");
-                    return;
-                }
-            }
-            else
-            {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync("No Movie Found");
-                return;
-            }
-        }
         /// <summary>
         /// Set JSON
         /// </summary>

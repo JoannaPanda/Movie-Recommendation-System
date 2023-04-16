@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using Ubiety.Dns.Core.Records;
 using UNSoftWare.DataBase;
 using static UNSoftWare.Map.User;
 using static UNSoftWare.Program;
@@ -67,7 +68,9 @@ namespace UNSoftWare.Map
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
                     }
 
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
+                    var jret = new JObject();
+                    jret["movieinfo"] = JObject.Parse(JsonConvert.SerializeObject(movie));
+                    await context.Response.WriteAsync(jret.ToString());
                 }
             }
             else

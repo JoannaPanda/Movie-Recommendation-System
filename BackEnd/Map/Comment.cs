@@ -77,8 +77,7 @@ namespace UNSoftWare.Map
 
                     //Re Cal Score
                     var comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == mid).ToList();
-                    movie.Score = MV_Comment.CalScore(comms);
-                    FSQL.Update<MV_Moive>().SetSource(movie).ExecuteAffrows();
+                    FSQL.Update<MV_Moive>().Set(x=>x.Score, MV_Comment.CalScore(comms)).ExecuteAffrows();
                 }
             }
             else
