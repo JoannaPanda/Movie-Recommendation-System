@@ -33,4 +33,8 @@ I merged all my front end code with Yuemeng and Robert, so that our functionalit
 In the lab On Wenesday, I attend the demo B and perform the functionality that had been achieved by me, after the demo, I had the retrive meeting with other members.
 
 Week9:
-In the beginning of this week (Monday), I write the things td do for the report B.
+In the beginning of this week (Monday), I write the things td do for the report B. Dring lab, I merged in and install all the required package in my local app and re-discuss the details of my tasks in sprint3 with frontend team.
+On Thuresday, I met with Yuemeng, and discuss the reward system with her as I would use the profile page and comment component which are partly intersect with her tasks. On that day, I add the progress bar and levels in the profile page. 
+Up to Saturday, I nearly complete my tasks for sprint3, I add the sub-ratings in the write review page, and give the users the advised overall rate which is based on the sub-ratings. Moreover, when they successfully post the review, The sub-ratings would appear as a string with users' self-writing review. 
+Moreover, I adjusted the recommandation system according to the change from backend. 
+At Saturday night, I merged all my code with Yuemeng into her branch.
