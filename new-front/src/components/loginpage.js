@@ -1,6 +1,9 @@
 import React from "react";
 import "../styles/Form.css";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const JSONbig = require("json-bigint");
 
 class LoginPage extends React.Component {
@@ -9,15 +12,31 @@ class LoginPage extends React.Component {
     this.state = {
       idoremail: "",
       password: "",
+      token: "",
+      userinfo: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    const userinfo = JSON.parse(localStorage.getItem("userinfo"));
+    if (token && userinfo) {
+      this.setState({ token, userinfo });
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { idoremail, password } = this.state;
     if (idoremail === "") {
-      alert("invalid username.");
+      // alert("invalid username.");
+      toast.error("Invalid username.", {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
       return;
     }
 
@@ -32,13 +51,18 @@ class LoginPage extends React.Component {
     })
       .then((response) => {
         if (!response.ok) {
+          toast.error("Login failed: " + response.status, {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
           throw new Error("Login failed: " + response.status);
         }
         console.log("Response status code:", response.status);
         return response.text();
       })
       .then((data) => {
-        alert("successful");
         if (data.length === 0) {
           throw new Error("Empty response data");
         }
@@ -46,7 +70,8 @@ class LoginPage extends React.Component {
           const jsonData = JSONbig.parse(data);
 
           console.log("Login successful:", jsonData);
-          alert("successful");
+          // alert("successful");
+
           const { token, userinfo } = jsonData;
 
           // store token and user info in local storage
@@ -58,15 +83,30 @@ class LoginPage extends React.Component {
           this.setState({ token: String(token), userinfo });
 
           // redirect to user dashboard
-          window.location.href = "/dashboard";
+          toast.success("Login Successful!", {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            onClose: () => {
+              setTimeout(() => {
+                window.location.href = "/dashboard";
+              }, 3000); // Delay redirect by 2 seconds
+            },
+          });
         } catch (error) {
-          console.error("Registration failed:", error);
-          alert(error);
+          console.error("Login failed:", error);
+          // alert(error);
+          toast.error("Login failed:", error, {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          });
         }
       })
       .catch((error) => {
         console.error(error);
-        alert(error);
       });
   }
 
@@ -110,16 +150,17 @@ class LoginPage extends React.Component {
           <button type="submit" className="form-submit">
             Sign In
           </button>
-          <Link to="/register" className="register-link">
-            Don't have an account? Register here.
+          <Link
+            to="/register"
+            className="register-link"
+            style={{
+              marginTop: "20px",
+              color: "white",
+            }}
+          >
+            Don't have an account? Register here
           </Link>
         </form>
-        {this.state.token && (
-          <div>
-            <p>Token: {this.state.token}</p>
-            <p>User Info: {JSON.stringify(this.state.userinfo)}</p>
-          </div>
-        )}
         <img
           style={{
             position: "absolute",
@@ -132,6 +173,7 @@ class LoginPage extends React.Component {
           src={require("../images/iconFull.png")}
           alt="Icon"
         />
+        <ToastContainer />
       </div>
     );
   }
