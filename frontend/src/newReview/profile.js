@@ -337,7 +337,7 @@ const Profile = () => {
                 <h3 style={{ marginBottom: "6px", marginTop: "6px" }}>
                   {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
-                {/* {console.log(ownBan, level, MAX_BANWISHS[level])} */}
+                {console.log(ownBan, level, MAX_BANWISHS[level])}
                 <img
                   className="ban-poster"
                   src={require("../CommentImage/ban.png")}
