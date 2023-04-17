@@ -104,7 +104,6 @@ function SearchPage() {
           "Crime",
           "History",
           "Western",
-          "Fantasy",
         ]}
         onSelect={handleGenreSelect}
         style={{
