@@ -6,15 +6,27 @@ import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
 
 function ListComment() {
-  const { mid, token } = useParams();
+  const { mid } = useParams();
   console.log("mid:", mid);
   const [comments, setComment] = useState([]);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  console.log("Token", token);
 
   useEffect(() => {
     setComment([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=NULL`)
+      .get(
+        `http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=${token}`
+      )
       .then((response) => {
         console.log(response);
         console.log(response.data.commentinfo);
@@ -101,7 +113,9 @@ function ListComment() {
                     }}
                   >
                     <div class="userFont">
-                      User {comment.Uid} gives {comment.Score} marks!!
+                      <Link to={`/wishlist/${comment.Uid}`}>
+                        User {comment.Uid} gives {comment.Score} marks!!
+                      </Link>
                     </div>
                     {Array.from({ length: comment.Score }, (_, i) => (
                       <img
