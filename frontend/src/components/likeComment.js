@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 function LikeComment({ Cid }) {
   const [liked, setLiked] = useState(false);
+  const [disliked, setdisliked] = useState(false);
   const [userinfo, setUserinfo] = useState({});
   const [ouid, setOuid] = useState("");
 
@@ -56,16 +57,58 @@ function LikeComment({ Cid }) {
     }
   };
 
+  const handleDislike = () => {
+    if (disliked) {
+      // Unlike the comment
+      const dislikedComments = JSON.parse(
+        localStorage.getItem("dislikedComments") || "[]"
+      );
+      const updatedDislikedComments = dislikedComments.filter(
+        (comment) => !(comment.Cid === Cid && comment.Uid === ouid)
+      );
+      localStorage.setItem(
+        "dislikedComments",
+        JSON.stringify(updatedDislikedComments)
+      );
+      setdisliked(false);
+    } else {
+      // Like the comment
+      const dislikedComments = JSON.parse(
+        localStorage.getItem("dislikedComments") || "[]"
+      );
+      const updatedDislikedComments = [...dislikedComments, { Cid: Cid, Uid: ouid }];
+      localStorage.setItem(
+        "likedComments",
+        JSON.stringify(updatedDislikedComments)
+      );
+      setdisliked(true);
+    }
+  }
   return (
     <div>
-      <button
+      <img
+        src={liked ? require("../CommentImage/liked.png") : require("../CommentImage/like.png")}
+        alt={liked ? "Liked" : "Not liked"}
         onClick={handleLike}
         style={{
-          color: liked ? "yellow" : "black",
+          cursor: "pointer",
+          width: "25px",
+          height: "25px",
+          marginRight: "5px",
+          marginLeft: "10px",
         }}
-      >
-        Like
-      </button>
+      />
+      <img
+        src={disliked ? require("../CommentImage/disliked.png") : require("../CommentImage/dislike.png")}
+        alt={disliked ? "disliked" : "Not disliked"}
+        onClick={handleDislike}
+        style={{
+          marginTop: "20px",
+          cursor: "pointer",
+          width: "25px",
+          height: "25px",
+        }}
+      />
     </div>
   );
 }

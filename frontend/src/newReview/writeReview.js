@@ -28,11 +28,6 @@ const AddComment = () => {
   const [rating2Num, setrating2Num] = useState(0);
   const [rating3Num, setrating3Num] = useState(0);
   const [rating4Num, setrating4Num] = useState(0);
-  // const [rating1String, setRating1String] = useState("");
-  // const [rating2String, setRating2String] = useState("");
-  // const [rating3String, setRating3String] = useState("");
-  // const [rating4String, setRating4String] = useState("");
-  // const [ratingString, setRatingString] = useState("");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -60,11 +55,6 @@ const AddComment = () => {
     } else {
       setrating1Num(0);
     }
-
-    // setRating1String("Plot is " + ratingStrings[newValue] + ", ");
-    // const rsting =
-    //   rating1String + rating2String + rating3String + rating4String;
-    // setRatingString(rsting);
   };
   const handleRating2Change = (newValue) => {
     setRating2Value(newValue);
@@ -186,6 +176,12 @@ const AddComment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const certifyCheckbox = document.querySelector('input[name="submit"]');
+    if (!certifyCheckbox.checked) {
+      alert("Please certify that this review is based on your own experience and is your genuine opinion.");
+      return;
+    }
+
     const params = new URLSearchParams();
     console.log("heretoken", token);
     params.append("Mid", mid);
@@ -270,7 +266,7 @@ const AddComment = () => {
           <h4 className="adv">
             Your first-hand experiences really help other Movie Finders.
           </h4>
-
+          <h4>Please note that your re-comment will overwrite the previous one.</h4>
           <h4 className="adv2">Thanks!</h4>
           <hr className="line" />
           <StarRating

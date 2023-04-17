@@ -1,5 +1,15 @@
+.search {
+  width: 100%;
+  height: auto;
+  background-image: url("../images/prefbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #400b0a;
+  text-align: center;
+}
+
 .searchInputs {
-  margin-top: 105px;
   display: flex;
   place-items: center;
 }

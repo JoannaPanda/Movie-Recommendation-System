@@ -13,6 +13,7 @@ const ListComment = () => {
   const [score, setScore] = useState([]);
   const [movieInfo, setMovieInfo] = useState([]);
   const [movieName, setMovieName] = useState([]);
+  const [rank, setRank] = useState(0);
 
   const [visibleComments, setVisibleComments] = useState([]);
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -25,8 +26,28 @@ const ListComment = () => {
       setToken(storedToken);
     }
   }, []);
-
-  console.log("Token", token);
+  
+  useEffect(() => {
+    fetch("http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(mid);
+        data.forEach((movie) => {
+          console.log(`Movie Mid: ${movie.Mid}`);
+        });
+        const movieIndex = data.findIndex(movie => parseInt(movie.Mid) === parseInt(mid));
+        console.log(movieIndex);
+        setRank(movieIndex);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [])
 
   useEffect(() => {
     // fetch comment and movie info
@@ -92,44 +113,28 @@ const ListComment = () => {
 
   return (
     <div id="comment">
-      <div className="inline-element">
+      <div className="review_inline-element">
         <a href="https://www.google.com" target="_blank">
           <img
-            className="back_poster"
+            className="review_back_poster"
             src={require("../CommentImage/back.png")}
           />
         </a>
-        <div className="title">{movieName}</div>
-        <div className="pass_poster">
+        <div className="review_title">{movieName}</div>
+        <div className="review_pass_poster">
           <img
-            className="pass_poster"
+            className="review_pass_poster"
             src={require("../CommentImage/pass.png")}
           />
         </div>
         <div style={{ marginTop: "50px", fontSize: "15px" }}>Claimed</div>
-        {/* <div>
-                    <a href={`http://localhost:3000/profile/${Uid}`}> 
-                        <img
-                            className="profile_poster"
-                            src={require("../CommentImage/profile.png")}
-                        />
-                    </a>
-                    <img
-                        className="setting_poster"
-                        src={require("../CommentImage/global.png" )}
-                    />
-                    <img
-                        className="setting_poster"
-                        src={require("../CommentImage/setting.png")}
-                    />
-                </div> */}
       </div>
 
-      <div className="container-green">
-        <div className="inline-element">
-          <div className="container-largegreen"></div>
-          <div className="covid-noticeL">COVID-19 update:</div>
-          <div className="covid-noticeS">
+      <div className="review_container-green">
+        <div className="review_inline-element">
+          <div className="review_container-largegreen"></div>
+          <div className="review_covid-noticeL">COVID-19 update:</div>
+          <div className="review_covid-noticeS">
             {" "}
             Enjoy movies safely with our enhanced health measures.
           </div>
@@ -137,38 +142,38 @@ const ListComment = () => {
             href="https://www.healthdirect.gov.au/covid19-restriction-checker/entertainment-and-amusement-venues/nsw"
             target="_blank"
           >
-            <div className="covid-noticeM">Read more</div>
+            <div className="review_covid-noticeM">Read more</div>
           </a>
         </div>
       </div>
 
-      <div className="container-grey">
-        <div className="inline-element">
+      <div className="review_container-grey">
+        <div className="review_inline-element">
           <div>
             {
               <img
-                className="movie_poster"
+                className="review_movie_poster"
                 src={`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`}
               />
             }
           </div>
-          <div className="white-box">
+          <div className="review_white-box">
             <div style={{ padding: "20px" }}>
               <h4 style={{ marginTop: "10px" }}>Ratings and reviews</h4>
-              <div className="inline-element">
+              <div className="review_inline-element">
                 <h3 style={{ marginTop: "0px", marginRight: "10px" }}>
                   {Number(parseFloat(score).toFixed(2))}
                 </h3>
                 {[...Array(Math.floor(Number(score)))].map((_, index) => (
                   <img
                     key={index}
-                    className="rest_circle"
+                    className="review_rest_circle"
                     src={require("../CommentImage/circle.png")}
                   />
                 ))}
               </div>
               <h5 style={{ marginTop: "0px", marginBottom: "10px" }}>
-                # {Math.floor(Math.random() * 200) + 1} of movie in Movie Finder
+                # {rank} of movie in Movie Finder
               </h5>
               <h5 style={{ marginTop: "0px", marginBottom: "40px" }}>
                 # {comments.length} of movie finders reviews
@@ -187,7 +192,7 @@ const ListComment = () => {
               <h5>{movieInfo.Type}</h5>
             </div>
           </div>
-          <div className="white-box">
+          <div className="review_white-box">
             <div style={{ padding: "20px" }}>
               <h4 style={{ marginTop: "10px" }}>Location and contact</h4>
               <a
@@ -195,45 +200,45 @@ const ListComment = () => {
                 target="_blank"
               >
                 <img
-                  className="cinema_poster"
+                  className="review_cinema_poster"
                   src={require("../CommentImage/cinemaAddress.png")}
                 />
-                <div className="inline-element">
+                <div className="review_inline-element">
                   <img
-                    className="address_poster"
+                    className="review_address_poster"
                     src={require("../CommentImage/location.png")}
                   />
-                  <div className="address">
+                  <div className="review_address">
                     45 St Pauls St, Randwick NSW 2031
                   </div>
                   <img
-                    className="address_poster"
+                    className="review_address_poster"
                     src={require("../CommentImage/call.png")}
                   />
                 </div>
               </a>
-              <div className="inline-element">
+              <div className="review_inline-element">
                 <img
-                  className="address_poster"
+                  className="review_address_poster"
                   src={require("../CommentImage/call.png")}
                 />
-                <div className="address">(02) 83 24 25 00</div>
+                <div className="review_address">(02) 83 24 25 00</div>
               </div>
               <h6>improve this list?</h6>
             </div>
           </div>
         </div>
 
-        <div className="container-write-comments">
+        <div className="review_container-write-comments">
           <h5 style={{ fontWeight: "100" }}>
             Write a review and unleash your creativity too - join the
             conversation today!
           </h5>
         </div>
 
-        <div className="inline-element">
-          <div className="container-comments">
-            <div className="inline-element">
+        <div className="review_inline-element">
+          <div className="review_container-comments">
+            <div className="review_inline-element">
               <h3
                 style={{
                   marginTop: "10px",
@@ -241,8 +246,8 @@ const ListComment = () => {
               >
                 Reviews
               </h3>
-              <div className="review-number">({comments.length})</div>
-              <button className="button-write">
+              <div className="review_review-number">({comments.length})</div>
+              <button className="review_button-write">
                 <a
                   href={`http://localhost:3000/comment/add/${mid}`}
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -265,11 +270,11 @@ const ListComment = () => {
               {Array.isArray(visibleComments) &&
                 visibleComments.map((comment) => (
                   <div key={comment.id}>
-                    <div className="inline-element">
+                    <div className="review_inline-element">
                       <div style={{ width: "30%", marginLeft: "50px" }}>
                         <Link to={`/profile/${comment.Uid}`}>
                           <img
-                            className="user_poster"
+                            className="review_user_poster"
                             src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
                           />
                         </Link>
@@ -279,13 +284,13 @@ const ListComment = () => {
                           {[...Array(comment.Score)].map((_, index) => (
                             <img
                               key={index}
-                              className="comment-poster"
+                              className="review_comment-poster"
                               src={require("../CommentImage/circle.png")}
                             />
                           ))}
                         </div>
-                        <div className="comment">{comment.Comment}</div>
-                        <div className="inline-element">
+                        <div className="review_comment">{comment.Comment}</div>
+                        <div className="review_inline-element">
                           <h6>helpful?</h6>
                           <LikeComment Cid={comment.Cid} />
                           {/* <img

@@ -21,6 +21,7 @@ const Profile = () => {
   const [director, setDirector] = useState([]);
   const [scores, setScores] = useState([]);
   const [token, setToken] = useState([]);
+  const [refresh, setReFresh] = useState(false);
 
   const [scrollIndex, setScrollIndex] = useState(0);
 
@@ -68,7 +69,7 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [uid]);
+  }, [uid, refresh]);
 
   // banning list
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -101,7 +102,7 @@ const Profile = () => {
     ).then((users) => {
       setBanUser(users);
     });
-  }, [banlist]);
+  }, [banlist, refresh]);
 
   // load more data when scroll down the button.
   const loadMoreComments = useCallback(() => {
@@ -337,7 +338,7 @@ const Profile = () => {
                 <h3 style={{ marginBottom: "6px", marginTop: "6px" }}>
                   {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
-                {console.log(ownBan, level, MAX_BANWISHS[level])}
+                {/* {console.log(ownBan, level, MAX_BANWISHS[level])} */}
                 <img
                   className="ban-poster"
                   src={require("../CommentImage/ban.png")}
@@ -377,32 +378,52 @@ const Profile = () => {
               <div className="inline">
                 <div>
                   <h4>Contributions</h4>
-                  <h4 style={{ marginTop: "-20px" }}>{comments.length}</h4>
+                  <h4 style={{ marginTop: "-20px", textAlign: "center" }}>
+                    {comments.length}
+                  </h4>
                 </div>
                 <div onClick={handleClick} className="banning">
                   <h4 style={{ marginLeft: "55%" }}>Banning</h4>
-                  <h4 style={{ marginLeft: "55%", marginTop: "-20px" }}>
+                  <h4
+                    style={{
+                      marginLeft: "88%",
+                      marginTop: "-20px",
+                      textAlign: "center",
+                    }}
+                  >
                     {banlist.length}
                   </h4>
                 </div>
                 <div>
                   <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
-                    <h4 style={{ marginLeft: "60px" }}>Wishlist</h4>
+                    <h4 style={{ marginLeft: "70px" }}>Wishlist</h4>
                   </Link>
 
                   {userInfo.WishList && (
-                    <h4 style={{ marginTop: "-20px", marginLeft: "60px" }}>
+                    <h4
+                      style={{
+                        marginTop: "-20px",
+                        marginLeft: "60px",
+                        textAlign: "center",
+                      }}
+                    >
                       {Object.keys(userInfo.WishList).length}
                     </h4>
                   )}
                 </div>
                 <div>
-                  <h4 style={{ marginLeft: "40px" }}>Level</h4>
-                  <h4 style={{ marginLeft: "50%", marginTop: "-20px" }}>
+                  <h4 style={{ marginLeft: "45px" }}>Level</h4>
+                  <h4
+                    style={{
+                      marginLeft: "50%",
+                      marginTop: "-20px",
+                      textAlign: "center",
+                    }}
+                  >
                     {level}
                   </h4>
                 </div>
-                <div>
+                <div style={{ textAlign: "center", marginLeft: "60px" }}>
                   <div
                     style={{
                       display: "flex",
@@ -450,7 +471,13 @@ const Profile = () => {
                           />
                         }
                       </div>
-                      <div className="modal-content">
+                      <div
+                        className="modal-content"
+                        style={{
+                          maxHeight: "calc(100vh - 200px)",
+                          overflowY: "auto",
+                        }}
+                      >
                         {banUser.map((user) => (
                           <>
                             <div className="inline" key={user.Uid}>
@@ -479,6 +506,7 @@ const Profile = () => {
                                   className="banlist_delete"
                                   src={require("../CommentImage/delete.png")}
                                   onClick={() => {
+                                    setReFresh(!refresh);
                                     const params = new URLSearchParams();
                                     params.append("token", token);
                                     params.append("Uid", user.Uid);
@@ -553,6 +581,7 @@ const Profile = () => {
                       className="delete_poster"
                       src={require("../CommentImage/close.png")}
                       onClick={() => {
+                        setReFresh(!refresh);
                         const params = new URLSearchParams();
                         params.append("Cid", comment.Cid);
                         params.append("token", token);
@@ -584,14 +613,14 @@ const Profile = () => {
                   {[...Array(comment.Score)].map((_, index) => (
                     <img
                       key={index}
-                      className="comment-poster"
+                      className="review_comment-poster"
                       src={require("../CommentImage/circle.png")}
                     />
                   ))}
                   {[...Array(5 - Math.floor(comment.Score))].map((_, index) => (
                     <img
                       key={index}
-                      className="comment-poster"
+                      className="review_comment-poster"
                       src={require("../CommentImage/emptyCircle.png")}
                     />
                   ))}
@@ -614,7 +643,7 @@ const Profile = () => {
                         {[...Array(Math.floor(scores[index]))].map((_, i) => (
                           <img
                             key={i}
-                            className="comment-poster"
+                            className="review_comment-poster"
                             src={require("../CommentImage/circle.png")}
                           />
                         ))}
@@ -623,7 +652,7 @@ const Profile = () => {
                         ].map((_, i) => (
                           <img
                             key={i}
-                            className="comment-poster"
+                            className="review_comment-poster"
                             src={require("../CommentImage/emptyCircle.png")}
                           />
                         ))}

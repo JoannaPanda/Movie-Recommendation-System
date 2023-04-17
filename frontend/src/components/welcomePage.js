@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import image from "../images/cinema.png";
-// import "../styles/welcome.css";
+import "../styles/welcome.css";
 
 function WelcomePage() {
   return (
     <div
+      className="welcomeBackground"
       style={{
-        backgroundImage: `url(${image}})`,
         backgroundSize: `cover`,
-        width: "88%",
-        height: "800px",
+        height: "900px",
+        backgroundColor: "#400b0a",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
       <img
