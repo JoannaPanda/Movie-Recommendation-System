@@ -200,6 +200,9 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
+            <div className="pass-instruction">
+              <span>&#63;</span>
+            </div>
           </div>
           <button type="submit" className="form-submit">
             Sign Up
@@ -233,9 +236,6 @@ class registerpage extends React.Component {
           src={require("../images/iconFull.png")}
           alt="Icon"
         />
-        <div className="pass-instruction">
-          <span>&#63;</span>
-        </div>
         <ToastContainer />
       </div>
     );

@@ -55,7 +55,6 @@ body {
   width: 25px;
   height: 23px;
 }
-
 /* fonts */
 
 .certify {
@@ -90,7 +89,6 @@ body {
   margin-left: 300px;
   color: #006599;
 }
-
 abbr[data-tips] {
   text-decoration: underline;
   cursor: help;
@@ -112,10 +110,8 @@ abbr[data-tips]:hover::after {
   border-radius: 3px;
   font-size: 20px;
   color: #333;
-  white-space: pre-wrap;
-  /* Respect line breaks */
+  white-space: pre-wrap; /* Respect line breaks */
 }
-
 /* line */
 
 .line {
@@ -182,8 +178,8 @@ input:focus {
 }
 
 .container-grey2 {
-  margin-top: 50px;
+  margin-top: 70px;
   width: 100%;
-  background-color: #f2f2f2;
+  background-color: white;
   border: 1px solid #ddd;
 }
