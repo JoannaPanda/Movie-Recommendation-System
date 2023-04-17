@@ -28,7 +28,9 @@ const AddComment = () => {
   const [rating2Num, setrating2Num] = useState(0);
   const [rating3Num, setrating3Num] = useState(0);
   const [rating4Num, setrating4Num] = useState(0);
+  const [haveReview, setHaveReview] = useState(false);
 
+  const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -143,6 +145,12 @@ const AddComment = () => {
         console.log(response);
         setComment(response.data.commentinfo);
         setScore(response.data.score);
+        console.log(token);
+        setHaveReview(
+          response.data.commentinfo.some(
+            (item) => item.uid === storedUserinfo.uid
+          )
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -178,7 +186,17 @@ const AddComment = () => {
 
     const certifyCheckbox = document.querySelector('input[name="submit"]');
     if (!certifyCheckbox.checked) {
-      alert("Please certify that this review is based on your own experience and is your genuine opinion.");
+      toast.error(
+        "Please certify that this review is based on your own experience and is your genuine opinion.",
+        {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        },
+        3000
+      );
+      // alert("Please certify that this review is based on your own experience and is your genuine opinion.");
       return;
     }
 
@@ -214,7 +232,16 @@ const AddComment = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Error!");
+        toast.error(
+          "Error!",
+          {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          },
+          3000
+        ); // Delay redirect by 2 seconds);
       });
   };
 
@@ -266,7 +293,9 @@ const AddComment = () => {
           <h4 className="adv">
             Your first-hand experiences really help other Movie Finders.
           </h4>
-          <h4>Please note that your re-comment will overwrite the previous one.</h4>
+          <h4>
+            Please note that your re-comment will overwrite the previous one.
+          </h4>
           <h4 className="adv2">Thanks!</h4>
           <hr className="line" />
           <StarRating
@@ -378,6 +407,18 @@ const AddComment = () => {
                 zero-tolerance policy on fake reviews.
               </label>
             </div>
+            {comments.some((item) => item.Uid === storedUserinfo.Uid) ? (
+              <li style={{ color: "red", marginTop: 10 }}>
+                You had already give a review. If you submit a review again,
+                your old review would be coverd by this new one
+              </li>
+            ) : (
+              <></>
+            )}
+
+            {console.log(
+              comments.some((item) => item.Uid === storedUserinfo.Uid)
+            )}
             <button className="submit" type="submit" onClick={handleSubmit}>
               Submit your review
             </button>

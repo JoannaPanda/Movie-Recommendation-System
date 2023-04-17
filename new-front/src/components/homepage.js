@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 import axios from "axios";
 import GenreMovies from "./getGenremovie";
+import "../styles/multiple.css";
 const TopTenMovies = () => {
   const [movies, setMovies] = useState([]);
 
@@ -169,7 +170,12 @@ const NewMovies = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: "20px", color: "whitesmoke" }}>
+    <div
+      style={{
+        marginTop: "20px",
+        color: "whitesmoke",
+      }}
+    >
       <input
         type="text"
         placeholder="NEW & UPCOMING MOVIES"
@@ -347,7 +353,7 @@ function Homepage() {
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
 
   return (
-    <div>
+    <div className="multiple">
       <input
         type="text"
         placeholder="MEET THE CLASSICS"
@@ -362,7 +368,7 @@ function Homepage() {
           fontWeight: "bold",
         }}
       />
-      <Slider {...settings}>
+      <Slider {...settings} className="posterSlider">
         {movies.map((movie) => (
           <Link to={`/movieinfo/${movie.Mid}`}>
             <div key={movie.MovieName}>

@@ -1,9 +1,14 @@
-.welcomeBackground {
-  background-image: url("../images/cinema.png");
+.multiple {
+  background-image: url("../images/prefbg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  width: 100%;
+  height: auto;
   background-color: #400b0a;
-  height: 800;
   text-align: center;
+}
+
+.posterSlider {
+  opacity: 85%;
 }

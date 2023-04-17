@@ -34,10 +34,11 @@ function NewMoviePage() {
       style={{
         marginTop: "20px",
         color: "whitesmoke",
-        backgroundColor: "grey",
+        backgroundColor: "#400b0a",
         backgroundSize: "cover",
-        marginLeft: "10%",
-        marginRight: "10%",
+        marginLeft: "7%",
+        marginRight: "7%",
+        textAlign: "center",
       }}
     >
       <input
@@ -52,7 +53,7 @@ function NewMoviePage() {
           fontWeight: "bold",
         }}
       />
-      <h1 style={{ color: "black", fontSize: 40, fontWeight: "bold" }}>
+      <h1 style={{ color: "white", fontSize: 40, fontWeight: "bold" }}>
         NEW and UPCOMING MOVIES
       </h1>
       <GenreBar

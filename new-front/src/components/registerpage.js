@@ -156,13 +156,13 @@ class registerpage extends React.Component {
           backgroundColor: "#400b0a",
           backgroundSize: `cover`,
           width: "120%",
-          height: "800px",
+          height: "900px",
         }}
       >
         <form
           onSubmit={this.handleSubmit}
           style={{
-            height: "100%",
+            height: "900px",
             position: "absolute",
             background: "black",
             color: "white",
