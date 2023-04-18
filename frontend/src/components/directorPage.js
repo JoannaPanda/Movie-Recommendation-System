@@ -15,7 +15,9 @@ function DirectorPage() {
     setResults([]);
     if (director !== "") {
       axios
-        .get(`http://lbosau.exlb.org:9900/Movie/Search?searchtext=${director}`)
+        .get(
+          `http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True`
+        )
         .then((response) => {
           console.log(response.data);
           setResults(response.data);
