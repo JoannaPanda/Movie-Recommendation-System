@@ -6,6 +6,9 @@ import * as d3 from "d3";
 import { Link } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
 import "../styles/progress.css";
+import UserProfileImageUpload from "../components/profilePhoto";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -15,10 +18,13 @@ const Profile = () => {
   const [movieNames, setMovieNames] = useState([]);
   const [movieInfo, setMovieInfo] = useState([]);
   const [banlist, setBanlist] = useState([]);
+  const [ownBan, setOwnBan] = useState(0);
   const [banUser, setBanUser] = useState([]);
   const [director, setDirector] = useState([]);
   const [scores, setScores] = useState([]);
   const [token, setToken] = useState([]);
+  const [refresh, setReFresh] = useState(false);
+  const [olevel, setOlevel] = useState([]);
 
   const [scrollIndex, setScrollIndex] = useState(0);
 
@@ -26,6 +32,15 @@ const Profile = () => {
   const [userinfo, setUserinfo] = useState(null);
   const [ouid, setOuid] = useState(null);
   const targetCount = 10;
+
+  // user level and according banlist & wishlist limits
+  const MAX_BANWISHS = {
+    1: 5,
+    2: 10,
+    3: 15,
+    4: 20,
+    5: 25,
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -57,7 +72,7 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [uid]);
+  }, [uid, refresh]);
 
   // banning list
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -70,17 +85,27 @@ const Profile = () => {
     document.body.classList.remove("modal-open");
   };
 
+  // profile image upload
+  const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
+  const handleImageDialogOpen = () => {
+    setIsImageDialogOpen(true);
+  };
+
+  const handleImageDialogClose = () => {
+    setIsImageDialogOpen(false);
+  };
+
   useEffect(() => {
     Promise.all(
       banlist.map((uid) =>
-        fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
+        ).then((response) => response.json())
       )
     ).then((users) => {
       setBanUser(users);
     });
-  }, [banlist]);
+  }, [banlist, refresh]);
 
   // load more data when scroll down the button.
   const loadMoreComments = useCallback(() => {
@@ -96,7 +121,7 @@ const Profile = () => {
   useEffect(() => {
     const handleScroll = (event) => {
       const { scrollTop, clientHeight, scrollHeight } = event.target;
-      if (scrollHeight - scrollTop <= clientHeight) {
+      if (scrollHeight - scrollTop <= clientHeight + 10) {
         loadMoreComments();
       }
     };
@@ -111,9 +136,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       visibleComments.map((comment) =>
-        fetch(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
+        ).then((response) => response.json())
       )
     )
       .then((data) => {
@@ -150,6 +175,7 @@ const Profile = () => {
         );
         const data = await response.json();
         setUserinfo(data);
+        setOwnBan(data.BanList.length);
       } catch (error) {
         console.error("Error fetching user info: ", error);
       }
@@ -161,19 +187,47 @@ const Profile = () => {
 
   useEffect(() => {
     if (userinfo) {
+      axios
+        .get(`http://lbosau.exlb.org:9900/User/Comment?Uid=${userinfo.Uid}`)
+        .then((response) => {
+          const ownlevel =
+            response.data.length < 50
+              ? Math.floor(response.data.length / 10) + 1
+              : 5;
+          setOlevel(ownlevel);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [userinfo]);
+
+  useEffect(() => {
+    if (userinfo) {
       const ouid = userinfo.Uid;
       setOuid(ouid.toString());
       const mids = Object.values(userinfo.WishList);
       const wishlistCount = mids.length;
       console.log("wishlist count", wishlistCount);
 
+      let progress;
       // Calculate the progress
-      const progress = Math.min(wishlistCount / targetCount, 1);
+      // if level is not null or not "Complete",
+      // the progress is calculated using MAX_BANWISHS[level]
+      // If level is "Complete", the progress is calculated using a target count of 100
+      if (level !== null && level !== "Complete") {
+        progress = Math.min(wishlistCount / MAX_BANWISHS[level], 1);
+      } else if (level === "Complete") {
+        progress = Math.min(wishlistCount / 100, 1);
+      } else {
+        progress = Math.min(wishlistCount / targetCount, 1);
+      }
+
       setProgress(progress);
     }
-  }, [userInfo, token]);
+  }, [userinfo, token]);
 
-  console.log(ouid, uid);
+  // console.log(ouid, uid);
 
   const chartRef = useRef();
 
@@ -212,13 +266,19 @@ const Profile = () => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d) => color(d.data.label))
-      .on("mouseover", function () {
-        d3.select(this).transition().duration(200).attr("d", outerArc);
+      .on("mouseover", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", outerArc);
       })
-      .on("mouseout", function () {
-        d3.select(this).transition().duration(200).attr("d", arc);
+      .on("mouseout", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", arc);
       })
-      .each(function (d) {
+      .each(function(d) {
         this._current = d;
       });
 
@@ -229,7 +289,8 @@ const Profile = () => {
       .append("text")
       .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
       .style("text-anchor", "middle")
-      .style("font-weight", "bold");
+      .style("font-weight", "bold")
+      .style("font-size", "13px");
 
     text
       .append("tspan")
@@ -257,88 +318,163 @@ const Profile = () => {
   const rewards =
     used_comment_length < 50
       ? `${10 - (used_comment_length % 10)} more reviews to ${nextLevel}`
-      : `Great!!! You have unlimited positions for your Ban list and Wish List`;
+      : `Great!!! You are on the top level!`;
   return (
     <div id="profile">
       <div className="background">
         <div className="profile-white-box">
-          <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
-            {ouid === uid ? (
-              <svg
-                className="progChart"
-                ref={chartRef}
-                width="350"
-                height="350"
-              ></svg>
-            ) : null}
-          </Link>
           <div className="inline">
             <img
               src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
               className="user-poster"
             />
+            <img
+              src={require("../CommentImage/upload.png")}
+              onClick={handleImageDialogOpen}
+              className="imageUpload"
+              style={{ width: "30px", height: "30px", marginTop: "100px" }}
+            ></img>
+            {console.log(isImageDialogOpen)}
+            {isImageDialogOpen && (
+              <div className="modal">
+                <div>
+                  <div
+                    className="close-background"
+                    onClick={handleImageDialogClose}
+                  >
+                    {
+                      <img
+                        className="delete_poster2"
+                        src={require("../CommentImage/close.png")}
+                      />
+                    }
+                  </div>
+                  <div className="modal-content">
+                    <UserProfileImageUpload />
+                  </div>
+                </div>
+              </div>
+            )}
             <div>
               <div className="inline">
                 <h3 style={{ marginBottom: "6px", marginTop: "6px" }}>
-                  {userInfo.UserName !== "" ? userInfo.UserName : "Tong Xia"}
+                  {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
-                <img
-                  className="ban-poster"
-                  src={require("../CommentImage/ban.png")}
-                  onClick={() => {
-                    const params = new URLSearchParams();
-                    params.append("token", token);
-                    params.append("Uid", uid);
-                    console.log(params.toString());
-                    fetch(`http://lbosau.exlb.org:9900/User/Banlist/add`, {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                      },
-                      body: params.toString(),
-                    })
-                      .then((response) => {
-                        if (response.ok) {
-                          alert("The user has been added to the banning list");
+                {console.log(ownBan, olevel, MAX_BANWISHS[olevel])}
+                {ouid !== uid ? (
+                  <>
+                    <img
+                      className="ban-poster"
+                      src={require("../CommentImage/ban.png")}
+                      onClick={() => {
+                        if (
+                          ownBan >= MAX_BANWISHS[olevel] &&
+                          olevel !== "Complete"
+                        ) {
+                          // alert(
+                          //   "You have exceeded the maximum number of bans for your user level."
+                          // );
+                          toast.error(
+                            "You have exceeded the maximum number of bans for your user level.",
+                            {
+                              position: "bottom-left",
+                              autoClose: 1000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                            }
+                          );
                         } else {
-                          throw new Error("Failed to add banning list");
+                          const params = new URLSearchParams();
+                          params.append("token", token);
+                          params.append("Uid", uid);
+                          console.log(params.toString());
+                          fetch(
+                            `http://lbosau.exlb.org:9900/User/Banlist/add`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type":
+                                  "application/x-www-form-urlencoded",
+                              },
+                              body: params.toString(),
+                            }
+                          )
+                            .then((response) => {
+                              if (response.ok) {
+                                // alert(
+                                //   "The user has been added to the banning list"
+                                // );
+                                toast.success(
+                                  "The user has been added to the banning list",
+                                  {
+                                    position: "bottom-left",
+                                    autoClose: 1000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                  }
+                                );
+                              } else {
+                                throw new Error("Failed to add banning list");
+                              }
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
                         }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  }}
-                />
+                      }}
+                    />
+                  </>
+                ) : null}
               </div>
               <div className="inline">
                 <div>
                   <h4>Contributions</h4>
-                  <h4 style={{ marginTop: "-20px" }}>{comments.length}</h4>
+                  <h4 style={{ marginTop: "-20px", textAlign: "center" }}>
+                    {comments.length}
+                  </h4>
                 </div>
                 <div onClick={handleClick} className="banning">
                   <h4 style={{ marginLeft: "55%" }}>Banning</h4>
-                  <h4 style={{ marginLeft: "55%", marginTop: "-20px" }}>
+                  <h4
+                    style={{
+                      marginLeft: "88%",
+                      marginTop: "-20px",
+                      textAlign: "center",
+                    }}
+                  >
                     {banlist.length}
                   </h4>
                 </div>
                 <div>
                   <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
-                    <h4 style={{ marginLeft: "60px" }}>Wishlist</h4>
+                    <h4 style={{ marginLeft: "70px" }}>Wishlist</h4>
                   </Link>
 
                   {userInfo.WishList && (
-                    <h4 style={{ marginTop: "-20px", marginLeft: "60px" }}>
+                    <h4
+                      style={{
+                        marginTop: "-20px",
+                        marginLeft: "60px",
+                        textAlign: "center",
+                      }}
+                    >
                       {Object.keys(userInfo.WishList).length}
                     </h4>
                   )}
                 </div>
                 <div>
-                  <h4 style={{ marginLeft: "40px" }}>Level</h4>
-                  <h4 style={{ marginLeft: "50%", marginTop: "-20px" }}>
+                  <h4 style={{ marginLeft: "45px" }}>Level</h4>
+                  <h4
+                    style={{
+                      marginLeft: "50%",
+                      marginTop: "-20px",
+                      textAlign: "center",
+                    }}
+                  >
                     {level}
                   </h4>
                 </div>
-                <div>
+                <div style={{ textAlign: "center", marginLeft: "60px" }}>
                   <div
                     style={{
                       display: "flex",
@@ -348,11 +484,28 @@ const Profile = () => {
                     }}
                   >
                     <h4 style={{ marginRight: "1rem" }}>{rewards}</h4>
-                    <div className="pass-instruction">
+                    <div
+                      className="pass-instruction"
+                      style={{ marginTop: "-75px", marginLeft: "2px" }}
+                    >
                       <span>&#63;</span>
                     </div>
                   </div>
-
+                  {comments.length >= 50 ? (
+                    <h4
+                      style={{
+                        color: "red",
+                        marginTop: "-10px",
+                      }}
+                    >
+                      You have unlimited postions in your ban list and wish list
+                    </h4>
+                  ) : (
+                    <h4 style={{ color: "red", marginTop: "-10px" }}>
+                      You have maximum {5 * level} positions in your ban list
+                      and wish list
+                    </h4>
+                  )}
                   <div
                     style={{
                       display: "flex",
@@ -386,7 +539,13 @@ const Profile = () => {
                           />
                         }
                       </div>
-                      <div className="modal-content">
+                      <div
+                        className="modal-content"
+                        style={{
+                          maxHeight: "calc(100vh - 200px)",
+                          overflowY: "auto",
+                        }}
+                      >
                         {banUser.map((user) => (
                           <>
                             <div className="inline" key={user.Uid}>
@@ -415,6 +574,7 @@ const Profile = () => {
                                   className="banlist_delete"
                                   src={require("../CommentImage/delete.png")}
                                   onClick={() => {
+                                    setReFresh(!refresh);
                                     const params = new URLSearchParams();
                                     params.append("token", token);
                                     params.append("Uid", user.Uid);
@@ -432,8 +592,17 @@ const Profile = () => {
                                     )
                                       .then((response) => {
                                         if (response.ok) {
-                                          alert(
-                                            "The user has been removed to the banning list"
+                                          // alert(
+                                          //   "The user has been removed to the banning list"
+                                          // );
+                                          toast.success(
+                                            "The user has been removed to the banning list",
+                                            {
+                                              position: "bottom-left",
+                                              autoClose: 1000,
+                                              hideProgressBar: false,
+                                              closeOnClick: true,
+                                            }
                                           );
                                         } else {
                                           throw new Error(
@@ -469,6 +638,49 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <div
+          style={{
+            textAlign: "center",
+            position: "absolute",
+            top: "83%",
+            left: "82%",
+            transform: "translate(-82%, -82%)",
+          }}
+        >
+          <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
+            {ouid === uid ? (
+              <svg
+                className="progChart"
+                ref={chartRef}
+                width="345"
+                height="345"
+              ></svg>
+            ) : null}
+          </Link>
+          {ouid === uid ? (
+            <>
+              <p style={{ marginLeft: "90px", fontSize: 13 }}>
+                Click the button below to add more preference tags.
+              </p>
+              <Link to="/setprefgenre" className="login-link">
+                <button
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "2px solid black",
+                    color: "black",
+                    padding: "12px 20px",
+                    fontSize: 12,
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    marginLeft: "90px",
+                  }}
+                >
+                  ADD MORE PREFERENCE →
+                </button>
+              </Link>
+            </>
+          ) : null}
+        </div>
         <div className="white-small-box">
           {visibleComments.map((comment, index) => (
             <div key={comment.id}>
@@ -480,7 +692,7 @@ const Profile = () => {
                   />
                 </div>
                 <h5 className="userName">
-                  {userInfo.UserName !== "" ? userInfo.UserName : "Tong Xia"}
+                  {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h5>
                 <h6 className="writeReview">wrote a review</h6>
                 <div>
@@ -489,6 +701,7 @@ const Profile = () => {
                       className="delete_poster"
                       src={require("../CommentImage/close.png")}
                       onClick={() => {
+                        setReFresh(!refresh);
                         const params = new URLSearchParams();
                         params.append("Cid", comment.Cid);
                         params.append("token", token);
@@ -502,7 +715,13 @@ const Profile = () => {
                         })
                           .then((response) => {
                             if (response.ok) {
-                              alert("Comment deleted successfully");
+                              // alert("Comment deleted successfully");
+                              toast.success("Comment deleted successfully", {
+                                position: "bottom-left",
+                                autoClose: 1000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                              });
                             } else {
                               throw new Error("Failed to delete comment");
                             }
@@ -520,14 +739,14 @@ const Profile = () => {
                   {[...Array(comment.Score)].map((_, index) => (
                     <img
                       key={index}
-                      className="comment-poster"
+                      className="review_comment-poster"
                       src={require("../CommentImage/circle.png")}
                     />
                   ))}
                   {[...Array(5 - Math.floor(comment.Score))].map((_, index) => (
                     <img
                       key={index}
-                      className="comment-poster"
+                      className="review_comment-poster"
                       src={require("../CommentImage/emptyCircle.png")}
                     />
                   ))}
@@ -550,7 +769,7 @@ const Profile = () => {
                         {[...Array(Math.floor(scores[index]))].map((_, i) => (
                           <img
                             key={i}
-                            className="comment-poster"
+                            className="review_comment-poster"
                             src={require("../CommentImage/circle.png")}
                           />
                         ))}
@@ -559,7 +778,7 @@ const Profile = () => {
                         ].map((_, i) => (
                           <img
                             key={i}
-                            className="comment-poster"
+                            className="review_comment-poster"
                             src={require("../CommentImage/emptyCircle.png")}
                           />
                         ))}
@@ -582,6 +801,7 @@ const Profile = () => {
           ))}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

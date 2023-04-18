@@ -19,17 +19,18 @@ const AddComment = () => {
   const [movieDirector, setMovieDirector] = useState([]);
   const [givenScore, setGivenScore] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [ratingValue, setRatingValue] = useState(3);
-  const [rating1Value, setRating1Value] = useState(3);
-  const [rating2Value, setRating2Value] = useState(3);
-  const [rating3Value, setRating3Value] = useState(3);
-  const [rating4Value, setRating4Value] = useState(3);
-  // const [rating1String, setRating1String] = useState("");
-  // const [rating2String, setRating2String] = useState("");
-  // const [rating3String, setRating3String] = useState("");
-  // const [rating4String, setRating4String] = useState("");
-  // const [ratingString, setRatingString] = useState("");
+  const [ratingValue, setRatingValue] = useState(0);
+  const [rating1Value, setRating1Value] = useState(0);
+  const [rating2Value, setRating2Value] = useState(0);
+  const [rating3Value, setRating3Value] = useState(0);
+  const [rating4Value, setRating4Value] = useState(0);
+  const [rating1Num, setrating1Num] = useState(0);
+  const [rating2Num, setrating2Num] = useState(0);
+  const [rating3Num, setrating3Num] = useState(0);
+  const [rating4Num, setrating4Num] = useState(0);
+  const [haveReview, setHaveReview] = useState(false);
 
+  const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -44,7 +45,6 @@ const AddComment = () => {
     3: "Average",
     2: "Below Average",
     1: "Poor",
-    0: "Terrible",
   };
 
   const handleRating1Change = (newValue) => {
@@ -52,16 +52,22 @@ const AddComment = () => {
     const updatedRatingValue =
       newValue + rating2Value + rating3Value + rating4Value;
     setRatingValue(updatedRatingValue);
-    // setRating1String("Plot is " + ratingStrings[newValue] + ", ");
-    // const rsting =
-    //   rating1String + rating2String + rating3String + rating4String;
-    // setRatingString(rsting);
+    if (newValue > 0) {
+      setrating1Num(1);
+    } else {
+      setrating1Num(0);
+    }
   };
   const handleRating2Change = (newValue) => {
     setRating2Value(newValue);
     const updatedRatingValue =
       rating1Value + newValue + rating3Value + rating4Value;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating2Num(1);
+    } else {
+      setrating2Num(0);
+    }
     // setRating2String("Characters are " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -72,6 +78,11 @@ const AddComment = () => {
     const updatedRatingValue =
       rating1Value + rating2Value + newValue + rating4Value;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating3Num(1);
+    } else {
+      setrating3Num(0);
+    }
     // setRating3String("Audio is " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -82,6 +93,11 @@ const AddComment = () => {
     const updatedRatingValue =
       rating1Value + rating2Value + rating3Value + newValue;
     setRatingValue(updatedRatingValue);
+    if (newValue > 0) {
+      setrating4Num(1);
+    } else {
+      setrating4Num(0);
+    }
     // setRating4String("Visuals are " + ratingStrings[newValue] + ", ");
     // const rsting =
     //   rating1String + rating2String + rating3String + rating4String;
@@ -94,18 +110,24 @@ const AddComment = () => {
   //   document.body.appendChild(script);
   // }, []);
   function handleInputChange(event) {
-    const ratestr = (ratingValue = 0
-      ? ""
-      : "Plot: " +
-        ratingStrings[rating1Value] +
-        ";\n Actors: " +
-        ratingStrings[rating2Value] +
-        ";\n Music: " +
-        ratingStrings[rating3Value] +
-        ";\n Production: " +
-        ratingStrings[rating4Value] +
-        ".\n");
-    setInputValue(event.target.value);
+    const ratestr =
+      ratingValue == 0
+        ? ""
+        : (rating1Value > 0
+            ? "Plot: " + ratingStrings[rating1Value] + ";\n "
+            : "") +
+          (rating2Value > 0
+            ? "Actors: " + ratingStrings[rating2Value] + ";\n "
+            : "") +
+          (rating3Value > 0
+            ? "Music: " + ratingStrings[rating3Value] + ";\n "
+            : "") +
+          (rating4Value > 0
+            ? "Production: " + ratingStrings[rating4Value] + ";\n "
+            : "") +
+          ".\n";
+
+    setInputValue(ratestr + event.target.value);
     // setRatingString(event.target.value);
   }
 
@@ -123,6 +145,12 @@ const AddComment = () => {
         console.log(response);
         setComment(response.data.commentinfo);
         setScore(response.data.score);
+        console.log(token);
+        setHaveReview(
+          response.data.commentinfo.some(
+            (item) => item.uid === storedUserinfo.uid
+          )
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -156,6 +184,22 @@ const AddComment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const certifyCheckbox = document.querySelector('input[name="submit"]');
+    if (!certifyCheckbox.checked) {
+      toast.error(
+        "Please certify that this review is based on your own experience and is your genuine opinion.",
+        {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        },
+        3000
+      );
+      // alert("Please certify that this review is based on your own experience and is your genuine opinion.");
+      return;
+    }
+
     const params = new URLSearchParams();
     console.log("heretoken", token);
     params.append("Mid", mid);
@@ -188,7 +232,16 @@ const AddComment = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Error!");
+        toast.error(
+          "Error!",
+          {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+          },
+          3000
+        ); // Delay redirect by 2 seconds);
       });
   };
 
@@ -240,10 +293,12 @@ const AddComment = () => {
           <h4 className="adv">
             Your first-hand experiences really help other Movie Finders.
           </h4>
-
+          <h4>
+            Please note that your re-comment will overwrite the previous one.
+          </h4>
           <h4 className="adv2">Thanks!</h4>
           <hr className="line" />
-          {/* <StarRating
+          <StarRating
             name="Plot"
             value={rating1Value}
             onValueChange={handleRating1Change}
@@ -265,8 +320,14 @@ const AddComment = () => {
           />
           <p>
             According to your four sub-ratings, the advised overall rating is{" "}
-            {Math.round(ratingValue / 4)}.
-          </p> */}
+            {Math.round(
+              ratingValue / (rating1Num + rating2Num + rating3Num + rating4Num)
+            )}
+            {console.log(rating1Num)}
+            {console.log(rating2Num)}
+            {console.log(rating3Num)}
+            {console.log(rating4Num)}.
+          </p>
           <h5>Your overall rating of this movie</h5>
           <div className="rating-container">
             <div className="inline-element">
@@ -346,6 +407,18 @@ const AddComment = () => {
                 zero-tolerance policy on fake reviews.
               </label>
             </div>
+            {comments.some((item) => item.Uid === storedUserinfo.Uid) ? (
+              <li style={{ color: "red", marginTop: 10 }}>
+                You had already give a review. If you submit a review again,
+                your old review would be coverd by this new one
+              </li>
+            ) : (
+              <></>
+            )}
+
+            {console.log(
+              comments.some((item) => item.Uid === storedUserinfo.Uid)
+            )}
             <button className="submit" type="submit" onClick={handleSubmit}>
               Submit your review
             </button>

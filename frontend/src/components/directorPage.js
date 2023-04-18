@@ -13,9 +13,12 @@ function DirectorPage() {
 
   useEffect(() => {
     setResults([]);
+
     if (director !== "") {
       axios
-        .get(`http://lbosau.exlb.org:9900/Movie/Search?searchtext=${director}`)
+        .get(
+          `http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True`
+        )
         .then((response) => {
           console.log(response.data);
           setResults(response.data);
@@ -38,7 +41,9 @@ function DirectorPage() {
     }
   }, []);
 
-  const movietitle = results.map((result) => result.MovieName)[0];
+  const movietitle = results
+    .filter((movie) => movie.Director === director)
+    .map((result) => result.MovieName)[0];
   console.log(`title: ${movietitle}`);
 
   return (
@@ -52,6 +57,8 @@ function DirectorPage() {
       }}
     >
       <h1>{director}</h1>
+      {console.log(`director is ${director}`)}
+      {console.log(`from movie ${movietitle}`)}
       <img
         src={`http://lbosau.exlb.org:9900/image/${movietitle}/${director}`}
         alt={director}

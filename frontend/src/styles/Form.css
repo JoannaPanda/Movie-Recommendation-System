@@ -1,6 +1,13 @@
 .registration-page {
   width: 100%;
-  height: 100%;
+  height: auto;
+
+  background-image: url("../images/prefbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #400b0a;
+  text-align: center;
 }
 
 form {
@@ -11,6 +18,7 @@ form {
   justify-content: center;
   flex-wrap: wrap;
   margin-left: 3rem;
+  height: auto;
 }
 
 .form-input {
@@ -47,7 +55,7 @@ form {
   margin-bottom: 10px;
 }
 
-.pass-instruction {
+.pass-instruction1 {
   position: relative;
   display: block;
   width: 27px;
@@ -57,22 +65,22 @@ form {
   margin: 0 auto;
 }
 
-.pass-instruction span {
+.pass-instruction1 span {
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
   cursor: help;
 }
 
-.pass-instruction:hover span {
+.pass-instruction1:hover span {
   color: #7b96d4;
 }
 
-.pass-instruction:hover {
+.pass-instruction1:hover {
   background-color: #ffffff;
 }
 
-.pass-instruction:hover::before {
+.pass-instruction1:hover::before {
   content: "For password security, please a combination of at least eight characters, with upper case and lower case letters, numbers, and symbols.";
   top: 17px;
   left: 0;
@@ -84,8 +92,4 @@ form {
   white-space: pre-line;
   position: absolute;
   width: 370px;
-}
-
-body {
-  background-color: #400b0a;
 }

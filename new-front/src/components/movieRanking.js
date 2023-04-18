@@ -34,10 +34,11 @@ function MovieRankings() {
       style={{
         marginTop: "20px",
         color: "whitesmoke",
-        backgroundColor: "grey",
+        backgroundColor: "#400b0a",
         backgroundSize: "cover",
-        marginLeft: "10%",
-        marginRight: "10%",
+        marginLeft: "7%",
+        marginRight: "7%",
+        textAlign: "center",
       }}
     >
       <input
@@ -52,7 +53,7 @@ function MovieRankings() {
           fontWeight: "bold",
         }}
       />
-      <h1 style={{ color: "black", fontSize: 40 }}>Movie Rankings</h1>
+      <h1 style={{ color: "white", fontSize: 40 }}>Movie Rankings</h1>
       <GenreBar
         genres={[
           "Comedy",
@@ -98,7 +99,7 @@ function MovieRankings() {
                 style={{
                   marginRight: "10px",
                   fontWeight: "bold",
-                  color: "black",
+                  color: "white",
                 }}
               >
                 {movie.MovieName}

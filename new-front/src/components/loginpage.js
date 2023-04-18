@@ -112,11 +112,19 @@ class LoginPage extends React.Component {
 
   render() {
     return (
-      <div className="registration-page">
+      <div
+        className="registration-page"
+        style={{
+          backgroundColor: "#400b0a",
+          backgroundSize: `cover`,
+          width: "120%",
+          height: "900px",
+        }}
+      >
         <form
           onSubmit={this.handleSubmit}
           style={{
-            height: "100%",
+            height: "900px",
             position: "absolute",
             background: "black",
             color: "white",

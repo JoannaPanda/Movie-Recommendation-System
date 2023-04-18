@@ -57,7 +57,16 @@ function SearchPage() {
   );
   const usedResults = usedGenre === "xxxxxxxxxxxxx" ? results : returnedResults;
   return (
-    <div className="search">
+    <div
+      className="search"
+      style={{
+        backgroundColor: "#400b0a",
+        backgroundSize: `cover`,
+        width: "auto",
+        height: "900px",
+        padding: "105px",
+      }}
+    >
       <div className="searchInputs">
         <input
           type="text"
@@ -95,7 +104,6 @@ function SearchPage() {
           "Crime",
           "History",
           "Western",
-          "Fantasy",
         ]}
         onSelect={handleGenreSelect}
         style={{

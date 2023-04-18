@@ -116,12 +116,12 @@ body {
 
 /* font */
 .userName {
-  margin-left: -250px;
+  margin-left: 0px;
 }
 
 .writeReview {
   font-weight: 500;
-  margin-left: 170px;
+  margin-left: 30px;
 }
 
 .dirName {

@@ -26,17 +26,17 @@ class registerpage extends React.Component {
       // alert("invalid username.");
       toast.error("Invalid username.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
       return;
     }
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
-      alert("invalid email address.");
+      // alert("invalid email address.");
       toast.error("Invalid email address.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -55,7 +55,7 @@ class registerpage extends React.Component {
       // alert("Your password is not a strong password.");
       toast.error("Your password is not a strong password.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -109,13 +109,13 @@ class registerpage extends React.Component {
           // redirect to preference setting
           toast.success("Registration Successful!", {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
                 window.location.href = "/setprefgenre";
-              }, 3000); // Delay redirect by 2 seconds
+              }, 2000); // Delay redirect by 2 seconds
             },
           });
         } catch (error) {
@@ -123,7 +123,7 @@ class registerpage extends React.Component {
           // alert(error);
           toast.error("Registration failed", error, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -134,14 +134,14 @@ class registerpage extends React.Component {
         // alert(error);
         toast.error("Registration failed: the email has been registered", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });
 
         toast.error("Please try again with a different email.", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });
@@ -156,13 +156,13 @@ class registerpage extends React.Component {
           backgroundColor: "#400b0a",
           backgroundSize: `cover`,
           width: "120%",
-          height: "800px",
+          height: "900px",
         }}
       >
         <form
           onSubmit={this.handleSubmit}
           style={{
-            height: "100%",
+            height: "900px",
             position: "absolute",
             background: "black",
             color: "white",
@@ -200,7 +200,7 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
-            <div className="pass-instruction">
+            <div className="pass-instruction1">
               <span>&#63;</span>
             </div>
           </div>

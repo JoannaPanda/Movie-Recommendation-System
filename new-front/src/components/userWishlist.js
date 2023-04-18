@@ -106,7 +106,7 @@ const MovieWishlist = () => {
       </div>
       <h2
         style={{
-          color: "whitesmoke",
+          color: "black",
         }}
       >
         My Wishlist

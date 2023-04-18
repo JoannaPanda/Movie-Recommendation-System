@@ -64,6 +64,10 @@ function MovieDetail() {
               day: "numeric",
             })}
           </p>
+          <p className="movie-wishlist">
+            {" "}
+            {movie.WishListCount} users added to wishlist
+          </p>
         </div>
         <div onClick={handleClick()}>
           <Link to={`/comment/list/${movie.Mid}`}>

@@ -26,6 +26,7 @@ import DirectorPage from "./components/directorPage";
 import MovieRankings from "./components/movieRanking";
 import NewMoviePage from "./components/newMoviePage";
 import Profile from "./newReview/profile";
+import DoughnutWinwheel from "./components/winWheel";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/movierankings" element={<MovieRankings />} />
           <Route path="/newmoviepage" element={<NewMoviePage />} />
           <Route path="/profile/:uid" element={<Profile />} />
+          <Route path="/spin" element={<DoughnutWinwheel />} />
         </Routes>
       </div>
     </Router>

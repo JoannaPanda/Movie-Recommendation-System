@@ -106,7 +106,7 @@ const MovieWishlist = () => {
       </div>
       <h2
         style={{
-          color: "whitesmoke",
+          color: "black",
         }}
       >
         My Wishlist
@@ -116,6 +116,8 @@ const MovieWishlist = () => {
           <img
             style={{
               marginRight: "10px",
+              width: "206px",
+              height: "305px",
             }}
             src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}

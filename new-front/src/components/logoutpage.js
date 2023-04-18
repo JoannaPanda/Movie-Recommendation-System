@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
 
 class Logout extends Component {
   constructor(props) {
@@ -30,7 +27,6 @@ class Logout extends Component {
         window.location.href = "/welcome";
       })
       .catch((error) => console.log(error));
-    toast.error("Something is wrong, try again later.");
   }
 
   handleConfirmLogout() {
@@ -55,17 +51,20 @@ class Logout extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: "77px", color: "whitesmoke" }}>
+      <div
+        style={{
+          marginTop: "77px",
+          color: "whitesmoke",
+          textAlign: "center",
+          backgroundColor: "#400b0a",
+          backgroundSize: `cover`,
+          height: "900px",
+          padding: "100px",
+        }}
+      >
         <h1>Logout</h1>
-        {/* <p>Click the button below to log out.</p>
-        <button onClick={this.handleConfirmLogout}>Log out</button> */}
-
-        <p>Are you sure to log out?</p>
-        <Link to="/home">
-          <button>Cancel</button>
-        </Link>
-
-        <button onClick={this.handleConfirmLogout}>Logout</button>
+        <p>Click the button below to log out.</p>
+        <button onClick={this.handleConfirmLogout}>Log out</button>
       </div>
     );
   }
