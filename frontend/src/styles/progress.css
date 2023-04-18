@@ -1,3 +1,28 @@
+.pass-instruction {
+  position: relative;
+  display: block;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%; /* round placeholder*/
+  background-color: #400b0a; /* set the background color */
+  margin: 0 auto;
+}
+
+.pass-instruction span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: help;
+}
+
+.pass-instruction:hover span {
+  color: #7b96d4;
+}
+
+.pass-instruction:hover {
+  background-color: #ffffff;
+}
+
 .pass-instruction:hover::before {
   content: "You initially have 5 positions in you ban list and wish list, 5 more position would be rewared with leveling up. 10 comments required for each level up. when you have at least 50 comments you would have unlimited position!";
   top: 17px;

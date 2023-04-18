@@ -466,7 +466,10 @@ const Profile = () => {
                     }}
                   >
                     <h4 style={{ marginRight: "1rem" }}>{rewards}</h4>
-                    <div className="pass-instruction">
+                    <div
+                      className="pass-instruction"
+                      style={{ marginTop: "-80px", marginLeft: "-20px" }}
+                    >
                       <span>&#63;</span>
                     </div>
                   </div>

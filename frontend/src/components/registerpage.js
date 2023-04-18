@@ -200,7 +200,7 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
-            <div className="pass-instruction">
+            <div className="pass-instruction1">
               <span>&#63;</span>
             </div>
           </div>
