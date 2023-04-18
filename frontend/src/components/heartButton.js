@@ -143,6 +143,7 @@ function HeartButton({ movieId }) {
   return (
     <button style={buttonStyle} onClick={handleClick}>
       {inWishlist ? "❤️" : "🖤"}
+      <ToastContainer />
     </button>
   );
 }

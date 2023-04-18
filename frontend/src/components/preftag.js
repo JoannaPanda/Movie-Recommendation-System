@@ -184,6 +184,7 @@ const SetPreferenceTag = () => {
           Finish preference setting
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

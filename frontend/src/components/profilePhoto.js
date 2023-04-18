@@ -98,6 +98,7 @@ function UserProfileImageUpload() {
           </button>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }

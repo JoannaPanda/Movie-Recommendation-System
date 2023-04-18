@@ -98,6 +98,7 @@ const SetPreferenceGenre = () => {
           Next
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

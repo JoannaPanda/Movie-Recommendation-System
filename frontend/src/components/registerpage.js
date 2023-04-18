@@ -33,7 +33,7 @@ class registerpage extends React.Component {
       return;
     }
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
-      alert("invalid email address.");
+      // alert("invalid email address.");
       toast.error("Invalid email address.", {
         position: "bottom-left",
         autoClose: 1000,
