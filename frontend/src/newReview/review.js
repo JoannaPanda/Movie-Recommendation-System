@@ -26,28 +26,33 @@ const ListComment = () => {
       setToken(storedToken);
     }
   }, []);
-  
+
   useEffect(() => {
-    fetch("http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
+    fetch(
+      "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(mid);
         data.forEach((movie) => {
           console.log(`Movie Mid: ${movie.Mid}`);
         });
-        const movieIndex = data.findIndex(movie => parseInt(movie.Mid) === parseInt(mid));
+        const movieIndex = data.findIndex(
+          (movie) => parseInt(movie.Mid) === parseInt(mid)
+        );
         console.log(movieIndex);
         setRank(movieIndex);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [])
+  }, []);
 
   useEffect(() => {
     // fetch comment and movie info
@@ -97,7 +102,7 @@ const ListComment = () => {
   useEffect(() => {
     const handleScroll = (event) => {
       const { scrollTop, clientHeight, scrollHeight } = event.target;
-      if (scrollHeight - scrollTop <= clientHeight) {
+      if (scrollHeight - scrollTop <= clientHeight + 10) {
         loadMoreComments();
       }
     };

@@ -67,6 +67,15 @@ function SearchPage() {
         padding: "95px",
       }}
     >
+      <div className="logo">
+        <a href="/spin">
+          <img
+            src={require("../images/spinwheel.png")}
+            alt="Spin"
+            style={{ height: 50, width: 50, marginLeft: -700 }}
+          />
+        </a>
+      </div>
       <div className="searchInputs">
         <input
           type="text"

@@ -94,6 +94,7 @@ function HeartButton({ movieId }) {
           autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
+          fontSize: "7px",
         }
       );
     } else {
@@ -141,10 +142,12 @@ function HeartButton({ movieId }) {
   };
 
   return (
-    <button style={buttonStyle} onClick={handleClick}>
-      {inWishlist ? "❤️" : "🖤"}
+    <div>
+      <button style={buttonStyle} onClick={handleClick}>
+        {inWishlist ? "❤️" : "🖤"}
+      </button>
       <ToastContainer />
-    </button>
+    </div>
   );
 }
 

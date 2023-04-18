@@ -24,6 +24,7 @@ const Profile = () => {
   const [scores, setScores] = useState([]);
   const [token, setToken] = useState([]);
   const [refresh, setReFresh] = useState(false);
+  const [olevel, setOlevel] = useState([]);
 
   const [scrollIndex, setScrollIndex] = useState(0);
 
@@ -120,7 +121,7 @@ const Profile = () => {
   useEffect(() => {
     const handleScroll = (event) => {
       const { scrollTop, clientHeight, scrollHeight } = event.target;
-      if (scrollHeight - scrollTop <= clientHeight) {
+      if (scrollHeight - scrollTop <= clientHeight + 10) {
         loadMoreComments();
       }
     };
@@ -181,6 +182,23 @@ const Profile = () => {
     };
     if (userinfo) {
       fetchUserinfo();
+    }
+  }, [userinfo]);
+
+  useEffect(() => {
+    if (userinfo) {
+      axios
+        .get(`http://lbosau.exlb.org:9900/User/Comment?Uid=${userinfo.Uid}`)
+        .then((response) => {
+          const ownlevel =
+            response.data.length < 50
+              ? Math.floor(response.data.length / 10) + 1
+              : 5;
+          setOlevel(ownlevel);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [userinfo]);
 
@@ -300,7 +318,7 @@ const Profile = () => {
   const rewards =
     used_comment_length < 50
       ? `${10 - (used_comment_length % 10)} more reviews to ${nextLevel}`
-      : `Great!!! You have unlimited positions for your Ban list and Wish List`;
+      : `Great!!! You are on the top level!`;
   return (
     <div id="profile">
       <div className="background">
@@ -342,7 +360,7 @@ const Profile = () => {
                 <h3 style={{ marginBottom: "6px", marginTop: "6px" }}>
                   {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
-                {/* {console.log(ownBan, level, MAX_BANWISHS[level])} */}
+                {console.log(ownBan, olevel, MAX_BANWISHS[olevel])}
                 {ouid !== uid ? (
                   <>
                     <img
@@ -350,8 +368,8 @@ const Profile = () => {
                       src={require("../CommentImage/ban.png")}
                       onClick={() => {
                         if (
-                          ownBan >= MAX_BANWISHS[level] &&
-                          level !== "Complete"
+                          ownBan >= MAX_BANWISHS[olevel] &&
+                          olevel !== "Complete"
                         ) {
                           // alert(
                           //   "You have exceeded the maximum number of bans for your user level."
@@ -473,7 +491,21 @@ const Profile = () => {
                       <span>&#63;</span>
                     </div>
                   </div>
-
+                  {comments.length >= 50 ? (
+                    <h4
+                      style={{
+                        color: "red",
+                        marginTop: "-10px",
+                      }}
+                    >
+                      You have unlimited postions in your ban list and wish list
+                    </h4>
+                  ) : (
+                    <h4 style={{ color: "red", marginTop: "-10px" }}>
+                      You have maximum {5 * level} positions in your ban list
+                      and wish list
+                    </h4>
+                  )}
                   <div
                     style={{
                       display: "flex",
