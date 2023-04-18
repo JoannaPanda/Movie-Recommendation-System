@@ -90,7 +90,7 @@ class LoginPage extends React.Component {
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
-                window.location.href = "/dashboard";
+                window.location.href = `/profile/${userinfo.Uid}`;
               }, 3000); // Delay redirect by 2 seconds
             },
           });

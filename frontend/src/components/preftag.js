@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Pref.css";
 
 const tagData = [
@@ -60,7 +60,15 @@ const tagData = [
 
 const SetPreferenceTag = () => {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [userinfo, setUserinfo] = useState(null);
   const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
+    if (storedUserinfo) {
+      setUserinfo(storedUserinfo);
+    }
+  }, []);
 
   const handleTagButtonClick = (tagId) => {
     if (selectedTags.includes(tagId)) {
@@ -73,6 +81,7 @@ const SetPreferenceTag = () => {
   const handleNextButtonClick = () => {
     // when the user clicks Next, go to dashboard
     const token = localStorage.getItem("token");
+    console.log(userinfo);
     const params = new URLSearchParams();
     params.append("token", token);
     console.log(token);
@@ -93,10 +102,9 @@ const SetPreferenceTag = () => {
       body: params.toString(),
     })
       .then((response) => {
-        // localStorage.setItem("userinfo", JSON.stringify(response.data));
         // navigate to the next page
         // redirect to preference tag setting
-        window.location.href = "/dashboard";
+        window.location.href = `/profile/${userinfo.Uid}`;
       })
       .catch((error) => {
         console.error(error);

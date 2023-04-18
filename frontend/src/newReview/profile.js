@@ -190,8 +190,19 @@ const Profile = () => {
       const wishlistCount = mids.length;
       console.log("wishlist count", wishlistCount);
 
+      let progress;
       // Calculate the progress
-      const progress = Math.min(wishlistCount / targetCount, 1);
+      // if level is not null or not "Complete",
+      // the progress is calculated using MAX_BANWISHS[level]
+      // If level is "Complete", the progress is calculated using a target count of 100
+      if (level !== null && level !== "Complete") {
+        progress = Math.min(wishlistCount / MAX_BANWISHS[level], 1);
+      } else if (level === "Complete") {
+        progress = Math.min(wishlistCount / 100, 1);
+      } else {
+        progress = Math.min(wishlistCount / targetCount, 1);
+      }
+
       setProgress(progress);
     }
   }, [userinfo, token]);
@@ -258,7 +269,8 @@ const Profile = () => {
       .append("text")
       .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
       .style("text-anchor", "middle")
-      .style("font-weight", "bold");
+      .style("font-weight", "bold")
+      .style("font-size", "13px");
 
     text
       .append("tspan")
@@ -291,16 +303,6 @@ const Profile = () => {
     <div id="profile">
       <div className="background">
         <div className="profile-white-box">
-          <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
-            {ouid === uid ? (
-              <svg
-                className="progChart"
-                ref={chartRef}
-                width="350"
-                height="350"
-              ></svg>
-            ) : null}
-          </Link>
           <div className="inline">
             <img
               src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
@@ -339,41 +341,52 @@ const Profile = () => {
                   {userInfo.UserName !== "" ? userInfo.UserName : "User"}
                 </h3>
                 {/* {console.log(ownBan, level, MAX_BANWISHS[level])} */}
-                <img
-                  className="ban-poster"
-                  src={require("../CommentImage/ban.png")}
-                  onClick={() => {
-                    if (ownBan >= MAX_BANWISHS[level] && level !== "Complete") {
-                      alert(
-                        "You have exceeded the maximum number of bans for your user level."
-                      );
-                    } else {
-                      const params = new URLSearchParams();
-                      params.append("token", token);
-                      params.append("Uid", uid);
-                      console.log(params.toString());
-                      fetch(`http://lbosau.exlb.org:9900/User/Banlist/add`, {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        body: params.toString(),
-                      })
-                        .then((response) => {
-                          if (response.ok) {
-                            alert(
-                              "The user has been added to the banning list"
-                            );
-                          } else {
-                            throw new Error("Failed to add banning list");
-                          }
-                        })
-                        .catch((error) => {
-                          console.log(error);
-                        });
-                    }
-                  }}
-                />
+                {ouid !== uid ? (
+                  <>
+                    <img
+                      className="ban-poster"
+                      src={require("../CommentImage/ban.png")}
+                      onClick={() => {
+                        if (
+                          ownBan >= MAX_BANWISHS[level] &&
+                          level !== "Complete"
+                        ) {
+                          alert(
+                            "You have exceeded the maximum number of bans for your user level."
+                          );
+                        } else {
+                          const params = new URLSearchParams();
+                          params.append("token", token);
+                          params.append("Uid", uid);
+                          console.log(params.toString());
+                          fetch(
+                            `http://lbosau.exlb.org:9900/User/Banlist/add`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type":
+                                  "application/x-www-form-urlencoded",
+                              },
+                              body: params.toString(),
+                            }
+                          )
+                            .then((response) => {
+                              if (response.ok) {
+                                alert(
+                                  "The user has been added to the banning list"
+                                );
+                              } else {
+                                throw new Error("Failed to add banning list");
+                              }
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
+                        }
+                      }}
+                    />
+                  </>
+                ) : null}
               </div>
               <div className="inline">
                 <div>
@@ -560,6 +573,49 @@ const Profile = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div
+          style={{
+            textAlign: "center",
+            position: "absolute",
+            top: "83%",
+            left: "82%",
+            transform: "translate(-82%, -82%)",
+          }}
+        >
+          <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
+            {ouid === uid ? (
+              <svg
+                className="progChart"
+                ref={chartRef}
+                width="345"
+                height="345"
+              ></svg>
+            ) : null}
+          </Link>
+          {ouid === uid ? (
+            <>
+              <p style={{ marginLeft: "90px", fontSize: 13 }}>
+                Click the button below to add more preference tags.
+              </p>
+              <Link to="/setprefgenre" className="login-link">
+                <button
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "2px solid black",
+                    color: "black",
+                    padding: "12px 20px",
+                    fontSize: 12,
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    marginLeft: "90px",
+                  }}
+                >
+                  ADD MORE PREFERENCE →
+                </button>
+              </Link>
+            </>
+          ) : null}
         </div>
         <div className="white-small-box">
           {visibleComments.map((comment, index) => (
