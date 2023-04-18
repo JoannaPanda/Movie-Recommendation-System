@@ -66,6 +66,7 @@ namespace UNSoftWare.Map
                     {
                         comm = new MV_Comment(mid, usr.Uid, byte.Parse(context.Request.Form["score"]), context.Request.Form["comment"]);
                         comm.Cid = (int)FSQL.Insert(comm).ExecuteIdentity();
+                        FSQL.Update<MV_User>().Where(x=>x.Uid == usr.Uid).Set(x => x.Exp, usr.Exp + 1).ExecuteAffrows();
                     }
                     else
                     {
@@ -77,7 +78,7 @@ namespace UNSoftWare.Map
 
                     //Re Cal Score
                     var comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == mid).ToList();
-                    FSQL.Update<MV_Moive>().Set(x=>x.Score, MV_Comment.CalScore(comms)).ExecuteAffrows();
+                    FSQL.Update<MV_Moive>().Where(x => x.Mid == mid).Set(x => x.Score, MV_Comment.CalScore(comms)).ExecuteAffrows();
                 }
             }
             else
@@ -111,8 +112,8 @@ namespace UNSoftWare.Map
                 }
                 else
                 {
+                    FSQL.Update<MV_User>().Where(x => x.Uid == usr.Uid).Set(x => x.Exp, usr.Exp - 1).ExecuteAffrows();
                     await context.Response.WriteAsync("Success");
-
                 }
             }
             else

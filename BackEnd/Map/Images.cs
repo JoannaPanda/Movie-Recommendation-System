@@ -15,11 +15,11 @@ namespace UNSoftWare.Map
             var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", MoveName, ImageName + ".jpg");
             if (File.Exists(imgpath))
             {
-                context.Response.Redirect($"http://lbosau.exlb.org:9901/{MoveName}/{ImageName}.jpg", true);
+                context.Response.Redirect($"{Program.ImageHostName}/{MoveName}/{ImageName}.jpg", true);
             }
             else
             {
-                context.Response.Redirect($"http://lbosau.exlb.org:9901/Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png", true);
+                context.Response.Redirect($"{Program.ImageHostName}/Default{(Math.Abs(imgpath.GetHashCode()) % 3 + 1)}.png", true);
             }
             await context.Response.CompleteAsync();
         }
@@ -36,7 +36,7 @@ namespace UNSoftWare.Map
                     v.SaveAsPng(imgpath);
                 }
             }
-            context.Response.Redirect($"http://lbosau.exlb.org:9901/User/{uid}.png", true);
+            context.Response.Redirect($"{Program.ImageHostName}/User/{uid}.png", true);
             await context.Response.CompleteAsync();
         }
 
@@ -54,13 +54,17 @@ namespace UNSoftWare.Map
                 await context.Response.WriteAsync("Error Token");
                 return;
             }
-            var mem = new MemoryStream();
-            context.Request.EnableBuffering();
-            context.Request.Body.Position = 0;
-            await context.Request.Body.CopyToAsync(mem);
+            byte[] value;
+            using (var mem = new MemoryStream())
+            {
+                context.Request.EnableBuffering();
+                context.Request.Body.Position = 0;
+                await context.Request.Body.CopyToAsync(mem);
+                value = mem.ToArray();
+            }
             var imgpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "User", usr.Uid + ".png");
-            File.WriteAllBytes(imgpath, mem.ToArray());
-            await context.Response.WriteAsync("Success");
+            File.WriteAllBytes(imgpath, value);
+            await context.Response.WriteAsync("Success\nTotalByte:" + value.Length);
             await context.Response.CompleteAsync();
         }
 

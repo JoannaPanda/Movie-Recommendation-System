@@ -81,11 +81,15 @@ namespace UNSoftWare.DataBase
                 s += c.Score * w;
                 ts += 5 * w;
             });
-            double rs = s / ts;
+            double rs = (s + 1) / (ts + 1);
             double r = rs - (rs - 0.5) * Math.Pow(2, -Math.Log10(ts + 1));
             r *= 5;
             if (r < 0) return 0;
             if (r > 5) return 5;
+            if (double.IsNaN(r))
+            {
+                throw new Exception();
+            }
             return r;
         }
 

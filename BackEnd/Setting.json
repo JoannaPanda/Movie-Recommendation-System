@@ -1,0 +1,4 @@
+{
+  "ConnectionString": "Data Source=192.168.1.100;Port=3306;User ID=unsoftw;Password=yI1.ft!@p*;Database=3900UNSW;SslMode=none;Max pool size=10",
+  "ImageHostName": "http://lbosau.exlb.org:9901"
+}

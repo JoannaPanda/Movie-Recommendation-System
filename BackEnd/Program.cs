@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Routing.Constraints;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Crypto.Agreement.Kdf;
 using SixLabors.ImageSharp;
 using UNSoftWare.Map;
@@ -7,15 +9,23 @@ namespace UNSoftWare
 {
     public class Program
     {
-        static string connectionString = "Data Source=192.168.1.100;Port=3306;User ID=unsoftw;Password=yI1.ft!@p*;Charset=utf8;Database=3900UNSW;SslMode=none;Max pool size=10";
+        public static string ConnectionString = "";
+        public static string ImageHostName = "";
         public static Random Rnd = new Random();
-        public static IFreeSql FSQL = new FreeSql.FreeSqlBuilder()
-             .UseConnectionString(FreeSql.DataType.MySql, connectionString)
-             .UseMonitorCommand(cmd => Console.WriteLine($"Sql：{cmd.CommandText}"))
-             .UseAutoSyncStructure(true) //自动同步实体结构到数据库
-             .Build(); //请务必定义成 Singleton 单例模式
+        public static IFreeSql? FSQL = null;
         public static void Main(string[] args)
         {
+            //LoadSetting
+            var settingpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Setting.json");
+            JObject setting = JObject.Parse(File.ReadAllText(settingpath));
+            ConnectionString = setting["ConnectionString"].ToString();
+            ImageHostName = setting["ImageHostName"].ToString();
+            FSQL = new FreeSql.FreeSqlBuilder()
+            .UseConnectionString(FreeSql.DataType.MySql, ConnectionString)
+            .UseMonitorCommand(cmd => Console.WriteLine($"Sql：{cmd.CommandText}"))
+            .UseAutoSyncStructure(true)
+            .Build();
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(e => e.AddDefaultPolicy(o => o.AllowAnyOrigin()

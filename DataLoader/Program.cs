@@ -4,7 +4,7 @@ namespace DataLoader
 {
     internal class Program
     {
-        static string connectionString = "Data Source=192.168.1.100;Port=3306;User ID=unsoftw;Password=yI1.ft!@p*;Charset=utf8;Database=3900UNSW;SslMode=none;Max pool size=10";
+        static string connectionString = "Data Source=192.168.1.100;Port=3306;User ID=unsoftw;Password=yI1.ft!@p*;Database=3900UNSW;SslMode=none;Max pool size=10";
         static Random rnd = new Random();
         public static IFreeSql FSQL = new FreeSql.FreeSqlBuilder()
             .UseConnectionString(FreeSql.DataType.MySql, connectionString)
@@ -31,12 +31,12 @@ namespace DataLoader
                 case "3":
                     LoadUser(data);
                     break;
-                //case "4":
-                //    for(int i = 62; i < 95;i++)
-                //    {
-                //        FSQL.Update<MV_Moive>().Where(x => x.Mid == i).Set(y => y.Score,
-                //            MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == i).ToList())).ExecuteAffrows();
-                //    }
+                    //case "4":
+                    //    for(int i = 62; i < 95;i++)
+                    //    {
+                    //        FSQL.Update<MV_Moive>().Where(x => x.Mid == i).Set(y => y.Score,
+                    //            MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == i).ToList())).ExecuteAffrows();
+                    //    }
                     break;
             }
 
@@ -51,9 +51,26 @@ namespace DataLoader
                     return;
                 var ds = d.Split('\t');
                 var mv = new MV_Moive(ds[0], ds[4], ds[5], ds[6], ds[1], ds[2], DateTime.Parse(ds[3]), rnd.Next(300));
-                int mid = (int)FSQL.Insert(mv).ExecuteIdentity();
+                int mid;
+                try
+                {
+                    mid = (int)FSQL.Insert(mv).ExecuteIdentity();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.ToString().Contains("Duplicate entry"))
+                    {
+                        Console.WriteLine("SKIP" + ex.ToString());
+                        mv.MovieName = "VUPSimulator " + rnd.Next().ToString("x");
+                        mv.Director = "LorisYounger";
+                        mid = (int)FSQL.Insert(mv).ExecuteIdentity();
+                    }
+                    else
+                        throw ex;
+                }
                 double s = MV_Comment.CalScore(FSQL.Select<MV_Comment>().Where(x => x.Mid == mid).ToList());
-                FSQL.Update<MV_Moive>().Where(x => x.Mid == mid).Set(y => y.Score, s).ExecuteAffrows();
+                if (!double.IsNaN(s))
+                    FSQL.Update<MV_Moive>().Where(x => x.Mid == mid).Set(y => y.Score, s).ExecuteAffrows();
             }
         }
 
@@ -61,18 +78,31 @@ namespace DataLoader
         {
             foreach (var d in data)
             {
-                if(d.Replace("\t","").Length == 0)
+                if (d.Replace("\t", "").Length == 0)
                     continue;
                 var ds = d.Split('\t');
-                FSQL.Insert(new MV_Comment()
+                try
                 {
-                    Uid = int.Parse(ds[0]),
-                    Mid = int.Parse(ds[1]),
-                    Score = byte.Parse(ds[2]),
-                    Comment = ds[3],
-                    Like = rnd.Next(5) != 0 ? rnd.Next(0,200) : rnd.Next(0, 2000),
-                    DisLike = rnd.Next(5) != 0 ? rnd.Next(0, 200) : rnd.Next(0, 2000),
-                }).ExecuteAffrows();
+                    FSQL.Insert(new MV_Comment()
+                    {
+                        Uid = int.Parse(ds[0]),
+                        Mid = int.Parse(ds[1]),
+                        Score = byte.Parse(ds[2]),
+                        Comment = ds[3],
+                        Like = rnd.Next(5) != 0 ? rnd.Next(0, 200) : rnd.Next(0, 2000),
+                        DisLike = rnd.Next(5) != 0 ? rnd.Next(0, 200) : rnd.Next(0, 2000),
+                    }).ExecuteAffrows();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.ToString().Contains("Incorrect string value"))
+                    {
+                        Console.WriteLine("SKIP" + ex.ToString());
+                    }
+                    else
+                        throw ex;
+                }
+
             }
         }
 

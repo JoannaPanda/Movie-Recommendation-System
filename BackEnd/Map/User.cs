@@ -225,7 +225,7 @@ namespace UNSoftWare.Map
                         usr.SetPreferenceModel(pm);
 
                         FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
-                        FSQL.Update<MV_Moive>().Set(x => x.WishListCount, movie.WishListCount + 1).ExecuteAffrows();
+                        FSQL.Update<MV_Moive>().Where(x => x.Mid == mid).Set(x => x.WishListCount, movie.WishListCount + 1).ExecuteAffrows();
                         await context.Response.WriteAsync("Success");
                         return;
                     }
@@ -262,6 +262,7 @@ namespace UNSoftWare.Map
                     list.Remove(mid);
                     usr.SetWishlist(list);
                     FSQL.Update<MV_User>().SetSource(usr).ExecuteAffrows();
+                    FSQL.Update<MV_Moive>().Where(x => x.Mid == mid).SetRaw("WishListCount = WishListCount - 1").ExecuteAffrows();
                     await context.Response.WriteAsync("Success");
                     return;
                 }
