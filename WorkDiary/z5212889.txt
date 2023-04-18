@@ -45,3 +45,9 @@ This week I encourter a challenge. I was planning to complete generating data on
 
 Week 8 Sat
 Right after the wed demo, I had another looked at my code and rotten tomato, and realised there was a big change of the website. The structure and tags has been changed a lot, so my oriangal code could no longer generate movie informations. I rewrite the codes during the weekend and kept working on updating the databse. 
+
+week 9
+This week I generated 200+ movies for our database, our database now having more than 300 movies. I particular choosed some famous movies and lastest movies to make our website more realistic and attractive. I then did some data cleaining and put it into the database. 
+
+week 10 Tue
+we had a meeting to have a final review for our website, and had a demo presentaion. I wrote 500 words script for the presentation tmr. 
