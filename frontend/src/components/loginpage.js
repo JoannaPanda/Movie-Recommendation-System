@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
       // alert("invalid username.");
       toast.error("Invalid username.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
         if (!response.ok) {
           toast.error("Login failed: " + response.status, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -85,13 +85,13 @@ class LoginPage extends React.Component {
           // redirect to user dashboard
           toast.success("Login Successful!", {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
                 window.location.href = `/profile/${userinfo.Uid}`;
-              }, 3000); // Delay redirect by 2 seconds
+              }, 2000); // Delay redirect by 2 seconds
             },
           });
         } catch (error) {
@@ -99,7 +99,7 @@ class LoginPage extends React.Component {
           // alert(error);
           toast.error("Login failed:", error, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });

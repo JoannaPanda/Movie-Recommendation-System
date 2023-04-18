@@ -63,8 +63,8 @@ function SearchPage() {
         backgroundColor: "#400b0a",
         backgroundSize: `cover`,
         width: "auto",
-        height: "900px",
-        padding: "105px",
+        height: "1000px",
+        padding: "95px",
       }}
     >
       <div className="searchInputs">
@@ -141,7 +141,8 @@ const GenreBar = ({ genres, onSelect }) => {
         className="nav nav-tabs"
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
           textAlign: "center",
           alignItems: "center",
         }}
@@ -154,7 +155,7 @@ const GenreBar = ({ genres, onSelect }) => {
               onClick={() => handleSelect(genre)}
               style={{
                 fontSize: "16px",
-                padding: "10px 20px",
+                padding: "9px 16px",
                 backgroundColor: selectedGenre === genre ? "blue" : "grey",
                 color: selectedGenre === genre ? "white" : "black",
               }}

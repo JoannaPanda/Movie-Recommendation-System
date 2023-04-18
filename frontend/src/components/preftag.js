@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Pref.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const tagData = [
   { id: 1, name: "Leonardo DiCaprio" },
@@ -108,7 +110,13 @@ const SetPreferenceTag = () => {
       })
       .catch((error) => {
         console.error(error);
-        alert(error);
+        // alert(error);
+        toast.error("Perference not added!", {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
       });
   };
 

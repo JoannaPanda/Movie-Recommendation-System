@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UserProfileImageUpload() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -31,10 +33,22 @@ function UserProfileImageUpload() {
 
       const responseData = response.data;
       console.log("Image uploaded successfully", responseData);
-      alert("Image uploaded successfully");
+      // alert("Image uploaded successfully");
+      toast.success("Image uploaded successfully!", {
+        position: "bottom-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
     } catch (error) {
       console.error(error);
-      alert("Error uploading image");
+      // alert("Error uploading image");
+      toast.error("Error uploading image, please try again!", {
+        position: "bottom-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
     }
   };
 

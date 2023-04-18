@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function HeartButton({ movieId }) {
   const [clicked, setClicked] = useState(false);
@@ -82,8 +84,17 @@ function HeartButton({ movieId }) {
       comments.length < 50 &&
       url === "http://lbosau.exlb.org:9900/User/Wishlist/add"
     ) {
-      alert(
-        "You have exceeded the maximum number of movie wishlists for your user level."
+      // alert(
+      //   "You have exceeded the maximum number of movie wishlists for your user level."
+      // );
+      toast.error(
+        "You have exceeded the maximum number of movie wishlists for your user level.",
+        {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        }
       );
     } else {
       fetch(url, {

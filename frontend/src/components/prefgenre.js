@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Pref.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const genreData = [
   { id: 1, name: "Action" },
@@ -53,8 +55,13 @@ const SetPreferenceGenre = () => {
         window.location.href = "/setpreftag";
       })
       .catch((error) => {
-        console.error(error);
-        alert(error);
+        // console.error(error);
+        toast.error("Perference not added!", {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
       });
   };
 

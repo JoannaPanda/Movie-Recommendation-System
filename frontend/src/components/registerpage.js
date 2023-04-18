@@ -26,7 +26,7 @@ class registerpage extends React.Component {
       // alert("invalid username.");
       toast.error("Invalid username.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -36,7 +36,7 @@ class registerpage extends React.Component {
       alert("invalid email address.");
       toast.error("Invalid email address.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -55,7 +55,7 @@ class registerpage extends React.Component {
       // alert("Your password is not a strong password.");
       toast.error("Your password is not a strong password.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -109,13 +109,13 @@ class registerpage extends React.Component {
           // redirect to preference setting
           toast.success("Registration Successful!", {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
                 window.location.href = "/setprefgenre";
-              }, 3000); // Delay redirect by 2 seconds
+              }, 2000); // Delay redirect by 2 seconds
             },
           });
         } catch (error) {
@@ -123,7 +123,7 @@ class registerpage extends React.Component {
           // alert(error);
           toast.error("Registration failed", error, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -134,14 +134,14 @@ class registerpage extends React.Component {
         // alert(error);
         toast.error("Registration failed: the email has been registered", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });
 
         toast.error("Please try again with a different email.", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });

@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
 import "../styles/progress.css";
 import UserProfileImageUpload from "../components/profilePhoto";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -351,8 +353,17 @@ const Profile = () => {
                           ownBan >= MAX_BANWISHS[level] &&
                           level !== "Complete"
                         ) {
-                          alert(
-                            "You have exceeded the maximum number of bans for your user level."
+                          // alert(
+                          //   "You have exceeded the maximum number of bans for your user level."
+                          // );
+                          toast.error(
+                            "You have exceeded the maximum number of bans for your user level.",
+                            {
+                              position: "bottom-left",
+                              autoClose: 1000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                            }
                           );
                         } else {
                           const params = new URLSearchParams();
@@ -372,8 +383,17 @@ const Profile = () => {
                           )
                             .then((response) => {
                               if (response.ok) {
-                                alert(
-                                  "The user has been added to the banning list"
+                                // alert(
+                                //   "The user has been added to the banning list"
+                                // );
+                                toast.success(
+                                  "The user has been added to the banning list",
+                                  {
+                                    position: "bottom-left",
+                                    autoClose: 1000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                  }
                                 );
                               } else {
                                 throw new Error("Failed to add banning list");
@@ -537,8 +557,17 @@ const Profile = () => {
                                     )
                                       .then((response) => {
                                         if (response.ok) {
-                                          alert(
-                                            "The user has been removed to the banning list"
+                                          // alert(
+                                          //   "The user has been removed to the banning list"
+                                          // );
+                                          toast.success(
+                                            "The user has been removed to the banning list",
+                                            {
+                                              position: "bottom-left",
+                                              autoClose: 1000,
+                                              hideProgressBar: false,
+                                              closeOnClick: true,
+                                            }
                                           );
                                         } else {
                                           throw new Error(
@@ -651,7 +680,13 @@ const Profile = () => {
                         })
                           .then((response) => {
                             if (response.ok) {
-                              alert("Comment deleted successfully");
+                              // alert("Comment deleted successfully");
+                              toast.success("Comment deleted successfully", {
+                                position: "bottom-left",
+                                autoClose: 1000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                              });
                             } else {
                               throw new Error("Failed to delete comment");
                             }
