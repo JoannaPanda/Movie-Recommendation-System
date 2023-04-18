@@ -118,7 +118,7 @@ const Profile = () => {
   useEffect(() => {
     const handleScroll = (event) => {
       const { scrollTop, clientHeight, scrollHeight } = event.target;
-      if (scrollHeight - scrollTop <= clientHeight) {
+      if (scrollHeight - scrollTop <= clientHeight + 10) {
         loadMoreComments();
       }
     };
