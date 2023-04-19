@@ -61,7 +61,8 @@ namespace UNSoftWare.DataBase
         /// Weight of Score
         /// </summary>
         public double Weight()
-        {
+        {// The higher the weight, the higher the proportion of scores
+            // Weight is count from likes and dislikes
             double tr = Like + DisLike;
             double rs = (Like + 1) / (tr + 1);
             double w = (rs - 0.5) * tr + 1;
@@ -72,6 +73,11 @@ namespace UNSoftWare.DataBase
         /// </summary>
         public static double CalScore(List<MV_Comment> comments)
         {
+            // Weight score algorithm
+            // Use By Steam
+            // The more comments there are, the more trustworthy the score is
+            // So The Score will more Height/Low
+            // Else The Score will more Middle (2.5)
             if (comments.Count == 0) return 0;
             double ts = 0;
             double s = 0;

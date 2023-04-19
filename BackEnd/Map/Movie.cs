@@ -37,7 +37,7 @@ namespace UNSoftWare.Map
                  ((string)form["performer"]).Replace(", ", ","), Convert.ToDateTime(form["publishdate"]), usr.Uid);
             movie.Mid = (int)FSQL.Insert(movie).ExecuteIdentity();
             await context.Response.WriteAsync(JsonConvert.SerializeObject(movie));
-        }        
+        }
         /// <summary>
         /// Get Movie Info
         /// </summary>
@@ -85,9 +85,24 @@ namespace UNSoftWare.Map
         /// </summary>
         public static async void Recommend(HttpContext context)
         {
+            // In Recommend System, We use various quantitative tools to analyze user preferences
+            // This Is Sample for Recommend System
+            //{
+            //  "edmund goulding": 132,
+            //  "crime": 66,
+            //  "drama": 66,
+            //  "english": 66,
+            //  "tyrone power": 66,
+            //  "joan blondell": 66,
+            //  "coleen gray": 66,
+            //  "ian keith": 66
+            //}
+            // When User View a Movie, We Add this Movie info and Tags to User Preference Model
+            // When User Add a Movie to WishList, We Add this Movie info and Tags to User Preference Model with Higher weight
             if (long.TryParse(context.Request.Query["Mid"], out long mid))
             {
                 var movie = FSQL.Select<MV_Moive>().Where(a => a.Mid == mid).First();
+                // At Same Time, We Also Get the currently previewed movie to find similar movies for recommend
                 if (movie == null)
                 {
                     context.Response.StatusCode = 404;
@@ -115,7 +130,7 @@ namespace UNSoftWare.Map
                         var moives = FSQL.Select<MV_Moive>().ToList();
 
                         foreach (var moive in moives)
-                        {
+                        {// When Recommend System Working, It will find all movie and add rank point in User Preference Model
                             foreach (var jr in usr.PreferenceModels)
                             {
                                 if (moive.Tag.ToLower().Contains(jr.Key) || moive.Performer.ToLower().Contains(jr.Key)
@@ -123,6 +138,7 @@ namespace UNSoftWare.Map
                                     moive.RankPoint += (int)jr.Value;
                             }
                         }
+                        // Then We Sort the Movie List by Rank Point and return the top 20
                         recom.AddRange(moives.OrderByDescending(x => x.RankPoint).Take(20));
                         recom.DistinctBy(x => x.Mid);
                     }
@@ -136,12 +152,13 @@ namespace UNSoftWare.Map
                 await context.Response.WriteAsync("No Movie Found");
                 return;
             }
-        }       
+        }
         /// <summary>
         /// Search Movie
         /// </summary>
         public static async void Search(HttpContext context)
         {
+            // In Search System, We use multiple methods to ensure the accuracy of search results
             var searchtext = (string)context.Request.Query["searchtext"];
             if (string.IsNullOrWhiteSpace(searchtext))
             {
