@@ -12,6 +12,7 @@ const genreData = [
   { id: 6, name: "Sci-Fi" },
   { id: 7, name: "Thriller" },
   { id: 8, name: "Western" },
+  { id: 9, name: "Sports" },
 ];
 
 const SetPreferenceGenre = () => {
@@ -66,19 +67,20 @@ const SetPreferenceGenre = () => {
   };
 
   return (
-    <div className="movie-preference-container">
+    <div className="movie-preference-container" style={{ textAlign: "center" }}>
       <h1 className="movie-preference-title">What's your movie preference?</h1>
       <h1 className="movie-preference-subtitle">Select up to 8 genres</h1>
       <div className="movie-preference-genres">
         {genreData.map((genre) => (
           <button
+            style={{ width: "350px", height: "170px" }}
             key={genre.id}
             className={`movie-preference-genre-button ${genrePreferences.includes(
               genre.id
             ) && "selected"}`}
             onClick={() => handleGenreButtonClick(genre.id)}
             disabled={
-              genrePreferences.length === 8 &&
+              genrePreferences.length === 9 &&
               !genrePreferences.includes(genre.id)
             }
           >

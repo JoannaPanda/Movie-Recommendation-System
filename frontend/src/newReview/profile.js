@@ -33,6 +33,12 @@ const Profile = () => {
   const [ouid, setOuid] = useState(null);
   const targetCount = 10;
 
+  const [refreshProfile, setRefreshProfile] = useState(false);
+
+  const handleProfileImageUpload = () => {
+    setRefreshProfile(true);
+  };
+
   // user level and according banlist & wishlist limits
   const MAX_BANWISHS = {
     1: 5,
@@ -49,6 +55,7 @@ const Profile = () => {
     }
   }, []);
 
+  console.log("Photo refresh", refreshProfile);
   useEffect(() => {
     // fetch all comment for this user
     axios
@@ -72,7 +79,11 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [uid, refresh]);
+    if (refreshProfile) {
+      // force reload the page
+      window.location.reload(true);
+    }
+  }, [uid, refresh, refreshProfile]);
 
   // banning list
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -350,7 +361,9 @@ const Profile = () => {
                     }
                   </div>
                   <div className="modal-content">
-                    <UserProfileImageUpload />
+                    <UserProfileImageUpload
+                      onImageUpload={handleProfileImageUpload}
+                    />
                   </div>
                 </div>
               </div>
@@ -405,7 +418,7 @@ const Profile = () => {
                                 //   "The user has been added to the banning list"
                                 // );
                                 toast.success(
-                                  "The user has been added to the banning list",
+                                  "The user has been added to the banning list successfully.",
                                   {
                                     position: "bottom-left",
                                     autoClose: 1000,
@@ -414,6 +427,15 @@ const Profile = () => {
                                   }
                                 );
                               } else {
+                                toast.error(
+                                  "The user is already in the banning list.",
+                                  {
+                                    position: "bottom-left",
+                                    autoClose: 1000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                  }
+                                );
                                 throw new Error("Failed to add banning list");
                               }
                             })
