@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function UserProfileImageUpload() {
+function UserProfileImageUpload(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadMethod, setUploadMethod] = useState(null);
   const [token, setToken] = useState([]);
@@ -40,6 +40,7 @@ function UserProfileImageUpload() {
         hideProgressBar: false,
         closeOnClick: true,
       });
+      props.onImageUpload();
     } catch (error) {
       console.error(error);
       // alert("Error uploading image");

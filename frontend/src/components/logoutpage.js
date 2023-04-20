@@ -27,7 +27,9 @@ class LogoutConfirmation extends Component {
           <p style={{ fontSize: "25px", color: "black" }}>
             Are you sure you want to log out?
           </p>
-          <button onClick={this.props.onLogout}>OK</button>
+          <button style={{ background: "green" }} onClick={this.props.onLogout}>
+            OK
+          </button>
           <button onClick={this.props.onCancel}>Cancel</button>
         </div>
       </div>
