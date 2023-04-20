@@ -116,7 +116,7 @@ namespace UNSoftWare.Map
 
                     var usr = GetUserInfofromToken(context);
                     if (usr != null)
-                    {
+                    { // When User View a Movie, We Add this Movie info and Tags to User Preference Model
                         var pm = usr.PreferenceModels;
                         pm[movie.Type.ToLower()] = pm.GetValueOrDefault(movie.Type.ToLower()) + 1;
                         pm[movie.Director.ToLower()] = pm.GetValueOrDefault(movie.Director.ToLower()) + 1;
@@ -172,7 +172,7 @@ namespace UNSoftWare.Map
             foreach (var moive in moives)
             {
                 foreach (string jr in searchtexts)
-                {
+                {// When Search System Working, It will find all movie and add point
                     if (moive.Tag.ToLower().Contains(jr))
                         moive.RankPoint += 5;
                     if (moive.MovieName.ToLower().Contains(jr))
