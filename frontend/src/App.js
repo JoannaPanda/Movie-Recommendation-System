@@ -43,14 +43,9 @@ function App() {
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/404" element={<NotFound />} />
-          {/* <Route
-            path="/movieinfo/:id"
-            element={<MovieDetail mid=id />}
-          /> */}
           <Route path="/movieinfo/:mid" element={<MovieDetail />} />
           <Route path="/comment/list/:mid" element={<ListComment />} />
           <Route path="/comment/add/:mid" element={<AddComment />} />
-          {/* <Route path="/review/:mid" element={<ListComment />} /> */}
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />

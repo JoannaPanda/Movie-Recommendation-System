@@ -4,14 +4,17 @@ import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 import DirectorBar from "./selectedDirector";
+import MovieResults from "./results";
 
 function RecoMovies(props) {
   const [movies, setMovies] = useState([]);
+  // get the corresponding movie id that need the recomendation movies
   const recoid = props.id;
-  //   const director = props.director;
+
   const [token, setToken] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [isDirectorSelected, setIsDirectorSelected] = useState(false);
+  // get the token from local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -19,9 +22,14 @@ function RecoMovies(props) {
     }
   }, []);
   console.log(token);
+
   useEffect(() => {
     setMovies([]);
     console.log(`recoused token ${token}`);
+    // get this given movie's correponding recommendation movie list
+    // if the token is null  then the recomandation would only based on the
+    // given movies, otherwise, it would also based on the users'
+    // perference and history
     axios
       .get(
         `http://lbosau.exlb.org:9900/Movie/Recommend?Mid=${recoid}&token=${token}`
@@ -33,7 +41,7 @@ function RecoMovies(props) {
       })
       .catch((error) => {
         console.log(error);
-        // window.location.href = "/404";
+        window.location.href = "/404";
       });
   }, [recoid]);
 
@@ -44,16 +52,16 @@ function RecoMovies(props) {
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-  console.log(`get reco as ${movies}`);
+  // filtering the returened movie by the selecte genre
   const recommendedMovies = selectedGenre
     ? movies.filter((movie) => movie.Type === selectedGenre)
     : movies;
-
+  // check if the 'just like this director' button is clciked
   const handleDirectorToggle = (isSelected) => {
     setIsDirectorSelected(isSelected);
     console.log(isDirectorSelected);
   };
-
+  // if it is clicked then further filtering the returned movie set by director
   const recommendedMovies2 = isDirectorSelected
     ? recommendedMovies.filter((movie) => movie.Director === props.director)
     : recommendedMovies;
@@ -76,76 +84,7 @@ function RecoMovies(props) {
         style={{ marginTop: "20px", color: "whitesmoke" }}
         onClick={handleClick()}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          {recommendedMovies2.map((movie) => (
-            <div
-              key={movie.MovieName}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                margin: "10px",
-                width: "200px",
-                height: "350px auto",
-                backgroundColor: "gray",
-                borderRadius: "10px",
-                boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
-                overflow: "hidden",
-              }}
-            >
-              <Link to={`/movieinfo/${movie.Mid}`}>
-                <img
-                  src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
-                  alt={movie.MovieName}
-                  style={{ width: "100%", height: "70%", objectFit: "cover" }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "100%",
-                    height: "30%",
-                    padding: "10px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "18px",
-                      marginBottom: "10px",
-                      color: "white",
-                    }}
-                  >
-                    {movie.MovieName}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <div style={{ marginRight: "5px" }}>
-                      {movie.Score.toFixed(2)}
-                    </div>
-                    <span style={{ color: "yellow" }}>★</span>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+        <MovieResults movies={recommendedMovies2} />
       </div>
     </div>
   );

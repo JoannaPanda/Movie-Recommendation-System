@@ -5,7 +5,7 @@ function StarRating({ name, value, onValueChange }) {
   const handleChange = (event, newValue) => {
     onValueChange(newValue);
   };
-
+  // this component is used to complete each subrating
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ marginRight: "1rem", fontSize: "20px" }}>{name} : </div>

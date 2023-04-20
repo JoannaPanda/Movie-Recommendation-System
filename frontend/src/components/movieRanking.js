@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 
+// this component is used from homepage
 function MovieRankings() {
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("xxxxxxxxxxxxx");
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // get all the sorted movie from the backend
         const res = await fetch(
           "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True"
         );
@@ -22,10 +22,11 @@ function MovieRankings() {
     fetchMovies();
   }, []);
   console.log(movies);
+  // get the selected genre
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-
+  // filter the returned movies by genre
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
   const results = movies.filter((movie) => movie.Type === selectedGenre);
   const usedResults = usedGenre === "xxxxxxxxxxxxx" ? movies : results;
@@ -54,6 +55,7 @@ function MovieRankings() {
         }}
       />
       <h1 style={{ color: "white", fontSize: 40 }}>Movie Rankings</h1>
+      {/* put a gnerebar can be used to select genre for filtering */}
       <GenreBar
         genres={[
           "Comedy",
@@ -82,6 +84,7 @@ function MovieRankings() {
           alignItems: "center",
         }}
       >
+        {/* print all the selected movies with ratings */}
         {usedResults.map((movie) => (
           <div
             key={movie.MovieName}

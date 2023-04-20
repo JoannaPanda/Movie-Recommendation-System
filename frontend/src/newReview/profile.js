@@ -48,6 +48,7 @@ const Profile = () => {
     5: 25,
   };
 
+  // get the token from localstorage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -105,13 +106,13 @@ const Profile = () => {
   const handleImageDialogClose = () => {
     setIsImageDialogOpen(false);
   };
-
+  // load all the users in the ban list
   useEffect(() => {
     Promise.all(
       banlist.map((uid) =>
-        fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
-        ).then((response) => response.json())
+        fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`).then(
+          (response) => response.json()
+        )
       )
     ).then((users) => {
       setBanUser(users);
@@ -143,13 +144,13 @@ const Profile = () => {
       container.removeEventListener("scroll", handleScroll);
     };
   }, [loadMoreComments]);
-
+  // get all the comments that belongs to this particular user
   useEffect(() => {
     Promise.all(
       visibleComments.map((comment) =>
-        fetch(
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
-        ).then((response) => response.json())
+        fetch(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`).then(
+          (response) => response.json()
+        )
       )
     )
       .then((data) => {
@@ -170,7 +171,7 @@ const Profile = () => {
         console.error(error);
       });
   }, [visibleComments]);
-
+  // get the userinfo from the local storage
   useEffect(() => {
     const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
     if (storedUserinfo) {
@@ -178,6 +179,7 @@ const Profile = () => {
     }
   }, []);
 
+  // get the up-to-date userinfo from backend database
   useEffect(() => {
     const fetchUserinfo = async () => {
       try {
@@ -195,7 +197,7 @@ const Profile = () => {
       fetchUserinfo();
     }
   }, [userinfo]);
-
+  // get the the users' levels
   useEffect(() => {
     if (userinfo) {
       axios
@@ -241,7 +243,7 @@ const Profile = () => {
   // console.log(ouid, uid);
 
   const chartRef = useRef();
-
+  // get the reward system infomation
   useEffect(() => {
     const data = [
       { label: "Completed", value: progress * 100 },
@@ -277,19 +279,13 @@ const Profile = () => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d) => color(d.data.label))
-      .on("mouseover", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("d", outerArc);
+      .on("mouseover", function () {
+        d3.select(this).transition().duration(200).attr("d", outerArc);
       })
-      .on("mouseout", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("d", arc);
+      .on("mouseout", function () {
+        d3.select(this).transition().duration(200).attr("d", arc);
       })
-      .each(function(d) {
+      .each(function (d) {
         this._current = d;
       });
 
@@ -321,6 +317,7 @@ const Profile = () => {
   }, [progress]);
 
   const used_comment_length = comments.length;
+  // get the level, next level, completed percetage of each level and reward strings
   const level =
     used_comment_length < 50 ? Math.floor(used_comment_length / 10) + 1 : 5;
   const nextLevel = level < 4 ? `Level ${level + 1}` : "Complete";
@@ -339,6 +336,7 @@ const Profile = () => {
               src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
               className="user-poster"
             />
+            {/* the user image */}
             <img
               src={require("../CommentImage/upload.png")}
               onClick={handleImageDialogOpen}
@@ -384,9 +382,6 @@ const Profile = () => {
                           ownBan >= MAX_BANWISHS[olevel] &&
                           olevel !== "Complete"
                         ) {
-                          // alert(
-                          //   "You have exceeded the maximum number of bans for your user level."
-                          // );
                           toast.error(
                             "You have exceeded the maximum number of bans for your user level.",
                             {

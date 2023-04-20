@@ -12,9 +12,9 @@ const DoughnutWinwheel = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // get all the movie from the database
         const res = await fetch(
-          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&limit=10&desc=True"
+          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True"
         );
         const data = await res.json();
         if (data !== null) {
@@ -27,7 +27,7 @@ const DoughnutWinwheel = () => {
     };
     fetchMovies();
   }, []);
-
+  // by clicking the button there would be a random movie generated
   const handleClick = () => {
     setFlag(true);
     const randomIndex = Math.floor(Math.random() * movies.length);
@@ -44,9 +44,11 @@ const DoughnutWinwheel = () => {
         textAlign: "center",
       }}
     >
+      {/* improve visulization */}
       <div className="confetti" ref={confetiRef}>
         <Confetti run={flag} numberOfPieces={150} width={1200} height={1000} />
       </div>
+      {/* this is the button used to generate the movies */}
       <button onClick={handleClick}>Click for Confetti and a Movie!</button>
       {randomMovie && (
         <Link to={`/movieinfo/${randomMovieID}`}>

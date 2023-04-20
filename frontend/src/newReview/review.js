@@ -298,37 +298,6 @@ const ListComment = () => {
                         <div className="review_inline-element">
                           <h6>helpful?</h6>
                           <LikeComment Cid={comment.Cid} />
-                          {/* <img
-                            className="good-poster"
-                            src={require("../CommentImage/emptyGood.png")}
-                            onClick={() => {
-                              const params = new URLSearchParams();
-                              params.append("Cid", comment.Cid);
-                              params.append("token", token);
-                              console.log(params.toString());
-                              fetch(
-                                `http://lbosau.exlb.org:9900/Comment/Like`,
-                                {
-                                  method: "POST",
-                                  headers: {
-                                    "Content-Type":
-                                      "application/x-www-form-urlencoded",
-                                  },
-                                  body: params.toString(),
-                                }
-                              )
-                                .then((response) => {
-                                  if (response.ok) {
-                                    alert("Comment likes successfully");
-                                  } else {
-                                    throw new Error("Failed to likes comment");
-                                  }
-                                })
-                                .catch((error) => {
-                                  console.log(error);
-                                });
-                            }}
-                          /> */}
                         </div>
                       </div>
                     </div>

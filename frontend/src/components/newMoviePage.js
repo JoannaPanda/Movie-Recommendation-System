@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import MovieResults from "./results";
 import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 
@@ -9,7 +9,7 @@ function NewMoviePage() {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // get all the sorted movie from backend by publishdate
         const res = await fetch(
           "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&desc=True"
         );
@@ -21,11 +21,11 @@ function NewMoviePage() {
     };
     fetchMovies();
   }, []);
-
+  // get the selected genre
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-
+  // filter the return movie lis by genre
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
   const results = movies.filter((movie) => movie.Type === selectedGenre);
   const usedResults = usedGenre === "xxxxxxxxxxxxx" ? movies : results;
@@ -56,6 +56,7 @@ function NewMoviePage() {
       <h1 style={{ color: "white", fontSize: 40, fontWeight: "bold" }}>
         NEW and UPCOMING MOVIES
       </h1>
+      {/* a genrebar used by user to filter the returned movies */}
       <GenreBar
         genres={[
           "Comedy",
@@ -77,86 +78,7 @@ function NewMoviePage() {
           borderRadius: "10px",
         }}
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        {usedResults.map((movie) => (
-          <div
-            key={movie.MovieName}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "10px",
-              width: "250px",
-              height: "400px",
-              backgroundColor: "gray",
-              borderRadius: "10px",
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              // src={require("../images/default-movie.png")}
-              src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
-              alt={movie.MovieName}
-              style={{ width: "100%", height: "70%", objectFit: "cover" }}
-            />
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                height: "30%",
-                padding: "10px",
-              }}
-            >
-              <Link to={`/movieinfo/${movie.Mid}`}>
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    marginBottom: "10px",
-                    color: "white",
-                  }}
-                >
-                  {movie.MovieName}
-                </div>
-              </Link>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  marginBottom: "10px",
-                }}
-              >
-                <div style={{ marginRight: "5px" }}>
-                  {movie.Score.toFixed(2)}
-                </div>
-                <span style={{ color: "yellow" }}>★</span>
-              </div>
-              <div style={{ fontWeight: "bold" }}>
-                Released on{" "}
-                {new Date(movie.PublishDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <MovieResults movies={usedResults} />
     </div>
   );
 }

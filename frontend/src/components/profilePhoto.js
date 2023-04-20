@@ -7,7 +7,7 @@ function UserProfileImageUpload(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadMethod, setUploadMethod] = useState(null);
   const [token, setToken] = useState([]);
-
+  // get the token from local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -15,10 +15,7 @@ function UserProfileImageUpload(props) {
     }
   }, []);
 
-  const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]);
-  };
-
+  //
   const handleUploadImage = async () => {
     try {
       const response = await axios.post(
@@ -30,10 +27,10 @@ function UserProfileImageUpload(props) {
           },
         }
       );
-
+      // if get the reponse then save the image
       const responseData = response.data;
       console.log("Image uploaded successfully", responseData);
-      // alert("Image uploaded successfully");
+
       toast.success("Image uploaded successfully!", {
         position: "bottom-left",
         autoClose: 1000,
@@ -43,7 +40,7 @@ function UserProfileImageUpload(props) {
       props.onImageUpload();
     } catch (error) {
       console.error(error);
-      // alert("Error uploading image");
+      // alert the errors
       toast.error("Error uploading image, please try again!", {
         position: "bottom-left",
         autoClose: 1000,
@@ -56,7 +53,7 @@ function UserProfileImageUpload(props) {
   const handleSelectMethod = (method) => {
     setUploadMethod(method);
   };
-
+  // if the method is local then open the local storage
   const handleUploadMethod = async () => {
     if (uploadMethod === "local") {
       const fileInput = document.createElement("input");
@@ -76,6 +73,7 @@ function UserProfileImageUpload(props) {
       <button onClick={() => handleSelectMethod("local")}>
         Upload from local
       </button>
+      {/* upload the user image based on its type */}
       {selectedImage && (
         <div>
           {typeof selectedImage === "string" ? (
@@ -92,6 +90,7 @@ function UserProfileImageUpload(props) {
           </button>
         </div>
       )}
+      {/* select the image based on the upload method */}
       {uploadMethod && (
         <div>
           <button onClick={handleUploadMethod} style={{ fontSize: "23px" }}>

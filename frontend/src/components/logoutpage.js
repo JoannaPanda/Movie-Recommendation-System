@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// this class would be used to the ask the user for confirmation
 class LogoutConfirmation extends Component {
   render() {
     return (
@@ -61,9 +62,6 @@ class Logout extends Component {
       },
     })
       .then((response) => {
-        // if (response.ok) {
-        //   alert("success");
-        // }
         // remove token and userinfo from local storage
         localStorage.removeItem("token");
         localStorage.removeItem("userinfo");

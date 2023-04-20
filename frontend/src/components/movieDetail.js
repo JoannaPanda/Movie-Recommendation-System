@@ -7,10 +7,12 @@ import RecoMovies from "./recoMovie";
 import HeartButton from "./heartButton";
 
 function MovieDetail() {
+  // get the mid from the url
   const { mid } = useParams();
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
   const [token, setToken] = useState(null);
+  // get the token from local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -18,6 +20,7 @@ function MovieDetail() {
     }
   }, []);
   console.log("token:", token);
+  // get the movie info
   useEffect(() => {
     setMovie([]);
 
@@ -33,7 +36,7 @@ function MovieDetail() {
         window.location.href = "/404";
       });
   }, [mid]);
-  console.log(movie.Performers);
+  // get the performers and use a MovieAttend to wrap it
   const cast = movie.Performers ? (
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
@@ -54,6 +57,7 @@ function MovieDetail() {
       <div className="movie-header" style={{ marginLeft: 13 }}>
         <div className="movie-name-date">
           <h1 className="movie-title">{movie.MovieName}</h1>
+          {/* used for wishlist */}
           <HeartButton movieId={mid} />
           <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
@@ -69,6 +73,7 @@ function MovieDetail() {
             {movie.WishListCount} users added to wishlist
           </p>
         </div>
+        {/* this button would be redirected to the comment page */}
         <div onClick={handleClick()}>
           <Link to={`/comment/list/${movie.Mid}`}>
             <div
@@ -99,7 +104,7 @@ function MovieDetail() {
           <p className="summary-text">{movie.Info}</p>
         </div>
       </div>
-
+      {/* can link to the comment page */}
       <Link to={`/comment/list/${movie.Mid}`}>
         <button
           style={{
@@ -116,7 +121,7 @@ function MovieDetail() {
           SEE COMMENTS →
         </button>
       </Link>
-
+      {/* the direct is a movie attend box can link to a director page */}
       <div className="movie-cast">
         <h2 className="cast-heading">Director</h2>
         <Link to={`/director/${movie.Director}`}>
@@ -137,11 +142,12 @@ function MovieDetail() {
           {movie.Director}
         </ul>
       </div>
+      {/* cast list */}
       <div className="movie-cast">
         <h2 className="cast-heading">Cast</h2>
         <ul className="cast-list">{cast}</ul>
       </div>
-
+      {/* recommandation movie set */}
       <div className="movie-cast" style={{ margin: "auto" }}>
         <h2 className="cast-heading">Guess you like:</h2>
         <RecoMovies id={mid} director={movie.Director} />
@@ -152,6 +158,7 @@ function MovieDetail() {
 
 export default MovieDetail;
 
+// diplay the input name into a wrapped box
 const MovieAttend = (props) => {
   const actorNmae = props.name;
   const title = props.movietitle;

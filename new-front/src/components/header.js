@@ -28,23 +28,6 @@ function Header() {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchUserinfo = async () => {
-      try {
-        const response = await fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
-        );
-        const data = await response.json();
-        setUserinfo(data);
-      } catch (error) {
-        console.error("Error fetching user info: ", error);
-      }
-    };
-    if (userinfo) {
-      fetchUserinfo();
-    }
-  }, [userinfo]);
-
   const getUid = () => {
     if (userinfo && userinfo.Uid) {
       return userinfo.Uid;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+// this component is frequently used in the whole system
+// nearly all the movie box is created by this component
 function MovieResults(props) {
   return <MovieBox results={props.movies} />;
 }
@@ -13,7 +14,7 @@ const MovieBox = (props) => {
   const handleClick = () => {
     console.log("Clickable area clicked!");
   };
-
+  // this would return the movie information in a wrap box
   return (
     <div
       style={{ marginTop: "20px", color: "whitesmoke" }}
@@ -44,6 +45,7 @@ const MovieBox = (props) => {
               overflow: "hidden",
             }}
           >
+            {/* by clickintg the movie box user would be redirected to the movie detail page */}
             <Link to={`/movieinfo/${movie.Mid}`}>
               <img
                 src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}

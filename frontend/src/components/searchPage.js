@@ -40,17 +40,18 @@ function SearchPage() {
         });
     }
   }, [search]);
+  // by clicking the genre button, select a gnere
   const handleGenreSelect = (selectedGenre) => {
     setSelectedGenre(selectedGenre);
   };
-
+  // by clicking the clear button, reset all the state
   const handleClear = () => {
     setSearch("");
     setResults([]);
     setSelectedGenre(null);
     handleGenreSelect(selectedGenre);
   };
-
+  // filtering the movie with the genre
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
   const returnedResults = results.filter(
     (movie) => movie.Type === selectedGenre
@@ -125,12 +126,14 @@ function SearchPage() {
           borderRadius: "10px",
         }}
       />
+      {/* return the movie results */}
       {!results ? <h1>loading...</h1> : <MovieResults movies={usedResults} />}
     </div>
   );
 }
 export default SearchPage;
 
+// this is a normal genre bar that work as any other one
 const GenreBar = ({ genres, onSelect }) => {
   const [selectedGenre, setSelectedGenre] = useState(null);
 

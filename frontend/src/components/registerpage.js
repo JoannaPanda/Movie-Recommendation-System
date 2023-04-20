@@ -23,7 +23,7 @@ class registerpage extends React.Component {
     const { name, email, password } = this.state;
 
     if (name === "") {
-      // alert("invalid username.");
+      // alert all the invalid info that entered
       toast.error("Invalid username.", {
         position: "bottom-left",
         autoClose: 1000,
@@ -32,6 +32,7 @@ class registerpage extends React.Component {
       });
       return;
     }
+    // alert all the invalid info that entered
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
       // alert("invalid email address.");
       toast.error("Invalid email address.", {
@@ -42,7 +43,7 @@ class registerpage extends React.Component {
       });
       return;
     }
-
+    // check if the password is strong enough
     if (
       !validator.isStrongPassword(password, {
         minLength: 8,
@@ -66,12 +67,12 @@ class registerpage extends React.Component {
       "API endpoint URL:",
       "http://lbosau.exlb.org:9900/User/Register"
     );
-
+    // put all the valid information into the params
     const params = new URLSearchParams();
     params.append("name", name);
     params.append("email", email);
     params.append("password", password);
-
+    // and post tha params to the backend
     fetch("http://lbosau.exlb.org:9900/User/Register", {
       method: "POST",
       headers: {
@@ -80,6 +81,8 @@ class registerpage extends React.Component {
       body: params.toString(),
     })
       .then((response) => {
+        // check if the regierster is ok, if there is deplicate email
+        // the regerister is not ok
         if (!response.ok) {
           throw new Error("Registration failed: " + response.status);
         }
@@ -95,7 +98,7 @@ class registerpage extends React.Component {
           const jsonData = JSONbig.parse(data);
 
           console.log("Registration successful:", jsonData);
-          // alert("successful");
+          // if nothing is wrong
           const { token, userinfo } = jsonData;
 
           // store token and user info in local storage
@@ -120,7 +123,7 @@ class registerpage extends React.Component {
           });
         } catch (error) {
           console.error("Registration failed:", error);
-          // alert(error);
+          // alert error
           toast.error("Registration failed", error, {
             position: "bottom-left",
             autoClose: 1000,
@@ -138,7 +141,7 @@ class registerpage extends React.Component {
           hideProgressBar: false,
           closeOnClick: true,
         });
-
+        // if the email is already in the database
         toast.error("Please try again with a different email.", {
           position: "bottom-left",
           autoClose: 1000,
@@ -159,6 +162,7 @@ class registerpage extends React.Component {
           height: "900px",
         }}
       >
+        {/* from here, is the form that could be used to enter the param */}
         <form
           onSubmit={this.handleSubmit}
           style={{

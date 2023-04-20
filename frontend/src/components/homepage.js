@@ -6,14 +6,19 @@ import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 import axios from "axios";
 import GenreMovies from "./getGenremovie";
+import MovieResults from "./results";
 import "../styles/multiple.css";
+// This is the home page component that have multiple other component
+
+// this fucntion is used to present the top ten movies
 const TopTenMovies = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // get the movie from the backend with limit = 10
+        // top ten movies would be returned
         const res = await fetch(
           "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&limit=10&desc=True"
         );
@@ -21,22 +26,6 @@ const TopTenMovies = () => {
         setMovies(data);
       } catch (error) {
         console.log("Error fetching movies:", error);
-        // manual list used for testing style
-        setMovies([
-          { MovieName: "The Shawshank Redemption", Score: 5 },
-          { MovieName: "The Godfather", Score: 4.7 },
-          { MovieName: "The Godfather: Part II", Score: 4.6 },
-          { MovieName: "The Dark Knight", Score: 4.5 },
-          { MovieName: "12 Angry Men", Score: 4.5 },
-          { MovieName: "Schindler's List", Score: 4.5 },
-          {
-            MovieName: "The Lord of the Rings: The Return of the King",
-            Score: 4.5,
-          },
-          { MovieName: "Pulp Fiction", Score: 4.4 },
-          { MovieName: "The Good, the Bad and the Ugly", Score: 4.4 },
-          { MovieName: "Fight Club", Score: 4.3 },
-        ]);
       }
     };
     fetchMovies();
@@ -63,6 +52,8 @@ const TopTenMovies = () => {
           alignItems: "center",
         }}
       >
+        {/* for each movie in the returned movie set, 
+        the movie tile and conresponding ratings would be showed */}
         {movies.map((movie) => (
           <div
             key={movie.MovieName}
@@ -109,13 +100,14 @@ const TopTenMovies = () => {
   );
 };
 
+// the function would be used to presented the newMovies
 const NewMovies = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // fetch the new movies set from the backend database
         const res = await fetch(
           "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
         );
@@ -123,47 +115,6 @@ const NewMovies = () => {
         setMovies(data);
       } catch (error) {
         console.log("Error fetching movies:", error);
-        // manual list used for testing style
-        setMovies([
-          {
-            MovieName: "The Shawshank Redemption",
-            Score: 5.0,
-            PublishDate: "2023/03/12",
-          },
-          {
-            MovieName: "The Godfather",
-            Score: 4.75,
-            PublishDate: "2023/03/12",
-          },
-          {
-            MovieName: "The Godfather: Part II",
-            Score: 4.65,
-            PublishDate: "2023/03/11",
-          },
-          {
-            MovieName: "The Dark Knight",
-            Score: 4.57,
-            PublishDate: "2023/03/09",
-          },
-          { MovieName: "12 Angry Men", Score: 4.52, PublishDate: "2023/03/07" },
-          {
-            MovieName: "Schindler's List",
-            Score: 4.5,
-            PublishDate: "2023/03/07",
-          },
-          {
-            MovieName: "The Lord of the Rings: The Return of the King",
-            Score: 4.5,
-            PublishDate: "2023/03/06",
-          },
-          { MovieName: "Pulp Fiction", Score: 4.45, PublishDate: "2023/03/03" },
-          {
-            MovieName: "The Good, the Bad and the Ugly",
-            Score: 4.4,
-            PublishDate: "2023/03/02",
-          },
-          { MovieName: "Fight Club", Score: 4.3, PublishDate: "2023/03/02" },
-        ]);
       }
     };
     fetchMovies();
@@ -188,122 +139,11 @@ const NewMovies = () => {
           fontWeight: "bold",
         }}
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        {movies.map((movie) => (
-          <div
-            key={movie.MovieName}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "10px",
-              width: "250px",
-              height: "400px",
-              backgroundColor: "gray",
-              borderRadius: "10px",
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.5)",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              // src={require("../images/default-movie.png")}
-              src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
-              alt={movie.MovieName}
-              style={{ width: "100%", height: "70%", objectFit: "cover" }}
-            />
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                height: "30%",
-                padding: "10px",
-              }}
-            >
-              <Link to={`/movieinfo/${movie.Mid}`}>
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                    marginBottom: "10px",
-                    color: "white",
-                  }}
-                >
-                  {movie.MovieName}
-                </div>
-              </Link>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  marginBottom: "10px",
-                }}
-              >
-                <div style={{ marginRight: "5px" }}>
-                  {movie.Score.toFixed(2)}
-                </div>
-                <span style={{ color: "yellow" }}>★</span>
-              </div>
-              <div style={{ fontWeight: "bold" }}>
-                Released on{" "}
-                {new Date(movie.PublishDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* return the new movie list as movie boxes */}
+      <MovieResults movies={movies} />
     </div>
   );
 };
-
-const movies = [
-  {
-    MovieName: "Nightmare Alley",
-    Mid: "65",
-    imageUrl:
-      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1410310397860-B08JBSY4GLQ99U14SHBB/mp-36-nightmare-alley-film-noir-classic-movie-poster.jpg?format=1000w",
-  },
-  {
-    MovieName: "The Brides of Dracula",
-    Mid: "66",
-    imageUrl:
-      "http://static1.squarespace.com/static/539dffebe4b080549e5a5df5/53ac6176e4b0c4e738760920/57e4622415d5db083264a81f/1635979532345/?format=1500w",
-  },
-  {
-    MovieName: "Breakfast at Tiffany",
-    Mid: "67",
-    imageUrl:
-      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1462396269407-D3URV1GNKZY8J31DUMC4/MP-63+Breakfast+at+Tiffany%27s++Vintage+Movie+Posters.jpg?format=1500w",
-  },
-  {
-    MovieName: "The Big Sleep",
-    Mid: "68",
-    imageUrl:
-      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1492894877307-93AKZB22IF82BIDQ3048/MP-260-the-big-sleep-classic-vintage-movie-poster.jpeg?format=1500w",
-  },
-  {
-    MovieName: "Wizard of Oz ",
-    Mid: "69",
-    imageUrl:
-      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1556117276431-4EYYJM5WNYSKL0AQHNZ3/Wizard-of-Oz-classic-movie-poster-museum-outlets.jpg?format=1500w",
-  },
-];
 
 function Homepage() {
   const [selectedGenre, setSelectedGenre] = useState("xxxxxxxxxxxxx");
@@ -349,7 +189,7 @@ function Homepage() {
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-
+  // if there is genre selected from the genre bar, the usedGenre would be set
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
 
   return (
@@ -368,6 +208,7 @@ function Homepage() {
           fontWeight: "bold",
         }}
       />
+      {/* the slider compoent would be used to display the classic movie posters */}
       <Slider {...settings} className="posterSlider">
         {movies.map((movie) => (
           <Link to={`/movieinfo/${movie.Mid}`}>
@@ -381,7 +222,9 @@ function Homepage() {
           </Link>
         ))}
       </Slider>
+      {/* use the top ten movies */}
       <TopTenMovies />
+      {/* this is a a button used to redirect to the movie ranking pagr */}
       <Link to={`/movierankings`}>
         <button
           style={{
@@ -399,8 +242,9 @@ function Homepage() {
           SEE ALL →
         </button>
       </Link>
-
+      {/* new movie component used */}
       <NewMovies />
+      {/* this is a button that used to redirect to the new movie page */}
       <Link to={`/newmoviepage`}>
         <button
           style={{
@@ -418,6 +262,7 @@ function Homepage() {
           SEE ALL →
         </button>
       </Link>
+      {/*  at the bottom of the home page there is sorint movies that can be filter by genre */}
       <div
         style={{
           display: "flex",

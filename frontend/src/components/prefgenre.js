@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/Pref.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+// the genreData used later
 const genreData = [
   { id: 1, name: "Action" },
   { id: 2, name: "Comedy" },
@@ -17,7 +17,7 @@ const genreData = [
 
 const SetPreferenceGenre = () => {
   const [genrePreferences, setGenrePreferences] = useState([]);
-
+  // if the perference clicked add the the list
   const handleGenreButtonClick = (genreId) => {
     if (genrePreferences.includes(genreId)) {
       setGenrePreferences((prevState) =>
@@ -27,7 +27,7 @@ const SetPreferenceGenre = () => {
       setGenrePreferences((prevState) => [...prevState, genreId]);
     }
   };
-
+  // if the next button clicked
   const handleNextButtonClick = () => {
     const token = localStorage.getItem("token");
     const params = new URLSearchParams();
@@ -50,13 +50,11 @@ const SetPreferenceGenre = () => {
       body: params.toString(),
     })
       .then((response) => {
-        // localStorage.setItem("userinfo", JSON.stringify(response.data));
         // navigate to the next page
         // redirect to preference tag setting
         window.location.href = "/setpreftag";
       })
       .catch((error) => {
-        // console.error(error);
         toast.error("Perference not added!", {
           position: "bottom-left",
           autoClose: 1000,
@@ -65,7 +63,8 @@ const SetPreferenceGenre = () => {
         });
       });
   };
-
+  // print all the genre perference and if the next page clicked
+  // would be redirected to perference tag page
   return (
     <div className="movie-preference-container" style={{ textAlign: "center" }}>
       <h1 className="movie-preference-title">What's your movie preference?</h1>
@@ -75,9 +74,9 @@ const SetPreferenceGenre = () => {
           <button
             style={{ width: "350px", height: "170px" }}
             key={genre.id}
-            className={`movie-preference-genre-button ${genrePreferences.includes(
-              genre.id
-            ) && "selected"}`}
+            className={`movie-preference-genre-button ${
+              genrePreferences.includes(genre.id) && "selected"
+            }`}
             onClick={() => handleGenreButtonClick(genre.id)}
             disabled={
               genrePreferences.length === 9 &&
