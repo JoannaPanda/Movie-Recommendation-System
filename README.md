@@ -14,6 +14,10 @@ Automatically generated, see [Database](https://github.com/unsw-cse-comp3900-990
 
 Created with React.js, see [Frontend](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/frontend)
 
+### Installation Guide
+
+Please see [Installation Guide txt version] (https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/readme.txt)
+
 ### Link to this repository
 
-Finished at 8 p.m. on 21-04-2023, here is the [final main branch](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware)
+Code part inished at 8 p.m. on 21-04-2023, here is the [final main branch](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware). Updated installation guide and work diaries in the morning on 22-04-2023.
