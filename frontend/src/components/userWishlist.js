@@ -30,7 +30,7 @@ const MovieWishlist = () => {
     const fetchUserinfo = async () => {
       try {
         const response = await fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+          `${backendurl}/User/Info?Uid=${userinfo.Uid}`
         );
         const data = await response.json();
         setUserinfo(data);
@@ -49,7 +49,7 @@ const MovieWishlist = () => {
       const mids = Object.values(userinfo.WishList);
       const requests = mids.map((mid) =>
         axios.get(
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`
+          `${backendurl}/Movie/Info?Mid=${mid}&token=${token}`
         )
       );
       Promise.all(requests)
