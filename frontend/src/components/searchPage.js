@@ -18,7 +18,7 @@ function SearchPage() {
     setResults([]);
     if (search !== "") {
       axios
-        .get(`http://lbosau.exlb.org:9900/Movie/Search?searchtext=${search}`)
+        .get(`${backendurl}/Movie/Search?searchtext=${search}`)
         .then((response) => {
           console.log(response.data);
           setResults(response.data);
@@ -29,7 +29,7 @@ function SearchPage() {
     } else {
       axios
         .get(
-          `http://lbosau.exlb.org:9900/Movie/Search?searchtext=xxxxxxxxxxxxxxxxxxx`
+          `${backendurl}/Movie/Search?searchtext=xxxxxxxxxxxxxxxxxxx`
         )
         .then((response) => {
           console.log(response.data);
