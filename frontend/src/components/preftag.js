@@ -97,7 +97,7 @@ const SetPreferenceTag = () => {
 
     params.append("tag", tagString);
 
-    fetch("http://lbosau.exlb.org:9900/User/Recommend/add", {
+    fetch("${backendurl}/User/Recommend/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
