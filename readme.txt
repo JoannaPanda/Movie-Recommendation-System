@@ -11,6 +11,7 @@ ________________________________________________________________________________
 Requirements:
 Lubuntu 20.4.1 LTS virtual machine image
 VirtualBox 6.1.22
+Docker
 Node.js v19.7.0
 npm 9.5.0
 SetUp.zip file
