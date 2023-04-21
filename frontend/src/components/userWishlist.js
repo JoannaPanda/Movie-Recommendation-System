@@ -122,7 +122,7 @@ const MovieWishlist = () => {
               width: "206px",
               height: "305px",
             }}
-            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
+            src={`${backendurl}/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}
           />
           {/* by clciking each movie in the wish list, the user would be redirected to the corresponding movie detail page */}
