@@ -470,7 +470,7 @@ const Profile = () => {
                 </div>
                 <div>
                   <Link to={`/wishlist${ouid === uid ? "" : `/${uid}`}`}>
-                    <h4 style={{ marginLeft: "70px" }}>Wishlist</h4>
+                    <h4 style={{ marginLeft: "80px" }}>Wishlist</h4>
                   </Link>
 
                   {userInfo.WishList && (
