@@ -22,6 +22,7 @@ How to install and run:
 
 
 2. Unzip the SetUP.zip as a folder named Setup and place it on the desktop location
+A command that can be used is 'unzip SetUP.zip'
 
 
 3. Open the terminal in VM
