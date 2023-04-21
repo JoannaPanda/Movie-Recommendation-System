@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
 import DirectorBar from "./selectedDirector";
 import MovieResults from "./results";
+import { backendurl } from "./backendurl";
 
 function RecoMovies(props) {
   const [movies, setMovies] = useState([]);
