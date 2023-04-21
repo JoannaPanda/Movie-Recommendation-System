@@ -8,7 +8,7 @@ See All API in [API Design](https://3900w12a-unsoftware.atlassian.net/wiki/space
 
 ### Database
 
-Automatically generated, see [Database](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/BackEnd/DataBase)
+Automatically generated, crawled by python Selenium scipt. See [Database](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/BackEnd/DataBase)
 
 ### Front-End
 
