@@ -59,6 +59,8 @@ To Run The Front End
 typing: https://localhost:3000
 to visit the website, visit https://localhost:3000/welcome to see the welcome page and start our exploration from there.
 
+If the backend accidentally stops, restart backend with command: docker-compose up -d
+
 Please make the browser window full screen to enjoy the ultimate movie finding experience on CinemaScope!
 
 
