@@ -9,6 +9,7 @@ import "../styles/progress.css";
 import UserProfileImageUpload from "../components/profilePhoto";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { backendurl } from "../components/backendurl";
 
 const Profile = () => {
   const { uid } = useParams();
@@ -60,7 +61,7 @@ const Profile = () => {
   useEffect(() => {
     // fetch all comment for this user
     axios
-      .get(`http://lbosau.exlb.org:9900/User/Comment?Uid=${uid}`)
+      .get(`${backendurl}/User/Comment?Uid=${uid}`)
       .then((response) => {
         setComment(response.data);
         setVisibleComments(response.data.slice(0, 10));
@@ -72,7 +73,7 @@ const Profile = () => {
 
     // fetch user information
     axios
-      .get(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`)
+      .get(`${backendurl}/User/Info?Uid=${uid}`)
       .then((response) => {
         setUserInfo(response.data);
         setBanlist(response.data.BanList);
@@ -111,7 +112,7 @@ const Profile = () => {
     Promise.all(
       banlist.map((uid) =>
         fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
+          `${backendurl}/User/Info?Uid=${uid}`
         ).then((response) => response.json())
       )
     ).then((users) => {
@@ -149,7 +150,7 @@ const Profile = () => {
     Promise.all(
       visibleComments.map((comment) =>
         fetch(
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
+          `${backendurl}/Movie/Info?Mid=${comment.Mid}`
         ).then((response) => response.json())
       )
     )
@@ -184,7 +185,7 @@ const Profile = () => {
     const fetchUserinfo = async () => {
       try {
         const response = await fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+          `${backendurl}/User/Info?Uid=${userinfo.Uid}`
         );
         const data = await response.json();
         setUserinfo(data);
@@ -201,7 +202,7 @@ const Profile = () => {
   useEffect(() => {
     if (userinfo) {
       axios
-        .get(`http://lbosau.exlb.org:9900/User/Comment?Uid=${userinfo.Uid}`)
+        .get(`${backendurl}/User/Comment?Uid=${userinfo.Uid}`)
         .then((response) => {
           const ownlevel =
             response.data.length < 50
@@ -339,7 +340,7 @@ const Profile = () => {
         <div className="profile-white-box">
           <div className="inline">
             <img
-              src={`http://lbosau.exlb.org:9900/Image/User/${uid}`}
+              src={`${backendurl}/Image/User/${uid}`}
               className="user-poster"
             />
             {/* the user image */}
@@ -403,7 +404,7 @@ const Profile = () => {
                           params.append("Uid", uid);
                           console.log(params.toString());
                           fetch(
-                            `http://lbosau.exlb.org:9900/User/Banlist/add`,
+                            `${backendurl}/User/Banlist/add`,
                             {
                               method: "POST",
                               headers: {
@@ -574,7 +575,7 @@ const Profile = () => {
                             <div className="inline" key={user.Uid}>
                               <img
                                 className="banlist_user_poster"
-                                src={`http://lbosau.exlb.org:9900/Image/User/${user.Uid}`}
+                                src={`${backendurl}/Image/User/${user.Uid}`}
                               />
                               <div>
                                 <h4 className="banlist_user_name">
@@ -603,7 +604,7 @@ const Profile = () => {
                                     params.append("Uid", user.Uid);
                                     console.log(params.toString());
                                     fetch(
-                                      `http://lbosau.exlb.org:9900/User/Banlist/remove`,
+                                      `${backendurl}/User/Banlist/remove`,
                                       {
                                         method: "POST",
                                         headers: {
@@ -711,7 +712,7 @@ const Profile = () => {
                 <div style={{ width: "30%", marginLeft: "50px" }}>
                   <img
                     className="user_poster"
-                    src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
+                    src={`${backendurl}/Image/User/${comment.Uid}`}
                   />
                 </div>
                 <h5 className="userName">
@@ -729,7 +730,7 @@ const Profile = () => {
                         params.append("Cid", comment.Cid);
                         params.append("token", token);
                         console.log(params.toString());
-                        fetch(`http://lbosau.exlb.org:9900/Comment/remove`, {
+                        fetch(`${backendurl}/Comment/remove`, {
                           method: "POST",
                           headers: {
                             "Content-Type": "application/x-www-form-urlencoded",
