@@ -8,6 +8,7 @@ import axios from "axios";
 import GenreMovies from "./getGenremovie";
 import MovieResults from "./results";
 import "../styles/multiple.css";
+import { backendurl } from "./backendurl";
 // This is the home page component that have multiple other component
 
 // this fucntion is used to present the top ten movies
