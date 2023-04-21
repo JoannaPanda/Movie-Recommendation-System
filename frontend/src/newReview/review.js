@@ -120,12 +120,12 @@ const ListComment = () => {
   return (
     <div id="comment">
       <div className="review_inline-element">
-        <a href="https://www.google.com" target="_blank">
+        <Link to = {`/movieinfo/${mid}`}>
           <img
             className="review_back_poster"
             src={require("../CommentImage/back.png")}
           />
-        </a>
+        </Link>
         <div className="review_title">{movieName}</div>
         <div className="review_pass_poster">
           <img
