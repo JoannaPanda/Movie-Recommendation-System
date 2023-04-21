@@ -32,7 +32,7 @@ function RecoMovies(props) {
     // perference and history
     axios
       .get(
-        `http://lbosau.exlb.org:9900/Movie/Recommend?Mid=${recoid}&token=${token}`
+        `${backendurl}/Movie/Recommend?Mid=${recoid}&token=${token}`
       )
       .then((response) => {
         console.log(response);
