@@ -48,7 +48,7 @@ const MovieBox = (props) => {
             {/* by clickintg the movie box user would be redirected to the movie detail page */}
             <Link to={`/movieinfo/${movie.Mid}`}>
               <img
-                src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
+                src={`${backendurl}/image/${movie.MovieName}/${movie.MovieName}`}
                 alt={movie.MovieName}
                 style={{ width: "100%", height: "70%", objectFit: "cover" }}
               />
