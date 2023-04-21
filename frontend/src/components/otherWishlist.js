@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "../styles/wishlist.css";
 import HeartButton from "./heartButton";
+import { backendurl } from "./backendurl";
 
 const OtherWishlist = () => {
   const [movies, setMovies] = useState([]);
