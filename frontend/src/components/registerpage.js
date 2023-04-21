@@ -73,7 +73,7 @@ class registerpage extends React.Component {
     params.append("email", email);
     params.append("password", password);
     // and post tha params to the backend
-    fetch("http://lbosau.exlb.org:9900/User/Register", {
+    fetch("${backendurl}/User/Register", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
