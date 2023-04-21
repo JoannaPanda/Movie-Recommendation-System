@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MovieResults from "./results";
 import axios from "axios";
 import "../styles/search.css";
+import { backendurl } from "./backendurl";
 // This component would take in the genre
 // This component is mainly used in the home page to
 // retuern the sorted movies for each genre
