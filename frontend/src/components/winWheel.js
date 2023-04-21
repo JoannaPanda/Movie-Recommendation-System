@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import { Link } from "react-router-dom";
+import { backendurl } from "./backendurl";
 
 const DoughnutWinwheel = () => {
   const [movies, setMovies] = useState([]);
