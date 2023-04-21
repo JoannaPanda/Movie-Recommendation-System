@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
+import { backendurl } from "./backendurl";
 
 // this component is used from homepage
 function MovieRankings() {
