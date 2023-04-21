@@ -66,7 +66,7 @@ namespace UNSoftWare.Map
                     {
                         comm = new MV_Comment(mid, usr.Uid, byte.Parse(context.Request.Form["score"]), context.Request.Form["comment"]);
                         comm.Cid = (int)FSQL.Insert(comm).ExecuteIdentity();
-                        FSQL.Update<MV_User>().Where(x=>x.Uid == usr.Uid).Set(x => x.Exp, usr.Exp + 1).ExecuteAffrows();
+                        FSQL.Update<MV_User>().Where(x => x.Uid == usr.Uid).Set(x => x.Exp, usr.Exp + 1).ExecuteAffrows();
                     }
                     else
                     {
@@ -140,17 +140,16 @@ namespace UNSoftWare.Map
                 }
                 else
                 {
-                    List<MV_Comment> comms;
+                    List<MV_Comment> comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid).ToList();
                     var jret = new JObject();
                     if (usr == null)
                     {
-                        comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid).ToList();
                         jret["score"] = movie.Score;
                     }
                     else
                     {
                         var banlist = usr.BanList;
-                        comms = FSQL.Select<MV_Comment>().Where(x => x.Mid == Mid && !banlist.Contains(x.Uid)).ToList();
+                        comms.RemoveAll(x => banlist.Contains(x.Uid));
                         jret["score"] = MV_Comment.CalScore(comms); //comms.Count == 0 ? 0 : comms.Sum(x => x.Score) / comms.Count;
                     }
                     jret["commentinfo"] = JArray.Parse(JsonConvert.SerializeObject(comms.ToArray()));
