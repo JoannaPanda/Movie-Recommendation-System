@@ -26,7 +26,7 @@ function MovieDetail() {
     setMovie([]);
 
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`)
+      .get(`${backendurl}/Movie/Info?Mid=${mid}&token=${token}`)
       .then((response) => {
         console.log(response);
         console.log(response.data.movieinfo);
@@ -101,7 +101,7 @@ function MovieDetail() {
       <div className="movie-description">
         <div className="movie-poster">
           <img
-            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
+            src={`${backendurl}/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}
           />
         </div>
@@ -196,7 +196,7 @@ const MovieAttend = (props) => {
             }}
           >
             <img
-              src={`http://lbosau.exlb.org:9900/image/${title}/${actor}`}
+              src={`${backendurl}/image/${title}/${actor}`}
               alt={title}
               style={{ width: "100%", height: "70%", objectFit: "cover" }}
             />
