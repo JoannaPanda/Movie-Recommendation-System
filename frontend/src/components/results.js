@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { backendurl } from "./backendurl";
 // this component is frequently used in the whole system
 // nearly all the movie box is created by this component
 function MovieResults(props) {
