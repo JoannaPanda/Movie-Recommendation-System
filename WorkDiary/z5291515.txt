@@ -2,7 +2,41 @@ Week1
 
 Group formed with Gin, Zhiyue, Yao and Yuemeng. I created the Jira & GitHub accounts. I wrote the user story. I also found and discussed with the team all available software tools and suitable language that we can use for the project.
 
-
 Week2
 
 I wrote the user story for the Sorting, Banned list, dark/light mode section and attached the corresponding description and the objective that the user story met as part of the proposal and started to design the front-end using conva.
+
+week3
+
+I started to try to write some front-end basic functions such as displaying all the comments, and then made a very simple interface for scoring movies, where scoring is also done by making an input box that requires user input
+
+Week4
+
+I am attempting to enhance the aesthetics of the comment and write comment interfaces to improve user experience, and I am encouraging my teammates to join me in making the interface more visually appealing and modern. In collaboration with the backend, we aim to implement various complex requirements, such as only refreshing and loading ten additional comments when the user scrolls down to the bottom of the interface. By focusing on these improvements, we hope to create a seamless and engaging experience for users, encouraging them to interact with the platform more frequently and fostering a sense of community. Additionally, we will continue to refine the design and functionalities based on user feedback, ensuring that our platform remains up-to-date and in line with evolving user preferences.
+
+Week5
+
+I am starting to work on some basic banlist functionalities, which will involve searching for comments posted by users based on their UID. Next, we will identify the corresponding movies for the comments they have posted, based on the information they provided. Following that, we will display the movie interface, including the movie's name and other essential details. By implementing these features, we aim to create a more personalized and engaging experience for users, allowing them to easily access and manage their comments and associated movies, fostering a more connected and interactive community within the platform.
+
+Week6
+
+I am working on enhancing the banlist functionality, transforming it into a pop-up window within the user's profile. This improved banlist will support real-time deletion of users without the need for refreshing the page. By streamlining this process, we aim to provide a more efficient and seamless user experience, allowing users to manage their banlist with ease and maintain a positive atmosphere within the platform. As we continue to refine and optimize the banlist functionality, we will keep user feedback and preferences in mind to ensure that our platform remains up-to-date and caters to the evolving needs of our users.
+
+Week7
+
+I have fixed several bugs and prepared content for future introductions. Additionally, I have implemented new features, such as comment like and comment dislike functionalities. These additions will enable users to express their opinions on comments more effectively, fostering engagement and promoting a more interactive community within the platform. As we continue to develop and refine our features, we remain committed to incorporating user feedback and addressing any issues that arise, ensuring that our platform remains user-friendly and up-to-date with evolving user preferences.
+
+Week8
+
+I have successfully completed all the functionalities related to the banlist, comment display, and write comment features. These enhancements provide users with an improved experience, allowing them to engage more effectively with the platform and interact with the community. By implementing these features, we aim to create a more interactive and enjoyable environment for our users, promoting a sense of connection and fostering a dynamic online community. As we continue to develop and refine the platform, we remain committed to incorporating user feedback and addressing any issues that arise to ensure the platform remains user-friendly and up-to-date with evolving user preferences.
+
+Week9
+
+I have fixed several bugs, including modifying the wishlist refresh behavior. Instead of refreshing every second, the wishlist now only refreshes when there is a change, providing a more efficient and seamless user experience. By addressing these issues, we aim to create a platform that caters to the evolving needs of our users while maintaining its user-friendly and up-to-date features. We will continue to listen to user feedback and make improvements as necessary to ensure our platform remains relevant and engaging.
+
+Week10
+
+I have fixed several bugs, such as updating the display to show the number of people who have added a movie to their wishlist after it has been added. Another bug fix involves limiting the number of people allowed in the banlist to five. Furthermore, I have added a sliding functionality to enhance the user experience and navigation within the platform.
+
+By addressing these issues and implementing new features, we aim to create a more seamless and enjoyable experience for our users. We will continue to listen to user feedback and make improvements to ensure our platform remains up-to-date and caters to the evolving needs of our users.
+
