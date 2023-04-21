@@ -16,7 +16,7 @@ Created with React.js, see [Frontend](https://github.com/unsw-cse-comp3900-9900-
 
 ### Installation Guide
 
-Please see [Installation Guide txt version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/readme.txt)
+Please see [Installation Guide txt version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/readme.txt) or [Installation Guide pdf version]
 
 ### Link to this repository
 
