@@ -41,6 +41,7 @@ Sometimes it needs to Press Y to continue like this (we encountered it 4 time in
 
 6. Then go to `Setup` Folder via cd Desktop/Setup and enter command docker-compose up -d to startup all Backend application.
 cd Desktop/Setup
+docker-compose run nodesetup
 docker-compose up -d
 
 Note if the downloading process get stuck halfway through, we can close the current terminal and restart from Step 5.
