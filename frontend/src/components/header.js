@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../images/icon.png";
 import "../styles/Header.css";
 import { Link } from "react-router-dom";
+import { backendurl } from "./backendurl";
 // This is the header for the whole system
 function Header() {
   const [token, setToken] = useState(null);
