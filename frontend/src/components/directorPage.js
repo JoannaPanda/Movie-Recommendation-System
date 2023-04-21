@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "../styles/movieDetail.css";
 import MovieResults from "./results";
 import axios from "axios";
+import { backendurl } from "./backendurl";
 
 function DirectorPage() {
   // from the link get the director name
