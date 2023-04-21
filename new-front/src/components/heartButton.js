@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function HeartButton({ movieId }) {
+function HeartButton({ movieId, onClick }) {
   const [clicked, setClicked] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
   const [inWishlist, setInWishlist] = useState(false);
@@ -102,6 +102,7 @@ function HeartButton({ movieId }) {
           console.error(error);
         });
     }
+    onClick();
   }
 
   useEffect(() => {

@@ -8,19 +8,20 @@ import HeartButton from "./heartButton";
 
 function MovieDetail() {
   const { mid } = useParams();
-  console.log("mid:", mid);
+  // console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
   const [token, setToken] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
-  console.log("token:", token);
+  // console.log("token:", token);
   useEffect(() => {
     setMovie([]);
-
     axios
       .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`)
       .then((response) => {
@@ -32,15 +33,21 @@ function MovieDetail() {
         console.log(error);
         window.location.href = "/404";
       });
-  }, [mid]);
+  }, [mid, refresh]);
+
   console.log(movie.Performers);
   const cast = movie.Performers ? (
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
   ) : null;
-  console.log(cast);
+  // console.log(cast);
   const handleClick = () => {
-    console.log("Clickable area clicked!");
+    // console.log("Clickable area clicked!");
   };
+
+  function handleHeartButtonClick () {
+    setRefresh(!refresh);
+    console.log(refresh);
+  }
   return (
     <div
       className="movie-detail-page"
@@ -54,7 +61,7 @@ function MovieDetail() {
       <div className="movie-header" style={{ marginLeft: 13 }}>
         <div className="movie-name-date">
           <h1 className="movie-title">{movie.MovieName}</h1>
-          <HeartButton movieId={mid} />
+          <HeartButton movieId={mid} onClick={handleHeartButtonClick}/>
           <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
             Released on:{" "}

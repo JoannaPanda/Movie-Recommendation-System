@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function UserInfo({ uid }) {
+function UserName({ uid }) {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function UserInfo({ uid }) {
     setUserName(data.UserName); 
   }
 
-  return <p>{userName}</p>;
+  return <p>{userName || "Tonia"}</p>;
 }
 
-export default UserInfo;
+export default UserName;
