@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Pref.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { backendurl } from "./backendurl";
 
 const tagData = [
   { id: 1, name: "Leonardo DiCaprio" },
