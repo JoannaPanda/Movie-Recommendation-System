@@ -14,14 +14,14 @@ const OtherWishlist = () => {
 
   const { uid } = useParams();
   console.log("uid:", uid);
-
+  // get the token from the local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
-
+  // get the other users info from the backend
   useEffect(() => {
     axios
       .get(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`)
@@ -34,7 +34,7 @@ const OtherWishlist = () => {
         window.location.href = "/404";
       });
   }, [uid]);
-
+  // get other users movieinfo (add to wish list or not)
   useEffect(() => {
     if (userinfo1) {
       console.log(userinfo1);
@@ -55,7 +55,7 @@ const OtherWishlist = () => {
         });
     }
   }, [userinfo1, token]);
-
+  // get the user name
   const getUsername = () => {
     if (userinfo1 && userinfo1.UserName) {
       return userinfo1.UserName;
@@ -71,7 +71,7 @@ const OtherWishlist = () => {
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  // print all the infomation for the other user's page
   return (
     <div
       className="movie-wishlist-container"
@@ -81,7 +81,7 @@ const OtherWishlist = () => {
     >
       <h2
         style={{
-          color: "whitesmoke",
+          color: "black",
         }}
       >
         {getUsername()}'s Wishlist
@@ -91,6 +91,8 @@ const OtherWishlist = () => {
           <img
             style={{
               marginRight: "10px",
+              width: "206px",
+              height: "305px",
             }}
             src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}

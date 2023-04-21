@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Pref.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const tagData = [
   { id: 1, name: "Leonardo DiCaprio" },
@@ -60,8 +62,17 @@ const tagData = [
 
 const SetPreferenceTag = () => {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [userinfo, setUserinfo] = useState(null);
   const [page, setPage] = useState(0);
-
+  // get the user info
+  useEffect(() => {
+    const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
+    if (storedUserinfo) {
+      setUserinfo(storedUserinfo);
+    }
+  }, []);
+  // is the tag is clicked then put in the tag list
+  // double click , remove from the tag list
   const handleTagButtonClick = (tagId) => {
     if (selectedTags.includes(tagId)) {
       setSelectedTags((prevState) => prevState.filter((id) => id !== tagId));
@@ -69,10 +80,11 @@ const SetPreferenceTag = () => {
       setSelectedTags((prevState) => [...prevState, tagId]);
     }
   };
-
+  // if next button clicked move to the next tage data
   const handleNextButtonClick = () => {
     // when the user clicks Next, go to dashboard
     const token = localStorage.getItem("token");
+    console.log(userinfo);
     const params = new URLSearchParams();
     params.append("token", token);
     console.log(token);
@@ -93,14 +105,19 @@ const SetPreferenceTag = () => {
       body: params.toString(),
     })
       .then((response) => {
-        // localStorage.setItem("userinfo", JSON.stringify(response.data));
         // navigate to the next page
         // redirect to preference tag setting
-        window.location.href = "/dashboard";
+        window.location.href = `/profile/${userinfo.Uid}`;
       })
       .catch((error) => {
         console.error(error);
-        alert(error);
+        // alert(error);
+        toast.error("Perference not added!", {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+        });
       });
   };
 
@@ -128,9 +145,9 @@ const SetPreferenceTag = () => {
         {currentPageTags.map((tag) => (
           <button
             key={tag.id}
-            className={`movie-preference-tag-button ${selectedTags.includes(
-              tag.id
-            ) && "selected"}`}
+            className={`movie-preference-tag-button ${
+              selectedTags.includes(tag.id) && "selected"
+            }`}
             onClick={() => handleTagButtonClick(tag.id)}
             disabled={
               selectedTags.length === 5 && !selectedTags.includes(tag.id)
@@ -168,6 +185,7 @@ const SetPreferenceTag = () => {
           Finish preference setting
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-
+// this is a simple page that would be used if there is anuthing unfound
 function NotFound() {
   return (
     <div

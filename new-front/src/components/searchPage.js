@@ -40,17 +40,18 @@ function SearchPage() {
         });
     }
   }, [search]);
+  // by clicking the genre button, select a gnere
   const handleGenreSelect = (selectedGenre) => {
     setSelectedGenre(selectedGenre);
   };
-
+  // by clicking the clear button, reset all the state
   const handleClear = () => {
     setSearch("");
     setResults([]);
     setSelectedGenre(null);
     handleGenreSelect(selectedGenre);
   };
-
+  // filtering the movie with the genre
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
   const returnedResults = results.filter(
     (movie) => movie.Type === selectedGenre
@@ -63,10 +64,19 @@ function SearchPage() {
         backgroundColor: "#400b0a",
         backgroundSize: `cover`,
         width: "auto",
-        height: "900px",
-        padding: "105px",
+        height: "1000px",
+        padding: "95px",
       }}
     >
+      <div className="logo">
+        <a href="/spin">
+          <img
+            src={require("../images/spinwheel.png")}
+            alt="Spin"
+            style={{ height: 50, width: 50, marginLeft: -700 }}
+          />
+        </a>
+      </div>
       <div className="searchInputs">
         <input
           type="text"
@@ -104,6 +114,7 @@ function SearchPage() {
           "Crime",
           "History",
           "Western",
+          "Fantasy",
         ]}
         onSelect={handleGenreSelect}
         style={{
@@ -115,12 +126,14 @@ function SearchPage() {
           borderRadius: "10px",
         }}
       />
+      {/* return the movie results */}
       {!results ? <h1>loading...</h1> : <MovieResults movies={usedResults} />}
     </div>
   );
 }
 export default SearchPage;
 
+// this is a normal genre bar that work as any other one
 const GenreBar = ({ genres, onSelect }) => {
   const [selectedGenre, setSelectedGenre] = useState(null);
 
@@ -140,7 +153,8 @@ const GenreBar = ({ genres, onSelect }) => {
         className="nav nav-tabs"
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
           textAlign: "center",
           alignItems: "center",
         }}
@@ -153,7 +167,7 @@ const GenreBar = ({ genres, onSelect }) => {
               onClick={() => handleSelect(genre)}
               style={{
                 fontSize: "16px",
-                padding: "10px 20px",
+                padding: "9px 16px",
                 backgroundColor: selectedGenre === genre ? "blue" : "grey",
                 color: selectedGenre === genre ? "white" : "black",
               }}

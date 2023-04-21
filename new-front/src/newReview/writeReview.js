@@ -248,22 +248,42 @@ const AddComment = () => {
   const rate = (circle) => {
     const circles = document.getElementsByClassName("circle-poster");
     const score = parseInt(circle.alt);
-    setGivenScore(score);
-
-    for (let i = 0; i < circles.length; i++) {
-      if (i < score) {
-        circles[i].src = require("../CommentImage/circle.png");
-      } else {
-        circles[i].src = require("../CommentImage/emptyCircle.png");
-      }
-    }
     const scoreDisplay = document.getElementById("score");
 
-    if (score == 1) scoreDisplay.textContent = "Terrible";
-    if (score == 2) scoreDisplay.textContent = "Poor";
-    if (score == 3) scoreDisplay.textContent = "Average";
-    if (score == 4) scoreDisplay.textContent = "Very Good";
-    if (score == 5) scoreDisplay.textContent = "Excellent";
+    if (score === givenScore) {
+      // double-clicked on the same dot
+      setGivenScore(0);
+      scoreDisplay.textContent = "Awful";
+    } else {
+      setGivenScore(score);
+      scoreDisplay.textContent =
+        score === 0
+          ? "Awful"
+          : score === 1
+          ? "Terrible"
+          : score === 2
+          ? "Poor"
+          : score === 3
+          ? "Average"
+          : score === 4
+          ? "Very Good"
+          : score === 5
+          ? "Excellent"
+          : "";
+    }
+    if (scoreDisplay.textContent === "Awful") {
+      for (let i = 0; i < circles.length; i++) {
+        circles[i].src = require("../CommentImage/emptyCircle.png");
+      }
+    } else {
+      for (let i = 0; i < circles.length; i++) {
+        if (i < score) {
+          circles[i].src = require("../CommentImage/circle.png");
+        } else {
+          circles[i].src = require("../CommentImage/emptyCircle.png");
+        }
+      }
+    }
   };
 
   return (
@@ -409,8 +429,8 @@ const AddComment = () => {
             </div>
             {comments.some((item) => item.Uid === storedUserinfo.Uid) ? (
               <li style={{ color: "red", marginTop: 10 }}>
-                You had already give a review. If you submit a review again,
-                your old review would be coverd by this new one
+                You had already given a review. If you submit a review again,
+                your old review would be replaced by this new one.
               </li>
             ) : (
               <></>

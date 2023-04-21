@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import image from "../images/cinema.png";
 import "../styles/welcome.css";
-
+// this is a welcome page for the users
 function WelcomePage() {
   return (
     <div
@@ -41,6 +41,7 @@ function WelcomePage() {
           Movies change your life
         </h1>
         <p style={{ color: "white" }}>Escape into a world of wonder.</p>
+        {/* this button would redirect the user to the log in page */}
         <Link to="/login" className="login-link">
           <button
             style={{

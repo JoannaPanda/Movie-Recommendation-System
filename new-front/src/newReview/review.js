@@ -4,7 +4,7 @@ import "./review.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LikeComment from "../components/likeComment";
-import UserName from './UserName';
+import UserName from "./UserName";
 
 const ListComment = () => {
   // extract "mid" information from URL
@@ -27,28 +27,33 @@ const ListComment = () => {
       setToken(storedToken);
     }
   }, []);
-  
+
   useEffect(() => {
-    fetch("http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
+    fetch(
+      "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(mid);
-        data.forEach((movie) => {
-          console.log(`Movie Mid: ${movie.Mid}`);
-        });
-        const movieIndex = data.findIndex(movie => parseInt(movie.Mid) === parseInt(mid));
+        // data.forEach((movie) => {
+        //   console.log(`Movie Mid: ${movie.Mid}`);
+        // });
+        const movieIndex = data.findIndex(
+          (movie) => parseInt(movie.Mid) === parseInt(mid)
+        );
         console.log(movieIndex);
         setRank(movieIndex);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [])
+  }, []);
 
   useEffect(() => {
     // fetch comment and movie info
@@ -98,8 +103,7 @@ const ListComment = () => {
   useEffect(() => {
     const handleScroll = (event) => {
       const { scrollTop, clientHeight, scrollHeight } = event.target;
-      console.log(scrollHeight, scrollTop, clientHeight);
-      if (scrollHeight - scrollTop <= clientHeight + 10 ) {
+      if (scrollHeight - scrollTop <= clientHeight + 10) {
         loadMoreComments();
       }
     };
@@ -113,33 +117,6 @@ const ListComment = () => {
     };
   }, [loadMoreComments]);
 
-  // useEffect(() => {
-  //   Promise.all(
-  //     visibleComments.map((comment) =>
-  //       fetch(
-  //         `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
-  //       ).then((response) => response.json())
-  //     )
-  //   )
-  //     .then((data) => {
-  //       const movieNames = data.map(
-  //         (movieInfo) => movieInfo.movieinfo.MovieName
-  //       );
-  //       setMovieNames(movieNames);
-
-  //       const movieDirector = data.map(
-  //         (movieInfo) => movieInfo.movieinfo.Director
-  //       );
-  //       setDirector(movieDirector);
-
-  //       const movieScores = data.map((movieInfo) => movieInfo.movieinfo.Score);
-  //       setScores(movieScores);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, [visibleComments]);
-  
   return (
     <div id="comment">
       <div className="review_inline-element">
@@ -281,7 +258,9 @@ const ListComment = () => {
                   href={`http://localhost:3000/comment/add/${mid}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <div style={{ marginTop: "-25px" }}>Write a review</div>
+                  <div style={{ marginTop: "-25px", whiteSpace: "nowrap" }}>
+                    Write a review
+                  </div>
                 </a>
               </button>
             </div>
@@ -325,37 +304,6 @@ const ListComment = () => {
                         <div className="review_inline-element">
                           <h6>helpful?</h6>
                           <LikeComment Cid={comment.Cid} />
-                          {/* <img
-                            className="good-poster"
-                            src={require("../CommentImage/emptyGood.png")}
-                            onClick={() => {
-                              const params = new URLSearchParams();
-                              params.append("Cid", comment.Cid);
-                              params.append("token", token);
-                              console.log(params.toString());
-                              fetch(
-                                `http://lbosau.exlb.org:9900/Comment/Like`,
-                                {
-                                  method: "POST",
-                                  headers: {
-                                    "Content-Type":
-                                      "application/x-www-form-urlencoded",
-                                  },
-                                  body: params.toString(),
-                                }
-                              )
-                                .then((response) => {
-                                  if (response.ok) {
-                                    alert("Comment likes successfully");
-                                  } else {
-                                    throw new Error("Failed to likes comment");
-                                  }
-                                })
-                                .catch((error) => {
-                                  console.log(error);
-                                });
-                            }}
-                          /> */}
                         </div>
                       </div>
                     </div>

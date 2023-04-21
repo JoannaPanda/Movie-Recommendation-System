@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 const JSONbig = require("json-bigint");
 
 class LoginPage extends React.Component {
+  // initialise the component
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +18,7 @@ class LoginPage extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  // moun the userinfo and token to the state
   componentDidMount() {
     const token = localStorage.getItem("token");
     const userinfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -30,30 +31,31 @@ class LoginPage extends React.Component {
     event.preventDefault();
     const { idoremail, password } = this.state;
     if (idoremail === "") {
-      // alert("invalid username.");
+      // alert the invliad username
       toast.error("Invalid username.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
       return;
     }
-
+    // append the email and password to the formdata
     const formData = new URLSearchParams();
     formData.append("idoremail", idoremail);
     formData.append("password", password);
-
+    // post all the form info to the backend
     fetch("http://lbosau.exlb.org:9900/User/Login", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formData.toString(),
     })
       .then((response) => {
+        // if there is not indeed this user toast errir
         if (!response.ok) {
           toast.error("Login failed: " + response.status, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -85,21 +87,21 @@ class LoginPage extends React.Component {
           // redirect to user dashboard
           toast.success("Login Successful!", {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
-                window.location.href = "/dashboard";
-              }, 3000); // Delay redirect by 2 seconds
+                window.location.href = `/profile/${userinfo.Uid}`;
+              }, 2000); // Delay redirect by 2 seconds
             },
           });
         } catch (error) {
           console.error("Login failed:", error);
-          // alert(error);
+          // alert error
           toast.error("Login failed:", error, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -121,6 +123,7 @@ class LoginPage extends React.Component {
           height: "900px",
         }}
       >
+        {/* mount the form info by handle submit */}
         <form
           onSubmit={this.handleSubmit}
           style={{
@@ -132,7 +135,7 @@ class LoginPage extends React.Component {
         >
           <div>
             <h2>Hello Again!</h2>
-            <label htmlFor="idoremail">Username</label>
+            <label htmlFor="idoremail">Email</label>
             <input
               className="form-input"
               type="text"
@@ -158,6 +161,7 @@ class LoginPage extends React.Component {
           <button type="submit" className="form-submit">
             Sign In
           </button>
+          {/* if the user don't have a account then this link can be used to regerister */}
           <Link
             to="/register"
             className="register-link"

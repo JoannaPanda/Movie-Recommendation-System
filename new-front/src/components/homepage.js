@@ -8,13 +8,17 @@ import axios from "axios";
 import GenreMovies from "./getGenremovie";
 import MovieResults from "./results";
 import "../styles/multiple.css";
+// This is the home page component that have multiple other component
+
+// this fucntion is used to present the top ten movies
 const TopTenMovies = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        // intentionally disable API before database completes
+        // get the movie from the backend with limit = 10
+        // top ten movies would be returned
         const res = await fetch(
           "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&limit=10&desc=True"
         );
@@ -22,22 +26,6 @@ const TopTenMovies = () => {
         setMovies(data);
       } catch (error) {
         console.log("Error fetching movies:", error);
-        // manual list used for testing style
-        setMovies([
-          { MovieName: "The Shawshank Redemption", Score: 5 },
-          { MovieName: "The Godfather", Score: 4.7 },
-          { MovieName: "The Godfather: Part II", Score: 4.6 },
-          { MovieName: "The Dark Knight", Score: 4.5 },
-          { MovieName: "12 Angry Men", Score: 4.5 },
-          { MovieName: "Schindler's List", Score: 4.5 },
-          {
-            MovieName: "The Lord of the Rings: The Return of the King",
-            Score: 4.5,
-          },
-          { MovieName: "Pulp Fiction", Score: 4.4 },
-          { MovieName: "The Good, the Bad and the Ugly", Score: 4.4 },
-          { MovieName: "Fight Club", Score: 4.3 },
-        ]);
       }
     };
     fetchMovies();
@@ -64,6 +52,8 @@ const TopTenMovies = () => {
           alignItems: "center",
         }}
       >
+        {/* for each movie in the returned movie set, 
+        the movie tile and conresponding ratings would be showed */}
         {movies.map((movie) => (
           <div
             key={movie.MovieName}
@@ -110,90 +100,7 @@ const TopTenMovies = () => {
   );
 };
 
-const NewMovies = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        // intentionally disable API before database completes
-        const res = await fetch(
-          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
-        );
-        const data = await res.json();
-        setMovies(data);
-      } catch (error) {
-        console.log("Error fetching movies:", error);
-        // manual list used for testing style
-        setMovies([
-          {
-            MovieName: "The Shawshank Redemption",
-            Score: 5.0,
-            PublishDate: "2023/03/12",
-          },
-          {
-            MovieName: "The Godfather",
-            Score: 4.75,
-            PublishDate: "2023/03/12",
-          },
-          {
-            MovieName: "The Godfather: Part II",
-            Score: 4.65,
-            PublishDate: "2023/03/11",
-          },
-          {
-            MovieName: "The Dark Knight",
-            Score: 4.57,
-            PublishDate: "2023/03/09",
-          },
-          { MovieName: "12 Angry Men", Score: 4.52, PublishDate: "2023/03/07" },
-          {
-            MovieName: "Schindler's List",
-            Score: 4.5,
-            PublishDate: "2023/03/07",
-          },
-          {
-            MovieName: "The Lord of the Rings: The Return of the King",
-            Score: 4.5,
-            PublishDate: "2023/03/06",
-          },
-          { MovieName: "Pulp Fiction", Score: 4.45, PublishDate: "2023/03/03" },
-          {
-            MovieName: "The Good, the Bad and the Ugly",
-            Score: 4.4,
-            PublishDate: "2023/03/02",
-          },
-          { MovieName: "Fight Club", Score: 4.3, PublishDate: "2023/03/02" },
-        ]);
-      }
-    };
-    fetchMovies();
-  }, []);
-
-  return (
-    <div
-      style={{
-        marginTop: "20px",
-        color: "whitesmoke",
-      }}
-    >
-      <input
-        type="text"
-        placeholder="NEW & UPCOMING MOVIES"
-        style={{
-          fontSize: "30px",
-          marginBottom: "22px",
-          width: "100%",
-          padding: "5px",
-          textAlign: "center",
-          fontWeight: "bold",
-        }}
-      />
-
-      <MovieResults movies={movies} />
-    </div>
-  );
-};
+// the classic movie posters are from museum outlets website
 
 const movies = [
   {
@@ -227,6 +134,51 @@ const movies = [
       "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1556117276431-4EYYJM5WNYSKL0AQHNZ3/Wizard-of-Oz-classic-movie-poster-museum-outlets.jpg?format=1500w",
   },
 ];
+
+// the function would be used to presented the newMovies
+const NewMovies = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        // fetch the new movies set from the backend database
+        const res = await fetch(
+          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
+        );
+        const data = await res.json();
+        setMovies(data);
+      } catch (error) {
+        console.log("Error fetching movies:", error);
+      }
+    };
+    fetchMovies();
+  }, []);
+
+  return (
+    <div
+      style={{
+        marginTop: "20px",
+        color: "whitesmoke",
+      }}
+    >
+      <input
+        type="text"
+        placeholder="NEW & UPCOMING MOVIES"
+        style={{
+          fontSize: "30px",
+          marginBottom: "22px",
+          width: "100%",
+          padding: "5px",
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      />
+      {/* return the new movie list as movie boxes */}
+      <MovieResults movies={movies} />
+    </div>
+  );
+};
 
 function Homepage() {
   const [selectedGenre, setSelectedGenre] = useState("xxxxxxxxxxxxx");
@@ -272,7 +224,7 @@ function Homepage() {
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
   };
-
+  // if there is genre selected from the genre bar, the usedGenre would be set
   const usedGenre = selectedGenre === null ? "xxxxxxxxxxxxx" : selectedGenre;
 
   return (
@@ -291,6 +243,7 @@ function Homepage() {
           fontWeight: "bold",
         }}
       />
+      {/* the slider compoent would be used to display the classic movie posters */}
       <Slider {...settings} className="posterSlider">
         {movies.map((movie) => (
           <Link to={`/movieinfo/${movie.Mid}`}>
@@ -304,7 +257,9 @@ function Homepage() {
           </Link>
         ))}
       </Slider>
+      {/* use the top ten movies */}
       <TopTenMovies />
+      {/* this is a a button used to redirect to the movie ranking pagr */}
       <Link to={`/movierankings`}>
         <button
           style={{
@@ -322,8 +277,9 @@ function Homepage() {
           SEE ALL →
         </button>
       </Link>
-
+      {/* new movie component used */}
       <NewMovies />
+      {/* this is a button that used to redirect to the new movie page */}
       <Link to={`/newmoviepage`}>
         <button
           style={{
@@ -341,6 +297,7 @@ function Homepage() {
           SEE ALL →
         </button>
       </Link>
+      {/*  at the bottom of the home page there is sorint movies that can be filter by genre */}
       <div
         style={{
           display: "flex",

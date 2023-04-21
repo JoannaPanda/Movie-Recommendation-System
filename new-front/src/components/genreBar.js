@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-
+// this component is used in searching page, homepage, and sorting page, and recommandation
+// system which would take in a list of genres and return which one is selected
 const GenreBar = ({ genres, onSelect }) => {
+  // the selected genre would be used to remember which genre is selected by user
   const [selectedGenre, setSelectedGenre] = useState(null);
 
+  // return the genre throgh onSelect()
   const handleSelect = (genre) => {
     if (selectedGenre === genre) {
       setSelectedGenre(null);
@@ -24,6 +27,8 @@ const GenreBar = ({ genres, onSelect }) => {
           alignItems: "center",
         }}
       >
+        {/* for each genre in the given genre list
+        map it to be a button*/}
         {genres.map((genre) => (
           <li key={genre} className="nav-item">
             <button
@@ -33,8 +38,10 @@ const GenreBar = ({ genres, onSelect }) => {
               style={{
                 fontSize: "16px",
                 padding: "10px 20px",
+                // the  background color would be blue if it had been selected,
+                // otherwise it would be grey
                 backgroundColor: selectedGenre === genre ? "blue" : "#5A5A5A",
-                color: selectedGenre === genre ? "white" : "white",
+                color: "white",
               }}
             >
               {genre}

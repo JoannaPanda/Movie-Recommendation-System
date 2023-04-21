@@ -210,10 +210,3 @@ body {
   overflow: auto;
   margin-top: 70px;
 }
-
-.review-user-name {
-  margin-left: -10px;
-  font-size: 15px;
-  color: black;
-  text-decoration: none;
-}

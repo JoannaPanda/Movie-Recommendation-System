@@ -11,21 +11,21 @@ const MovieWishlist = () => {
   const [userinfo, setUserinfo] = useState(null);
   const [token, setToken] = useState(null);
   const [filterOption, setFilterOption] = useState("");
-
+  // get the token from the local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
-
+  // get the user info from the local storage
   useEffect(() => {
     const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
     if (storedUserinfo) {
       setUserinfo(storedUserinfo);
     }
   }, []);
-
+  // get the up-to-date user info from the backend database
   useEffect(() => {
     const fetchUserinfo = async () => {
       try {
@@ -42,7 +42,8 @@ const MovieWishlist = () => {
       fetchUserinfo();
     }
   }, [userinfo]);
-
+  // get the movie info with token which would contain the information about
+  // if this movie is in the users' wishlist
   useEffect(() => {
     if (userinfo) {
       const mids = Object.values(userinfo.WishList);
@@ -56,12 +57,14 @@ const MovieWishlist = () => {
           // default order is the order of adding to wishlist
           let movies = responses.map((response) => response.data.movieinfo);
           if (filterOption === "releaseDate") {
-            // filter for newest to oldest release date
+            // sort from newest to oldest release date
             movies = movies.sort(
               (a, b) => new Date(b.PublishDate) - new Date(a.PublishDate)
             );
+            // sort by score
           } else if (filterOption === "score") {
             movies = movies.sort((a, b) => b.Score - a.Score);
+            // sort by title
           } else if (filterOption === "title") {
             movies = movies.sort((a, b) =>
               a.MovieName.localeCompare(b.MovieName)
@@ -116,14 +119,18 @@ const MovieWishlist = () => {
           <img
             style={{
               marginRight: "10px",
+              width: "206px",
+              height: "305px",
             }}
             src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}
           />
+          {/* by clciking each movie in the wish list, the user would be redirected to the corresponding movie detail page */}
           <div className="movie-wishlist-details">
             <Link to={`/movieinfo/${movie.Mid}`}>
               <h3 className="movie-wishlist-title">{movie.MovieName}</h3>
             </Link>
+            {/* in the wishlist the user can click the heartbutton to remove the movie from their wish list */}
             <HeartButton movieId={movie.Mid} />
             <p className="movie-wishlist-date">
               {/* fix user date added later */}
@@ -146,6 +153,7 @@ const MovieWishlist = () => {
   );
 };
 
+// this is used to show one 10 movies in one page
 const Pagination = ({ moviesPerPage, totalMovies, paginate }) => {
   const pageNumbers = [];
 

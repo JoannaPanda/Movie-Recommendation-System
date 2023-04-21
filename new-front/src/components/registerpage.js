@@ -23,26 +23,27 @@ class registerpage extends React.Component {
     const { name, email, password } = this.state;
 
     if (name === "") {
-      // alert("invalid username.");
+      // alert all the invalid info that entered
       toast.error("Invalid username.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
       return;
     }
+    // alert all the invalid info that entered
     if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
-      alert("invalid email address.");
+      // alert("invalid email address.");
       toast.error("Invalid email address.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
       return;
     }
-
+    // check if the password is strong enough
     if (
       !validator.isStrongPassword(password, {
         minLength: 8,
@@ -55,7 +56,7 @@ class registerpage extends React.Component {
       // alert("Your password is not a strong password.");
       toast.error("Your password is not a strong password.", {
         position: "bottom-left",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
       });
@@ -66,12 +67,12 @@ class registerpage extends React.Component {
       "API endpoint URL:",
       "http://lbosau.exlb.org:9900/User/Register"
     );
-
+    // put all the valid information into the params
     const params = new URLSearchParams();
     params.append("name", name);
     params.append("email", email);
     params.append("password", password);
-
+    // and post tha params to the backend
     fetch("http://lbosau.exlb.org:9900/User/Register", {
       method: "POST",
       headers: {
@@ -80,6 +81,8 @@ class registerpage extends React.Component {
       body: params.toString(),
     })
       .then((response) => {
+        // check if the regierster is ok, if there is deplicate email
+        // the regerister is not ok
         if (!response.ok) {
           throw new Error("Registration failed: " + response.status);
         }
@@ -95,7 +98,7 @@ class registerpage extends React.Component {
           const jsonData = JSONbig.parse(data);
 
           console.log("Registration successful:", jsonData);
-          // alert("successful");
+          // if nothing is wrong
           const { token, userinfo } = jsonData;
 
           // store token and user info in local storage
@@ -109,21 +112,21 @@ class registerpage extends React.Component {
           // redirect to preference setting
           toast.success("Registration Successful!", {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             onClose: () => {
               setTimeout(() => {
                 window.location.href = "/setprefgenre";
-              }, 3000); // Delay redirect by 2 seconds
+              }, 2000); // Delay redirect by 2 seconds
             },
           });
         } catch (error) {
           console.error("Registration failed:", error);
-          // alert(error);
+          // alert error
           toast.error("Registration failed", error, {
             position: "bottom-left",
-            autoClose: 3000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
           });
@@ -134,14 +137,14 @@ class registerpage extends React.Component {
         // alert(error);
         toast.error("Registration failed: the email has been registered", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });
-
+        // if the email is already in the database
         toast.error("Please try again with a different email.", {
           position: "bottom-left",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
         });
@@ -159,6 +162,7 @@ class registerpage extends React.Component {
           height: "900px",
         }}
       >
+        {/* from here, is the form that could be used to enter the param */}
         <form
           onSubmit={this.handleSubmit}
           style={{
@@ -200,7 +204,7 @@ class registerpage extends React.Component {
                 this.setState({ password: event.target.value })
               }
             />
-            <div className="pass-instruction">
+            <div className="pass-instruction1">
               <span>&#63;</span>
             </div>
           </div>
