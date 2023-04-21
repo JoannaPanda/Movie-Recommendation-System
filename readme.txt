@@ -1,7 +1,5 @@
 Installation Guide
 
-see the pdf version with helpful screenshots for user installation via this link :
-
 
 
 Virtual Machine Environment:
@@ -57,51 +55,9 @@ ________________________________________________________________________________
 
 To Run The Front End
 
-7. Once we have the backend and database up and running, we can proceed with front end installations. We need to install npm first. The command is:
-sudo apt install npm
-
-8. We can check node js is installed by getting the current node js version:
-node -v
-
-9. To run the react app, we need to update the node version to v19.7.0 (if node.js is already installed. remove it first by using command: sudo apt remove nodejs)
-
-
-To update node.js to the required version (v19.7.0), run the following command:
-
-curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-
-sudo apt-get install -y nodejs
-
-node -v
-
-Now the node and npm versions should be as allowing. 
-
-
-10. Create app
-
-To create the frontend react app, use the following commands:
-
-sudo npm install -g create-react-app
-
-create-react-app my-app
-
-11. Open the folder of the newly created app “my-app”, go to the my-app/src folder and remove the original Components and Styles folders (if these exists), as well as App.js, and App.css.
-
-From our Setup folder, go to FrontEnd/src, copy the components, styles, newReview, images,and CommentImage folders, and app.js, app.css files. A total of 5 folders and 2 files should be copied.
-
-Then we paste these to my-app/src.
-
-
-12. Go into the my-app directory in the terminal
-cd my-app
-
-
-13. import the required packages through terminal in one single command:
-npm install @mui/icons-material @mui/material @emotion/styled @emotion/react d3 react-toastify react-confetti @ramonak/react-progress-bar axios react-router-dom json-bigint react-slick slick-carousel validator
-
-
-14. Start the app, now the frontend should be running on localhost 3000. The command is:
-npm start
+7. Once we have the backend and database up and running, we can run the frontend simply by:
+typing: https://localhost:3000
+to visit the website, visit https://localhost:3000/welcome to see the welcome page and start our exploration from there.
 
 Please make the browser window full screen to enjoy the ultimate movie finding experience on CinemaScope!
 
