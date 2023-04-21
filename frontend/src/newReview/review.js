@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import LikeComment from "../components/likeComment";
 import UserName from "./UserName";
+import { backendurl } from "../components/backendurl";
 
 const ListComment = () => {
   // extract "mid" information from URL
