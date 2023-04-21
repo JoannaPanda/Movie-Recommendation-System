@@ -14,7 +14,7 @@ const DoughnutWinwheel = () => {
       try {
         // get all the movie from the database
         const res = await fetch(
-          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True"
+          "${backendurl}/Movie/ListOrder?orderby=Score&desc=True"
         );
         const data = await res.json();
         if (data !== null) {
