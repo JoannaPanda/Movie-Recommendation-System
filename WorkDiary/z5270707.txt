@@ -49,3 +49,11 @@ This week I spent most of the time working on sprint 2 tickets. I completed the 
 Week 8
 
 This week I completed my assigned user stories before the Sprint 2 demo, and helped other frontend teammates with fixing their bugs so that thier webpage could be connected to Backend API. I also modified the overall style of frontend before the demo so that it looks more consistent. After the demo, I hosted the retro meeting as the scrum master. I started writing the sprint 2 report in the later half of the week. 
+
+Week 9
+
+This week I completed all sprint 3 user stories asisigned to me. I went beyond by adding extra functionalities like the random movie generator. In addition I fixed several frontend bugs.
+
+Week 10
+
+This wekk I completed the final demo, sprint 3 frontend functionalities, as well as writing multiple parts of the project report.
