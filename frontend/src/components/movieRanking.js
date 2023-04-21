@@ -11,7 +11,7 @@ function MovieRankings() {
       try {
         // get all the sorted movie from the backend
         const res = await fetch(
-          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True"
+          "${backendurl}/Movie/ListOrder?orderby=Score&desc=True"
         );
         const data = await res.json();
         setMovies(data);
