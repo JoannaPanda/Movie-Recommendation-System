@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { backendurl } from "./backendurl";
 
 class LogoutConfirmation extends Component {
   render() {
