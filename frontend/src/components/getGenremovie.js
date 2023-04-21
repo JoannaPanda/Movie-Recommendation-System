@@ -16,7 +16,7 @@ function GenreMovies(props) {
 
     axios
       .get(
-        `http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True`
+        `${backendurl}/Movie/ListOrder?orderby=Score&desc=True`
       )
       .then((response) => {
         // the result is the sorted movie lists from backend
