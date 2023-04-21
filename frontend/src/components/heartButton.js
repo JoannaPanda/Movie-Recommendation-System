@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { backendurl } from "./backendurl";
 
 // this component would be main used in the whichlist page,
 // dashboard and movie detail page
