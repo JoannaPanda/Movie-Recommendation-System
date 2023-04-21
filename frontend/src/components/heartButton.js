@@ -33,7 +33,7 @@ function HeartButton({ movieId, onClick = () => {} }) {
     const fetchUserinfo = async () => {
       try {
         const response = await fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+          `${backendurl}/User/Info?Uid=${userinfo.Uid}`
         );
         const data = await response.json();
         setUserinfo(data);
@@ -51,7 +51,7 @@ function HeartButton({ movieId, onClick = () => {} }) {
     // fetch all comment for this user
     if (userinfo) {
       axios
-        .get(`http://lbosau.exlb.org:9900/User/Comment?Uid=${userinfo.Uid}`)
+        .get(`${backendurl}/User/Comment?Uid=${userinfo.Uid}`)
         .then((response) => {
           setComment(response.data);
         })
@@ -79,14 +79,14 @@ function HeartButton({ movieId, onClick = () => {} }) {
     let url = "";
     // Make the API request to add/remove the movie to the user's wishlist
     if (clicked) {
-      url = "http://lbosau.exlb.org:9900/User/Wishlist/remove";
+      url = "${backendurl}/User/Wishlist/remove";
     } else {
-      url = "http://lbosau.exlb.org:9900/User/Wishlist/add";
+      url = "${backendurl}/User/Wishlist/add";
     }
     if (
       ownWish >= MAX_BANWISHS[level] &&
       comments.length < 50 &&
-      url === "http://lbosau.exlb.org:9900/User/Wishlist/add"
+      url === "${backendurl}/User/Wishlist/add"
     ) {
       // use the toastify to alert the error
       toast.error(
