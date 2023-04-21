@@ -5,6 +5,7 @@ import "../styles/movieDetail.css";
 import { Link } from "react-router-dom";
 import RecoMovies from "./recoMovie";
 import HeartButton from "./heartButton";
+import { backendurl } from "./backendurl";
 
 function MovieDetail() {
   // get the mid from the url
