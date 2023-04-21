@@ -15,7 +15,7 @@ function DirectorPage() {
     if (director !== "") {
       axios
         .get(
-          `http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True`
+          `${backendurl}/Movie/ListOrder?orderby=Score&desc=True`
         )
         .then((response) => {
           // save the sorted movies as results
@@ -28,7 +28,7 @@ function DirectorPage() {
       // if the director is an empty string,
       axios
         .get(
-          `http://lbosau.exlb.org:9900/Movie/Search?searchtext=xxxxxxxxxxxxxxxxxxx`
+          `${backendurl}/Movie/Search?searchtext=xxxxxxxxxxxxxxxxxxx`
         )
         .then((response) => {
           // the search for xxxxxxxxxxxx would return an empty list
@@ -63,7 +63,7 @@ function DirectorPage() {
       {console.log(`from movie ${movietitle}`)}
       <img
         // image obtained by using the movie title and director
-        src={`http://lbosau.exlb.org:9900/image/${movietitle}/${director}`}
+        src={`${backendurl}/image/${movietitle}/${director}`}
         alt={director}
         style={{
           width: "200px",
