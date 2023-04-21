@@ -65,7 +65,7 @@ class registerpage extends React.Component {
 
     console.log(
       "API endpoint URL:",
-      "http://lbosau.exlb.org:9900/User/Register"
+      "${backendurl}/User/Register"
     );
     // put all the valid information into the params
     const params = new URLSearchParams();
