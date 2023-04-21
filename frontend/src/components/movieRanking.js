@@ -12,7 +12,7 @@ function MovieRankings() {
       try {
         // get all the sorted movie from the backend
         const res = await fetch(
-          "${backendurl}/Movie/ListOrder?orderby=Score&desc=True"
+          `${backendurl}/Movie/ListOrder?orderby=Score&desc=True`
         );
         const data = await res.json();
         setMovies(data);

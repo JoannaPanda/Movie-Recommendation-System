@@ -98,7 +98,7 @@ const SetPreferenceTag = () => {
 
     params.append("tag", tagString);
 
-    fetch("${backendurl}/User/Recommend/add", {
+    fetch(`${backendurl}/User/Recommend/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

@@ -80,14 +80,14 @@ function HeartButton({ movieId, onClick = () => {} }) {
     let url = "";
     // Make the API request to add/remove the movie to the user's wishlist
     if (clicked) {
-      url = "${backendurl}/User/Wishlist/remove";
+      url = `${backendurl}/User/Wishlist/remove`;
     } else {
-      url = "${backendurl}/User/Wishlist/add";
+      url = `${backendurl}/User/Wishlist/add`;
     }
     if (
       ownWish >= MAX_BANWISHS[level] &&
       comments.length < 50 &&
-      url === "${backendurl}/User/Wishlist/add"
+      url === `${backendurl}/User/Wishlist/add`
     ) {
       // use the toastify to alert the error
       toast.error(

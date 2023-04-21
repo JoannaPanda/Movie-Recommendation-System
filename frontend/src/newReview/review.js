@@ -31,7 +31,7 @@ const ListComment = () => {
 
   useEffect(() => {
     fetch(
-      "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=Score&desc=True",
+      `${backendurl}/Movie/ListOrder?orderby=Score&desc=True`,
       {
         method: "GET",
         headers: {
@@ -61,9 +61,9 @@ const ListComment = () => {
     setIsLoading(true);
     Promise.all([
       axios.get(
-        `http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=${token}`
+        `${backendurl}/Comment/Movie?Mid=${mid}&token=${token}`
       ),
-      axios.get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`),
+      axios.get(`${backendurl}/Movie/Info?Mid=${mid}`),
     ])
       .then(([commentResponse, movieResponse]) => {
         setComment(commentResponse.data.commentinfo);
@@ -73,14 +73,14 @@ const ListComment = () => {
         console.log("Comment response", commentResponse.data);
         console.log(
           "Comment request URL: ",
-          `http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}&token=${token}`
+          `${backendurl}/Comment/Movie?Mid=${mid}&token=${token}`
         );
         setMovieInfo(movieResponse.data.movieinfo);
         setMovieName(movieResponse.data.movieinfo.MovieName);
         console.log("Movie response", movieResponse.data);
         console.log(
           "Movie request URL: ",
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`
+          `${backendurl}/Movie/Info?Mid=${mid}`
         );
       })
       .catch((error) => {
@@ -160,7 +160,7 @@ const ListComment = () => {
             {
               <img
                 className="review_movie_poster"
-                src={`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`}
+                src={`${backendurl}/image/${movieName}/${movieName}`}
               />
             }
           </div>
@@ -284,7 +284,7 @@ const ListComment = () => {
                         <Link to={`/profile/${comment.Uid}`}>
                           <img
                             className="review_user_poster"
-                            src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
+                            src={`${backendurl}/Image/User/${comment.Uid}`}
                           />
                           <div className="review-user-name">
                             <UserName uid={comment.Uid} />

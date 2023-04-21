@@ -30,7 +30,7 @@ function Header() {
     const fetchUserinfo = async () => {
       try {
         const response = await fetch(
-          `http://lbosau.exlb.org:9900/User/Info?Uid=${userinfo.Uid}`
+          `${backendurl}/User/Info?Uid=${userinfo.Uid}`
         );
         const data = await response.json();
         setUserinfo(data);

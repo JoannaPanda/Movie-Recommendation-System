@@ -781,7 +781,7 @@ const Profile = () => {
                     {
                       <img
                         className="profile-movie_poster"
-                        src={`http://lbosau.exlb.org:9900/image/${movieNames[index]}/${movieNames[index]}`}
+                        src={`${backendurl}/image/${movieNames[index]}/${movieNames[index]}`}
                       />
                     }
                   </div>

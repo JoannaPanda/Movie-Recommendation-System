@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { backendurl } from "../components/backendurl";
 
 const ListComment = () => {
   const { mid, token } = useParams();
@@ -14,7 +15,7 @@ const ListComment = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}`)
+      .get(`${backendurl}/Comment/Movie?Mid=${mid}`)
       .then((response) => {
         setAllComments(response.data.commentinfo);
         setVisibleComments(response.data.commentinfo.slice(0, 10)); // Initially show the first 10 comments

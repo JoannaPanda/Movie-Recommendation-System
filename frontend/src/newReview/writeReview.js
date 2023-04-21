@@ -141,7 +141,7 @@ const AddComment = () => {
 
     // fetch comment
     axios
-      .get(`http://lbosau.exlb.org:9900/Comment/Movie?Mid=${mid}`)
+      .get(`${backendurl}/Comment/Movie?Mid=${mid}`)
       .then((response) => {
         console.log(response);
         setComment(response.data.commentinfo);
@@ -159,7 +159,7 @@ const AddComment = () => {
 
     // fetch Movieinfo
     axios
-      .get(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}`)
+      .get(`${backendurl}/Movie/Info?Mid=${mid}`)
       .then((response) => {
         console.log(response);
         setMovieInfo(response.data.movieinfo);
@@ -172,7 +172,7 @@ const AddComment = () => {
 
     // fetch image of movie
     axios
-      .get(`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`)
+      .get(`${backendurl}/image/${movieName}/${movieName}`)
       .then((response) => {
         console.log(response);
         setImage(response.data);
@@ -209,7 +209,7 @@ const AddComment = () => {
     params.append("comment", inputValue);
     console.log(params.toString());
 
-    fetch("http://lbosau.exlb.org:9900/Comment/add", {
+    fetch(`${backendurl}/Comment/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -303,7 +303,7 @@ const AddComment = () => {
             {
               <img
                 className="movie-poster-display"
-                src={`http://lbosau.exlb.org:9900/image/${movieName}/${movieName}`}
+                src={`${backendurl}/image/${movieName}/${movieName}`}
               />
             }
             <div>

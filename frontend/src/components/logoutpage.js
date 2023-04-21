@@ -54,7 +54,7 @@ class Logout extends Component {
     formData.append("token", this.state.token);
 
     // call API to log out user using token from state
-    fetch("${backendurl}/User/Logout", {
+    fetch(`${backendurl}/User/Logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

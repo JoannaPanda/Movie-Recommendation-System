@@ -64,17 +64,13 @@ class registerpage extends React.Component {
       return;
     }
 
-    console.log(
-      "API endpoint URL:",
-      "${backendurl}/User/Register"
-    );
     // put all the valid information into the params
     const params = new URLSearchParams();
     params.append("name", name);
     params.append("email", email);
     params.append("password", password);
     // and post tha params to the backend
-    fetch("${backendurl}/User/Register", {
+    fetch(`${backendurl}/User/Register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

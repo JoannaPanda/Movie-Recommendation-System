@@ -133,7 +133,7 @@ function MovieDetail() {
         <h2 className="cast-heading">Director</h2>
         <Link to={`/director/${movie.Director}`}>
           <img
-            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.Director}`}
+            src={`${backendurl}/image/${movie.MovieName}/${movie.Director}`}
             alt={movie.Director}
             style={{
               width: "200px",

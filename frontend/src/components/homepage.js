@@ -21,7 +21,7 @@ const TopTenMovies = () => {
         // get the movie from the backend with limit = 10
         // top ten movies would be returned
         const res = await fetch(
-          "${backendurl}/Movie/ListOrder?orderby=Score&limit=10&desc=True"
+          `${backendurl}/Movie/ListOrder?orderby=Score&limit=10&desc=True`
         );
         const data = await res.json();
         setMovies(data);
@@ -145,7 +145,7 @@ const NewMovies = () => {
       try {
         // fetch the new movies set from the backend database
         const res = await fetch(
-          "${backendurl}/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True"
+          `${backendurl}/Movie/ListOrder?orderby=PublishDate&limit=10&desc=True`
         );
         const data = await res.json();
         setMovies(data);

@@ -43,7 +43,7 @@ const SetPreferenceGenre = () => {
 
     params.append("tag", genreString);
 
-    fetch("${backendurl}/User/Recommend/add", {
+    fetch(`${backendurl}/User/Recommend/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
