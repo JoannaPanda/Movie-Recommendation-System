@@ -4,6 +4,7 @@ import "./review.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LikeComment from "../components/likeComment";
+import UserName from './UserName';
 
 const ListComment = () => {
   // extract "mid" information from URL
@@ -112,6 +113,33 @@ const ListComment = () => {
     };
   }, [loadMoreComments]);
 
+  // useEffect(() => {
+  //   Promise.all(
+  //     visibleComments.map((comment) =>
+  //       fetch(
+  //         `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
+  //       ).then((response) => response.json())
+  //     )
+  //   )
+  //     .then((data) => {
+  //       const movieNames = data.map(
+  //         (movieInfo) => movieInfo.movieinfo.MovieName
+  //       );
+  //       setMovieNames(movieNames);
+
+  //       const movieDirector = data.map(
+  //         (movieInfo) => movieInfo.movieinfo.Director
+  //       );
+  //       setDirector(movieDirector);
+
+  //       const movieScores = data.map((movieInfo) => movieInfo.movieinfo.Score);
+  //       setScores(movieScores);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [visibleComments]);
+  
   return (
     <div id="comment">
       <div className="review_inline-element">
@@ -278,6 +306,9 @@ const ListComment = () => {
                             className="review_user_poster"
                             src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
                           />
+                          <div className="review-user-name">
+                            <UserName uid={comment.Uid} />
+                          </div>
                         </Link>
                       </div>
                       <div style={{ marginLeft: "-55px" }}>
