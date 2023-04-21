@@ -24,7 +24,7 @@ const OtherWishlist = () => {
   // get the other users info from the backend
   useEffect(() => {
     axios
-      .get(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`)
+      .get(`${backendurl}/User/Info?Uid=${uid}`)
       .then((response) => {
         console.log(response.data);
         setUserinfo1(response.data);
@@ -41,7 +41,7 @@ const OtherWishlist = () => {
       const mids = Object.values(userinfo1.WishList);
       const requests = mids.map((mid) =>
         axios.get(
-          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${mid}&token=${token}`
+          `${backendurl}/Movie/Info?Mid=${mid}&token=${token}`
         )
       );
       Promise.all(requests)
@@ -94,7 +94,7 @@ const OtherWishlist = () => {
               width: "206px",
               height: "305px",
             }}
-            src={`http://lbosau.exlb.org:9900/image/${movie.MovieName}/${movie.MovieName}`}
+            src={`${backendurl}/image/${movie.MovieName}/${movie.MovieName}`}
             alt={movie.MovieName}
           />
           <div className="movie-wishlist-details">
