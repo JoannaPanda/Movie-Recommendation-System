@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
     formData.append("idoremail", idoremail);
     formData.append("password", password);
     // post all the form info to the backend
-    fetch("http://lbosau.exlb.org:9900/User/Login", {
+    fetch("${backendurl}/User/Login", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formData.toString(),
