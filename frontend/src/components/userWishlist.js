@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/wishlist.css";
 import HeartButton from "./heartButton";
+import { backendurl } from "./backendurl";
 
 const MovieWishlist = () => {
   const [movies, setMovies] = useState([]);
