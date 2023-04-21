@@ -19,7 +19,7 @@ function UserProfileImageUpload(props) {
   const handleUploadImage = async () => {
     try {
       const response = await axios.post(
-        `http://lbosau.exlb.org:9900/UploadImage/User?token=${token}`,
+        `${backendurl}/UploadImage/User?token=${token}`,
         selectedImage,
         {
           headers: {
