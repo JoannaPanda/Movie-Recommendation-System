@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { backendurl } from "./backendurl";
 
 function LikeComment({ Cid }) {
   const [liked, setLiked] = useState(false);
