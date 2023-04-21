@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieResults from "./results";
 import { Link } from "react-router-dom";
 import GenreBar from "./genreBar";
+import { backendurl } from "./backendurl";
 
 function NewMoviePage() {
   const [movies, setMovies] = useState([]);
