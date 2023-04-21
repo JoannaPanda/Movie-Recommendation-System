@@ -4,6 +4,7 @@ import axios from "axios";
 import "../styles/search.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
+import { backendurl } from "./backendurl";
 
 function SearchPage() {
   const [search, setSearch] = useState("");
