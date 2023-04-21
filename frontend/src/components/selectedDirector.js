@@ -23,7 +23,7 @@ const DirectorBar = ({ onToggle }) => {
               fontSize: "16px",
               padding: "10px 20px",
               backgroundColor: isSelected ? "blue" : "grey",
-              color: isSelected ? "white" : "black",
+              color: "white",
             }}
           >
             Just like this director?

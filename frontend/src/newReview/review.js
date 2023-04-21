@@ -40,9 +40,9 @@ const ListComment = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(mid);
-        data.forEach((movie) => {
-          console.log(`Movie Mid: ${movie.Mid}`);
-        });
+        // data.forEach((movie) => {
+        //   console.log(`Movie Mid: ${movie.Mid}`);
+        // });
         const movieIndex = data.findIndex(
           (movie) => parseInt(movie.Mid) === parseInt(mid)
         );
@@ -257,7 +257,9 @@ const ListComment = () => {
                   href={`http://localhost:3000/comment/add/${mid}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <div style={{ marginTop: "-25px" }}>Write a review</div>
+                  <div style={{ marginTop: "-25px", whiteSpace: "nowrap" }}>
+                    Write a review
+                  </div>
                 </a>
               </button>
             </div>

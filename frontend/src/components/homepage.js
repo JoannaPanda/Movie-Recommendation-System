@@ -100,6 +100,41 @@ const TopTenMovies = () => {
   );
 };
 
+// the classic movie posters are from museum outlets website
+
+const movies = [
+  {
+    MovieName: "Nightmare Alley",
+    Mid: "65",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1410310397860-B08JBSY4GLQ99U14SHBB/mp-36-nightmare-alley-film-noir-classic-movie-poster.jpg?format=1000w",
+  },
+  {
+    MovieName: "The Brides of Dracula",
+    Mid: "66",
+    imageUrl:
+      "http://static1.squarespace.com/static/539dffebe4b080549e5a5df5/53ac6176e4b0c4e738760920/57e4622415d5db083264a81f/1635979532345/?format=1500w",
+  },
+  {
+    MovieName: "Breakfast at Tiffany",
+    Mid: "67",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1462396269407-D3URV1GNKZY8J31DUMC4/MP-63+Breakfast+at+Tiffany%27s++Vintage+Movie+Posters.jpg?format=1500w",
+  },
+  {
+    MovieName: "The Big Sleep",
+    Mid: "68",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1492894877307-93AKZB22IF82BIDQ3048/MP-260-the-big-sleep-classic-vintage-movie-poster.jpeg?format=1500w",
+  },
+  {
+    MovieName: "Wizard of Oz ",
+    Mid: "69",
+    imageUrl:
+      "https://images.squarespace-cdn.com/content/v1/539dffebe4b080549e5a5df5/1556117276431-4EYYJM5WNYSKL0AQHNZ3/Wizard-of-Oz-classic-movie-poster-museum-outlets.jpg?format=1500w",
+  },
+];
+
 // the function would be used to presented the newMovies
 const NewMovies = () => {
   const [movies, setMovies] = useState([]);

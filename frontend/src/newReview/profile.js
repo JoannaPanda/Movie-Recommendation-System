@@ -110,9 +110,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       banlist.map((uid) =>
-        fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`
+        ).then((response) => response.json())
       )
     ).then((users) => {
       setBanUser(users);
@@ -148,9 +148,9 @@ const Profile = () => {
   useEffect(() => {
     Promise.all(
       visibleComments.map((comment) =>
-        fetch(`http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`).then(
-          (response) => response.json()
-        )
+        fetch(
+          `http://lbosau.exlb.org:9900/Movie/Info?Mid=${comment.Mid}`
+        ).then((response) => response.json())
       )
     )
       .then((data) => {
@@ -279,13 +279,19 @@ const Profile = () => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d) => color(d.data.label))
-      .on("mouseover", function () {
-        d3.select(this).transition().duration(200).attr("d", outerArc);
+      .on("mouseover", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", outerArc);
       })
-      .on("mouseout", function () {
-        d3.select(this).transition().duration(200).attr("d", arc);
+      .on("mouseout", function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("d", arc);
       })
-      .each(function (d) {
+      .each(function(d) {
         this._current = d;
       });
 
@@ -545,7 +551,7 @@ const Profile = () => {
                     <h4 style={{ marginLeft: "10px" }}>{nextLevel}</h4>
                   </div>
                 </div>
-                {isDialogOpen && (
+                {isDialogOpen && ouid === uid && (
                   <div className="modal">
                     <div>
                       <div className="close-background" onClick={handleClose}>
@@ -713,7 +719,7 @@ const Profile = () => {
                 </h5>
                 <h6 className="writeReview">wrote a review</h6>
                 <div>
-                  {
+                  {ouid === uid && (
                     <img
                       className="delete_poster"
                       src={require("../CommentImage/close.png")}
@@ -748,7 +754,7 @@ const Profile = () => {
                           });
                       }}
                     />
-                  }
+                  )}
                 </div>
               </div>
               <div style={{ marginLeft: "50px" }}>

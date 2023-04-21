@@ -12,14 +12,11 @@ import SearchPage from "./components/searchPage";
 import MovieDetail from "./components/movieDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound";
-//import ListComment from "./review/listComment";
-//import AddComment from "./review/addComment";
 import ListComment from "./newReview/review";
 import AddComment from "./newReview/writeReview";
 
 import ContactPage from "./components/contactPage";
 import Logout from "./components/logoutpage";
-import Dashboard from "./components/userdashboard";
 import MovieWishlist from "./components/userWishlist";
 import OtherWishlist from "./components/otherWishlist";
 import DirectorPage from "./components/directorPage";
@@ -48,7 +45,6 @@ function App() {
           <Route path="/comment/add/:mid" element={<AddComment />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/wishlist" element={<MovieWishlist />} />
           <Route path="/wishlist/:uid" element={<OtherWishlist />} />
           <Route path="/director/:director" element={<DirectorPage />} />

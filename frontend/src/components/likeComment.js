@@ -27,7 +27,23 @@ function LikeComment({ Cid }) {
     ) {
       setLiked(true);
     }
-    console.log(localStorage.getItem("likedComments"));
+    console.log("liked", localStorage.getItem("likedComments"));
+  }, [Cid, ouid]);
+
+  // from the storage, get the dislikedcomment list
+  useEffect(() => {
+    // Check if this comment is disliked in local storage
+    const dislikedComments = JSON.parse(
+      localStorage.getItem("dislikedComments") || "[]"
+    );
+    if (
+      dislikedComments.some(
+        (comment) => comment.Cid === Cid && comment.Uid === ouid
+      )
+    ) {
+      setdisliked(true);
+    }
+    console.log("disliked", localStorage.getItem("dislikedComments"));
   }, [Cid, ouid]);
 
   const handleLike = () => {
@@ -82,7 +98,7 @@ function LikeComment({ Cid }) {
         { Cid: Cid, Uid: ouid },
       ];
       localStorage.setItem(
-        "likedComments",
+        "dislikedComments",
         JSON.stringify(updatedDislikedComments)
       );
       setdisliked(true);

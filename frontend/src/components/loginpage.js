@@ -135,7 +135,7 @@ class LoginPage extends React.Component {
         >
           <div>
             <h2>Hello Again!</h2>
-            <label htmlFor="idoremail">Username</label>
+            <label htmlFor="idoremail">Email</label>
             <input
               className="form-input"
               type="text"
