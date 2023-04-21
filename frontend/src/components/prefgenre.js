@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/Pref.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { backendurl } from "./backendurl";
 // the genreData used later
 const genreData = [
   { id: 1, name: "Action" },
