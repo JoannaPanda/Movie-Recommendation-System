@@ -6,12 +6,10 @@ Virtual Machine Environment:
 The application runs on a virtual machine based on the Lubuntu 20.4.1 LTS virtual machine image. The VM image should be imported and run using VirtualBox 6.1.22.
 ________________________________________________________________________________________________________________________________________
 
-Requirements:
+Requirements (will be automatically installed):
 Lubuntu 20.4.1 LTS virtual machine image
 VirtualBox 6.1.22
 Docker
-Node.js v19.7.0
-npm 9.5.0
 SetUp.zip file
 
 

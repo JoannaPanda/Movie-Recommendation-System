@@ -15,5 +15,9 @@ Automatically generated, crawled by python Selenium scipt. See [Database](https:
 Created with React.js, see [Frontend](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/tree/main/frontend)
 
 ### Installation Guide
+There are two methods for running for application. 
 
-Please see [Installation Guide pdf version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/CinemaScope%20user%20installation%20manual.pdf) or [Installation Guide txt version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/readme.txt). 
+The most recent and improved installation method is provided here in **[Installation Guide txt version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/readme.txt)**. Please **USE THIS GUIDE** to install and run our application as it is more **efficient and user friendly**.
+
+Below is another installation guide, which is the one we provided in the Final Report. It is working yet not as simple and efficient as the above method.
+Please see [Installation Guide pdf version](https://github.com/unsw-cse-comp3900-9900-23T1/capstone-project-3900w12aunsoftware/blob/main/CinemaScope%20user%20installation%20manual.pdf) for the outdated installation manual.

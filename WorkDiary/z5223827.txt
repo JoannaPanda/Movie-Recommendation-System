@@ -38,3 +38,7 @@ On Thuresday, I met with Yuemeng, and discuss the reward system with her as I wo
 Up to Saturday, I nearly complete my tasks for sprint3, I add the sub-ratings in the write review page, and give the users the advised overall rate which is based on the sub-ratings. Moreover, when they successfully post the review, The sub-ratings would appear as a string with users' self-writing review. 
 Moreover, I adjusted the recommandation system according to the change from backend. 
 At Saturday night, I merged all my code with Yuemeng into her branch.
+
+Week10:
+We fix some bugs fron previous sprint, and demo on Wenseday. Then I write all the allocated report part (search, reward system, and sorting user stories). All the third party that we used, and chanllenge we met, and half of the UI presentation in section 3.2. 
+Moreover, I fixed the bugs and involved in the packaging code and run code in VM.

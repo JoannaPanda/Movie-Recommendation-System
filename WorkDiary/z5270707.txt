@@ -52,8 +52,8 @@ This week I completed my assigned user stories before the Sprint 2 demo, and hel
 
 Week 9
 
-This week I completed all sprint 3 user stories asisigned to me. I went beyond by adding extra functionalities like the random movie generator. In addition I fixed several frontend bugs.
+This week I completed all sprint 3 user stories asisigned to me. I went beyond by adding extra functionalities like the random movie generator. In addition I fixed several frontend bugs relating to styling as well as functionalities. As the scrum master I arranged stand ups and peer coding sessions to prepare for the upcoming final demo and code/report submission.
 
 Week 10
 
-This wekk I completed the final demo, sprint 3 frontend functionalities, as well as writing multiple parts of the project report.
+This week I completed the final demo along with my teammates. Before the demo, I spent the whole night fixing bugs in the frontend. IN the later half of the week, I wrote multiple parts of the project report, and submitted the work to moodle.
