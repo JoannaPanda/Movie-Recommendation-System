@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 // this component would be main used in the whichlist page,
 // dashboard and movie detail page
 
-function HeartButton({ movieId }) {
+function HeartButton({ movieId, onClick }) {
   const [clicked, setClicked] = useState(false);
   const [userinfo, setUserinfo] = useState(null);
   const [inWishlist, setInWishlist] = useState(false);
@@ -116,6 +116,7 @@ function HeartButton({ movieId }) {
           console.error(error);
         });
     }
+    onClick();
   }
 
   useEffect(() => {

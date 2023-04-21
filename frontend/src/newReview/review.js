@@ -4,6 +4,7 @@ import "./review.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LikeComment from "../components/likeComment";
+import UserName from "./UserName";
 
 const ListComment = () => {
   // extract "mid" information from URL
@@ -284,6 +285,9 @@ const ListComment = () => {
                             className="review_user_poster"
                             src={`http://lbosau.exlb.org:9900/Image/User/${comment.Uid}`}
                           />
+                          <div className="review-user-name">
+                            <UserName uid={comment.Uid} />
+                          </div>
                         </Link>
                       </div>
                       <div style={{ marginLeft: "-55px" }}>

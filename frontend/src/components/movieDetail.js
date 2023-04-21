@@ -12,6 +12,7 @@ function MovieDetail() {
   console.log("mid:", mid);
   const [movie, setMovie] = useState([]);
   const [token, setToken] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   // get the token from local storage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -35,7 +36,7 @@ function MovieDetail() {
         console.log(error);
         window.location.href = "/404";
       });
-  }, [mid]);
+  }, [mid, refresh]);
   // get the performers and use a MovieAttend to wrap it
   const cast = movie.Performers ? (
     <MovieAttend name={movie.Performers} movietitle={movie.MovieName} />
@@ -44,6 +45,11 @@ function MovieDetail() {
   const handleClick = () => {
     console.log("Clickable area clicked!");
   };
+
+  function handleHeartButtonClick() {
+    setRefresh(!refresh);
+    console.log(refresh);
+  }
   return (
     <div
       className="movie-detail-page"
@@ -58,7 +64,7 @@ function MovieDetail() {
         <div className="movie-name-date">
           <h1 className="movie-title">{movie.MovieName}</h1>
           {/* used for wishlist */}
-          <HeartButton movieId={mid} />
+          <HeartButton movieId={mid} onClick={handleHeartButtonClick} />
           <h2 className="summary-heading">{movie.Type}</h2>
           <p className="movie-release-date">
             Released on:{" "}
