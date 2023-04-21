@@ -11,7 +11,7 @@ function NewMoviePage() {
       try {
         // get all the sorted movie from backend by publishdate
         const res = await fetch(
-          "http://lbosau.exlb.org:9900/Movie/ListOrder?orderby=PublishDate&desc=True"
+          "${backendurl}/Movie/ListOrder?orderby=PublishDate&desc=True"
         );
         const data = await res.json();
         setMovies(data);
