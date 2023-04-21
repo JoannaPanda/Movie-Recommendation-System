@@ -5,6 +5,7 @@ import axios from "axios";
 import StarRating from "./starRating";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { backendurl } from "../components/backendurl";
 
 const AddComment = () => {
   // extract "mid" information from URL
