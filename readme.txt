@@ -12,6 +12,10 @@ VirtualBox 6.1.22
 Docker
 SetUp.zip file
 
+Recommended broswer
+Chrome broswer is highly recommended, firefox is much slower than chrome in terms of our website browsing experience.
+Chrome browser can be downloaded and installed from this link: https://www.google.com/intl/en/chrome, choose 64 bit .deb (For Ubuntu). After downloading the .deb, clicking on it opens a Discover window. Then click on 'install' button on the top right corner to start installation.
+
 
 The following steps cover all the installation procedures and how to run the app.
 ________________________________________________________________________________________________________________________________________
