@@ -1,0 +1,219 @@
+@font-face {
+  font-family: "Trip Sans Regular";
+  src: url("TripSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Trip Sans Regular", sans-serif;
+}
+
+/* design format for image */
+.review_movie_poster {
+  width: 300px;
+  height: 450px;
+  margin-left: 150px;
+  margin-top: 60px;
+}
+
+.review_good-poster {
+  width: 20px;
+  height: 20px;
+  margin-top: 26px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.review_comment-poster {
+  width: 15px;
+  height: 15px;
+  margin-left: 1px;
+}
+.review_back_poster {
+  width: 40px;
+  height: 40px;
+  margin-left: 30px;
+  margin-top: 30px;
+  margin-right: 30px;
+}
+.review_first_circle {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+.review_rest_circle {
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
+.review_profile_poster {
+  margin-left: 600px;
+  margin-top: 20px;
+  width: 40px;
+  height: 40px;
+}
+.review_cinema_poster {
+  width: 350px;
+  height: 135px;
+  margin-top: -5px;
+}
+
+.review_address_poster {
+  margin-top: 28px;
+  width: 20px;
+  height: 20px;
+}
+
+.review_user_poster {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.review_setting_poster {
+  margin-left: 40px;
+  margin-top: 20px;
+  width: 40px;
+  height: 40px;
+}
+.review_pass_poster {
+  width: 30px;
+  height: 18px;
+  margin-top: 24px;
+  margin-left: 5px;
+}
+.review_inline-element {
+  display: flex;
+}
+
+.review_review-number {
+  margin-top: 10px;
+  margin-left: 10px;
+  color: grey;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.review_covid-noticeL {
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 19px;
+  margin-left: 8px;
+}
+.review_covid-noticeS {
+  font-size: 15px;
+  margin-top: 19px;
+  font-weight: 250;
+}
+.review_covid-noticeM {
+  font-size: 15px;
+  font-weight: normal;
+  text-decoration: underline;
+  margin-top: 19px;
+  margin-left: 500px;
+  font-weight: bold;
+}
+
+.review_comment {
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 10px;
+  width: 450px !important;
+}
+
+.review_button-write {
+  width: 300px;
+  height: 16px;
+  background-color: black;
+  line-height: 50px;
+  margin-top: 0px;
+  margin-left: 450px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+}
+
+.review_address {
+  font-size: 15px;
+  margin-top: 19px;
+  font-weight: 250;
+  margin-top: 30px;
+  margin-left: 15px;
+}
+.review_title {
+  margin-left: 80px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.review_container-largegreen {
+  background-color: #02a96c;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  margin-left: 10px;
+  width: 4px;
+  height: 30px;
+}
+
+.review_container-green {
+  background-color: #eafaf4;
+  width: 80%;
+  margin: 30px auto;
+  height: 50px;
+}
+
+.review_container-grey {
+  margin-top: 40px;
+  width: 100%;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+}
+
+.review_container-comments {
+  margin-top: 30px;
+  width: 50%;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-left: 145px;
+}
+
+.review_container-write-comments {
+  width: 78%;
+  background-color: white;
+  border: 1px solid #ddd;
+  height: 60px;
+  margin-left: 150px;
+  margin-top: 80px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review_white-box {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 380px !important;
+  height: 420px;
+  margin-top: 60px;
+  margin-left: 27px;
+}
+
+#comment {
+  height: 100vh;
+  overflow: auto;
+  margin-top: 70px;
+}
+
+.review-user-name {
+  margin-left: -10px;
+  font-size: 15px;
+  color: black;
+  text-decoration: none;
+}

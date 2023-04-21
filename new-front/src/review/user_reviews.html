@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Review</title>
+    <link href="../styles/font.css" rel="stylesheet" type="text/css">
+<style>
+* {
+    box-sizing: border-box;
+}
+
+.cinemaScopeSize {
+    width: 160px;
+    height: 80px;
+    margin-left: 10px;
+}
+/* Style the left navigation bar */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: white;
+}
+
+li a {
+    display: block;
+    color: grey;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
+}  
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.column.side {
+    width: 16%;
+}
+
+.column.main {
+    width: 75%;
+    margin-left: 50px;
+    display: inline;
+}
+
+.buttonProfile {
+    width: 85px;
+    height: 45px;
+    margin-left: 600px;
+}
+
+.buttonMessage {
+    width: 55px;
+    height: 45px;
+    margin-right: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    .column.side, .column.main {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+    <div class="column side">
+        <ul> 
+            <li><img class ="cinemaScopeSize" src="../images/iconBlack.png"><li>
+            <li><a href="#">Detail</a></li>
+            <li><a href="#">Description</a></li>
+            <li><a href="#">Director</a></li>
+            <li><a href="#">Cast</a></li>
+            <li><a href="#">Review</a></li>
+            <li><a href="#">Recommandation</a></li>
+        </ul>
+    </div>
+
+    <div class="column main">
+        <span class="profileTitle">Titanic</span>
+        <img class ="buttonProfile" src="../images/profile.png">
+        <img class ="buttonMessage" src="../images/message.png">
+        <img class ="buttonMessage" src="../images/notice.png">
+    </div>
+
+    <div class="column main">
+        <span class="titleEachPage">Roman/Drama</span>
+    </div>
+    
+</body>
+</html>
+
+
+
+
+
+
