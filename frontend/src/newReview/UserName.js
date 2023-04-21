@@ -8,7 +8,7 @@ function UserName({ uid }) {
   }, [uid]);
 
   async function fetchUserData() {
-    const response = await fetch(`http://lbosau.exlb.org:9900/User/Info?Uid=${uid}`);
+    const response = await fetch(`${backendurl}/User/Info?Uid=${uid}`);
     const data = await response.json();
     setUserName(data.UserName); 
   }
