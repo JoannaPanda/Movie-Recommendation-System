@@ -181,23 +181,19 @@ const Profile = () => {
   }, []);
 
   // get the up-to-date userinfo from backend database
+  async function updateBan() {
+ 	const storedUserinfo = JSON.parse(localStorage.getItem("userinfo"));
+ 	const response = await fetch(
+ 	`${backendurl}/User/Info?Uid=${storedUserinfo.Uid}`
+ 	);
+ 	const data = await response.json();
+ 	setUserinfo(data);
+ 	setOwnBan(data.BanList.length);
+   }
+ 	
   useEffect(() => {
-    const fetchUserinfo = async () => {
-      try {
-        const response = await fetch(
-          `${backendurl}/User/Info?Uid=${userinfo.Uid}`
-        );
-        const data = await response.json();
-        setUserinfo(data);
-        setOwnBan(data.BanList.length);
-      } catch (error) {
-        console.error("Error fetching user info: ", error);
-      }
-    };
-    if (userinfo) {
-      fetchUserinfo();
-    }
-  }, [userinfo]);
+	updateBan();
+  }, []);
   // get the the users' levels
   useEffect(() => {
     if (userinfo) {
