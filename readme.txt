@@ -14,7 +14,7 @@ SetUp.zip file
 
 Recommended broswer
 Chrome broswer is highly recommended, firefox is much slower than chrome in terms of our website browsing experience.
-Chrome browser can be downloaded and installed from this link: https://www.google.com/intl/en/chrome, choose 64 bit .deb (For Ubuntu). After downloading the .deb, clicking on it opens a Discover window. Then click on 'install' button on the top right corner to start installation.
+Chrome browser can be downloaded and installed from this link: https://www.google.com/intl/en/chrome, choose 64 bit .deb (For Ubuntu). After downloading the .deb, clicking on it opens a Discover window. Then click on 'Install' button on the top right corner to start installation. Otherwise, chromium web browser can simply be installed by searching for chrome in the Discover window, then clicking 'Install'.
 
 
 The following steps cover all the installation procedures and how to run the app.
